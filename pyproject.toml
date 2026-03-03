@@ -9,6 +9,7 @@ dependencies = [
     "matplotlib>=3.10.6",
     "pandas>=2.3.2",
     "python-dotenv>=1.1.1",
+    "quarto>=0.1.0",
     "seaborn>=0.13.2",
     "ydata-profiling>=4.12.2",
 ]
