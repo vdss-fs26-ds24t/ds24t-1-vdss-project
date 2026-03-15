@@ -142,7 +142,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 | RUMBA Umweltbericht 2025 | THG-Emissionen Bundesverwaltung gesamt und nach Kategorie inkl. Flugreisen; BR-Jets/Helikopter separat | PDF (Diagramme) | 2006–2024 | Aggregierte Werte; keine Einzelflug-Emissionen; Zahlen für BR-Jets nicht immer separat publiziert |
 | admin.ch Flugreisen | Kontext, Regeln, Aktionsplan | Webseite | Aktuell | Wenig quantitative Daten |
 
-**Personal:** 1 Studierende/r (Semesterarbeit)
+**Personal:** 2 Studierende (Semesterarbeit)
 
 **Software/Tools:**
 - Python (PDF-Extraktion, Datenaufbereitung: `pdfplumber`, `pandas`)
