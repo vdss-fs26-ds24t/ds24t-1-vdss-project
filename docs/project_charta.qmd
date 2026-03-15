@@ -18,7 +18,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 2. Wie haben sich die THG-Emissionen der Bundesratsflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
 3. Wie gross ist der Impact der Bundesratsflüge im Vergleich zu den Gesamtemissionen der Bundesverwaltung?
 
-**Veröffentlichung:** Öffentlich zugängliche, scrollbare Data Story (Website, Github Pages), und Dokumentation mit Quarto.
+**Veröffentlichung:** Öffentlich zugängliche, scrollbare Data Story (Website, GitHub Pages), und Dokumentation mit Quarto.
 
 **Datenquellen:**
 
