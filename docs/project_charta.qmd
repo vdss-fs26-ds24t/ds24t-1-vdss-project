@@ -83,7 +83,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ### Persona 1: Lea, interessierte Bürgerin (35, Zürich)
 
-**Profil:** Lehrerin, politisch interessiert, liest regelmässig Tamedia-Medien und SRF-Online. Kein Fachkenntnisse in Datenanalyse. Nutzt Smartphone und Laptop gleichermässig.
+**Profil:** Lehrerin, politisch interessiert, liest regelmässig Tamedia-Medien und SRF-Online. Keine Fachkenntnisse in der Datenanalyse. Nutzt Smartphone und Laptop gleichermässig.
 
 **Domänenexpertise:** Gering (kennt den Bundesrat, weiss wenig über LTDB oder RUMBA)
 **Data Literacy:** Gering bis mittel (versteht einfache Balken- und Liniendiagramme)
