@@ -183,7 +183,7 @@ Die Data Story führt Lesende in vier narrative Kapitel durch das Thema: von der
 - *Wert:* Ermöglicht Mustererkennung geografisch (kognitiv-analytisch); gibt Journalisten eine Rechercheoberfläche (kommunikativ).
 
 **Kapitel 3 – Zeitliche Entwicklung der Emissionen**
-- *Visualisierung:* Linien-/Flächendiagramm der THG-Emissionen durch Flugverkehr (2006–2024) mit eingeblendetem Zielpfad (–50% bis 2030). Zweite Layer: BR-Jets vs. Linienflüge.
+- *Visualisierung:* Linien-/Flächendiagramm der THG-Emissionen durch Flugverkehr (2006–2024) mit eingeblendetem Zielpfad (–30% bis 2030). Zweite Layer: BR-Jets vs. Linienflüge.
 - *Annotation:* Markierung von Ereignissen (COVID-Einbruch 2020, Economy-only-Regel EDA/EDI 2024).
 - *Narrativ:* «Ist die Bundesverwaltung auf Kurs?»
 - *Wert:* Trend und Zielfortschritt auf einen Blick; Anomalien (COVID) kontextualisiert (kognitiv-analytisch und kommunikativ).
