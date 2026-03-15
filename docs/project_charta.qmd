@@ -149,7 +149,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 - Git / GitHub (Versionierung)
 - Figma oder Quarto-Theming (Design)
 
-**Zeit:** Frühlingssemester 2026 (ca. Mitte Februar bis Mitte Juni 2026)
+**Zeit:** Frühlingssemester 2026 (09. März bis 05. Juni 2026)
 
 **Risiken:**
 
