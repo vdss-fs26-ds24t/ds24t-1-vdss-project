@@ -274,7 +274,6 @@ Siehe [Mermaid Syntax für Gantt-Diagramme](https://mermaid.js.org/syntax/gantt.
 | Rolle | Person | Aufgaben | Kontakt |
 |---|---|---|---|
 | Studierende/r | *[Name]* | Datenakquise, -bereinigung, Visualisierung, Data Story, Dokumentation | *[E-Mail]* |
-| Studierende/r | *[Name]* | Datenakquise, -bereinigung, Visualisierung, Data Story, Dokumentation | *[E-Mail]* |
 | Betreuung / Auftraggeber | *[Dozierender Name]* | Fachliche Begleitung, Feedback, Abnahme Meilensteine | *[E-Mail]* |
 | Datenquelle 1 | Bundeskanzlei BK | Flugdaten LTDB (öffentl. PDFs) | - |
 | Datenquelle 2 | Fachstelle RUMBA, GS-UVEK | RUMBA Umweltbericht 2025 | – |
