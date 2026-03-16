@@ -1,80 +1,279 @@
 # Project Charta
 ## Context and Scope
-Describe the context (domain/business area) and topic of the visualization project. Which topical aspects should be addressed? Which question(s) should the data visualization project answer? What are the expected benefits of the project? Where should the visualization product be published (e.g. website, app, intranet)?
+
+**Domäne:** Öffentliche Verwaltung, Klimapolitik, Staatstransparenz
+
+Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LTDB), der Bundesratsmitgliedern und weiteren Behördenvertretern Flugreisen im In- und Ausland ermöglicht. Flugreisen stellen mit **61 Prozent** den mit Abstand grössten Hotspot der Treibhausgasemissionen (THG-Emissionen) der Bundesverwaltung dar (RUMBA-Umweltbericht 2025). 2024 beliefen sich die Emissionen aus Flugreisen auf 15'220 Tonnen CO₂-Äquivalente.
+
+**Thematische Aspekte:**
+
+- Wer fliegt mit dem Bundesratsjet wohin und wann?
+- Wie haben sich die Emissionen der Bundesratsflüge über die Zeit entwickelt?
+- Welchen Anteil haben die BR-Jets und -Helikopter an den Gesamtemissionen der Bundesverwaltung?
+- Was ist der konkrete klimatische Impact dieser Flüge?
+
+**Leitfragen:**
+
+1. Welche Reisemuster (Personen, Destinationen, Häufigkeit) lassen sich aus den Flugdaten der Bundeskanzlei (2022–2024) ablesen?
+2. Wie haben sich die THG-Emissionen der Bundesratsflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
+3. Wie gross ist der Impact der Bundesratsflüge im Vergleich zu den Gesamtemissionen der Bundesverwaltung?
+
+**Veröffentlichung:** Öffentlich zugängliche, scrollbare Data Story (Website, GitHub Pages), und Dokumentation mit Quarto.
+
+**Datenquellen:**
+
+- Flugdaten der Bundeskanzlei 2022–2024 (PDF, [bk.admin.ch](https://www.bk.admin.ch/bk/de/home/dokumentation/medienmitteilungen/flugdaten_bk.html))
+- RUMBA – Umweltbericht 2025, GS-UVEK (veröffentlicht 25. November 2025), mit THG-Daten seit 2006
+- Flüge des Bundesrates mit dem Lufttransportdienst ([admin.ch](https://www.admin.ch/gov/de/start/bundesrat/aufgaben-des-bundesrates/flugreisen.html))
 
 ## Project Objectives and Success Criteria
-Describe the objectives **from the client/stakeholder perspective**. For example: "Enable users to understand the distribution of sales across different regions". Try to be as specific as possible, but restrict to the concrete needs formulated by the client/stakeholders. For example: if a dashboard is needed explicitly, then state it here, otherwise leave the form of the visualization product open.
 
-Formulate success criteria (from the client/stakeholder perspective): qualitative objectives and, wherever possible, corresponding quantitative metrics with target values to be achieved within the project. These objectives should directly address the pains and gains identified in the user analysis.
+**Projektziele (aus Stakeholder-/Nutzerperspektive):**
 
-It is also helpful to specify what is explicitly excluded from the project objectives (out of scope).
+1. **Transparenz schaffen:** Interessierten Bürgerinnen und Bürgern sowie Medienschaffenden ermöglichen, schnell und intuitiv zu verstehen, wer mit dem Bundesratsjet fliegt, wohin und wie oft.
+2. **Klimaimpact kommunizieren:** Die CO₂-Emissionen der Bundesratsflüge verständlich einordnen und im Zeitverlauf (2019–2024) sowie im Vergleich zu anderen Emissionsquellen der Bundesverwaltung darstellen.
+3. **Zielfortschritt aufzeigen:** Den Fortschritt gegenüber dem Aktionsplan Flugreisen (–30% bis 2030 gegenüber 2019) visualisieren.
+
+**Erfolgskriterien:**
+
+| Kriterium | Qualitativ | Quantitativ (Zielwert) |
+|---|---|---|
+| Verständlichkeit | Laien können Kernaussagen ohne Vorwissen erfassen | Mind. 2 Personas abgedeckt |
+| Vollständigkeit | Alle 3 Datenjahre (2022–2024) dargestellt | 100% der verfügbaren Flugdaten integriert |
+| Visualisierungsqualität | Klare visuelle Hierarchie, konsistentes Design | Mind. 3 unterschiedliche Diagrammtypen |
+| Narrativer Fluss | Data Story führt Lesende durch die Kernbotschaften | Mind. 4 klar strukturierte Story-Kapitel |
+| Reproduzierbarkeit | Code und Daten sind dokumentiert und nachvollziehbar | Vollständig in Quarto/Git versioniert |
+
+**Explizit ausgeschlossen (Out of Scope):**
+
+- Vergleich mit anderen Ländern / internationalen Regierungen
+- Emissionen aus anderen Dienstreisekategorien (Bahn, Auto) der Bundesverwaltung
+- Echtzeit-Flugtracking oder Live-Daten
+- Normative Bewertung einzelner Reisen oder Personen
+
 
 ## Stakeholder Analysis
-List the people involved in and affected by the project. Describe their goals and relationships with each other. Visualisation in the form of a stakeholder map can provide a quick overview.
+
+| Stakeholder | Interesse / Ziele | Beziehung zum Projekt |
+|---|---|---|
+| Schweizer Bevölkerung / Steuerzahlende | Transparenz über staatliche Ausgaben und Klimawirkung | Primäre Zielgruppe |
+| Medienschaffende / Investigativjournalismus | Recherche-Grundlage, Faktenchecks, Berichterstattung | Sekundäre Zielgruppe; mögliche Multiplikatoren |
+| Umwelt- und Klimaorganisationen | Belege für klimapolitische Forderungen | Sekundäre Nutzer, mögliche Fürsprecher |
+| Bundeskanzlei (BK) | Transparenz und Rechenschaftspflicht; Datenquelle | Datenlieferant (öffentl. PDFs) |
+| Fachstelle RUMBA / GS-UVEK | Kommunikation von Klimazielen und -fortschritten | Datenlieferant (RUMBA-Umweltbericht) |
+| Bundesratsmitglieder / Departemente | Rechenschaftspflicht; Reputation | Indirekt betroffen |
+| Studierende / Forschende | Lernprojekt, Methodenkompetenz Datenvisualisierung | Projektteam |
+
+**Stakeholder-Map (vereinfacht):**
+
+```
+                    [RUMBA/GS-UVEK]
+                          |
+  [Umweltorganisationen]--+--[Bundeskanzlei]
+                          |
+           [Bevölkerung]--+--[Medienschaffende]
+                          |
+                    [Bundesrat/Depts]
+                          |
+                    [Data Story]
+```
+
 
 ## User Analysis
-Analyse the target audience of the visualization product and create at least 2 personas with **relevant attributes** such as domain expertise, data literacy, technical environment (devices, screen sizes), frequency of use etc. Amend each persona with the dimensions of the customer profile side in the Value Proposition Canvas @Osterwalder2014:
 
-* **User tasks** (jobs): What tasks are users trying to accomplish? Consider functional jobs (e.g. analysing data, making decisions), social jobs (e.g. reporting to stakeholders, collaborating with colleagues) and emotional jobs (e.g. feeling confident in their decisions).
-* **Pains**: What obstacles, risks or undesired outcomes do users currently face? What makes their current approach frustrating or inefficient?
-* **Gains**: What outcomes and benefits do users expect or desire? What would exceed their expectations?
+### Persona 1: Lea, interessierte Bürgerin (35, Zürich)
+
+**Profil:** Lehrerin, politisch interessiert, liest regelmässig Tamedia-Medien und SRF-Online. Keine Fachkenntnisse in der Datenanalyse. Nutzt Smartphone und Laptop gleichermässig.
+
+**Domänenexpertise:** Gering (kennt den Bundesrat, weiss wenig über LTDB oder RUMBA)
+**Data Literacy:** Gering bis mittel (versteht einfache Balken- und Liniendiagramme)
+**Technisches Umfeld:** Smartphone-first, Chrome/Safari, gelegentlich Desktop
+**Nutzungsfrequenz:** Einmalig / gelegentlich (bei medialem Anlass)
+
+**User Tasks (Jobs):**
+- *Funktional:* Schnell verstehen, ob der Bundesrat "zu viel" fliegt und wie viel CO₂ dabei entsteht.
+- *Sozial:* Informiert mitreden können, z.B. in Gesprächen über Klimapolitik.
+- *Emotional:* Sich als mündige Bürgerin informiert und nicht "ausgetrickst" fühlen.
+
+**Pains:**
+- Rohdaten in PDF-Form sind unzugänglich und schwer interpretierbar.
+- Fehlender Kontext: Sind 15'000 t CO₂ viel oder wenig?
+- Überfrachtete Darstellungen mit zu viel Fachjargon.
+
+**Gains:**
+- Klare Kernbotschaft auf einen Blick erkennbar.
+- Vergleiche, die Grössenordnungen greifbar machen (z.B. Äquivalente in Autofahrten oder Flügen pro Person).
+- Interaktive Elemente, um selbst nach bestimmten Bundesratsmitgliedern zu suchen.
+
+---
+
+### Persona 2: Marc, Datenjournalist (42, Bern)
+
+**Profil:** Journalist bei einer Schweizer Tageszeitung, spezialisiert auf Recherchen zu Politik und Verwaltung. Erfahren im Umgang mit Daten und Tabellen. Nutzt Desktop und Laptop.
+
+**Domänenexpertise:** Hoch (kennt RUMBA, Klimaziele der Bundesverwaltung, Aktionsplan Flugreisen)
+**Data Literacy:** Hoch (liest Diagramme, versteht Methodik, hinterfragt Datenquellen)
+**Technisches Umfeld:** Desktop-first, mehrere Browser, braucht zitierfähige Quellen
+**Nutzungsfrequenz:** Wiederkehrend (bei jährlichen RUMBA-Updates oder politischen Ereignissen)
+
+**User Tasks (Jobs):**
+- *Funktional:* Einzelne Flüge und Passagiere schnell auffindbar machen; zeitliche Trends identifizieren; Abweichungen vom Zielpfad erkennen.
+- *Sozial:* Recherche-Ergebnisse gegenüber Redaktion und Publikum belegen.
+- *Emotional:* Sicherheit haben, dass die Daten korrekt und vollständig dargestellt sind.
+
+**Pains:**
+- Mühsames manuelles Auslesen der PDF-Flugdaten.
+- Fehlende Verknüpfung von Einzelflügen mit aggregierten Emissionsdaten.
+- Unklare Methodik (wie werden Emissionen der BR-Jets berechnet vs. Linienflüge?).
+
+**Gains:**
+- Alle Flüge durchsuchbar und filterbar (nach Jahr, Person, Destination).
+- Direktlinks zu Originaldatenquellen (Bundeskanzlei-PDFs, RUMBA-Bericht).
+- Exportmöglichkeit oder klar dokumentierte Methodik für Weiterverarbeitung.
 
 
 ## Situation Assessment
-Describe the available resources (data, personnel, material, software/tools, infrastructure, etc.) and time as well as restrictions and constraints. Possible risks that may arise during the project are also identified.
+
+**Verfügbare Daten:**
+
+| Quelle | Inhalt | Format | Zeitraum | Einschränkungen |
+|---|---|---|---|---|
+| Bundeskanzlei (bk.admin.ch) | Flüge LTDB inkl. Mitreisende (Name, Funktion, Destination, Datum) | PDF | 2022–2024 | Manuelle PDF-Extraktion nötig; Emissionswerte nicht direkt enthalten |
+| RUMBA Umweltbericht 2025 | THG-Emissionen Bundesverwaltung gesamt und nach Kategorie inkl. Flugreisen; BR-Jets/Helikopter separat | PDF (Diagramme) | 2006–2024 | Aggregierte Werte; keine Einzelflug-Emissionen; Zahlen für BR-Jets nicht immer separat publiziert |
+| admin.ch Flugreisen | Kontext, Regeln, Aktionsplan | Webseite | Aktuell | Wenig quantitative Daten |
+
+**Personal:** 2 Studierende (Semesterarbeit)
+
+**Software/Tools:**
+- Python (PDF-Extraktion, Datenaufbereitung: `pdfplumber`, `pandas`)
+- Git / GitHub (Versionierung)
+- Figma oder Quarto-Theming (Design)
+
+**Zeit:** Frühlingssemester 2026 (09. März bis 05. Juni 2026)
+
+**Risiken:**
+
+| Risiko | Wahrscheinlichkeit | Impact | Massnahme |
+|---|---|---|---|
+| Flugdaten-PDFs sind schlecht maschinenlesbar | Hoch | Mittel | Frühe Extraktion testen; manuelle Nachbearbeitung einplanen |
+| Emissionsdaten für BR-Jets nicht granular genug | Mittel | Mittel | Aggregierte RUMBA-Werte nutzen; Methodik transparent dokumentieren |
+| Datenlücken vor 2022 (keine Einzelflug-PDFs) | Hoch | Gering | Zeitraum auf 2022–2024 beschränken; für Trend auf RUMBA-Daten zurückgreifen |
+| Zeitaufwand für PDF-Extraktion unterschätzt | Mittel | Hoch | Datenakquise priorisieren; Aufwand früh abschätzen |
 
 
 ## Visualization Concept
-Translate the project objectives into a concrete visualization concept. This corresponds to the value map side of the Value Proposition Canvas [@Osterwalder2014] – describe how the proposed visualization product addresses the users' tasks, relieves their pains and creates gains. Address the following aspects:
 
-* **Product form**: Composition of the visualization product – dashboard, data story, infographic, exploratory tool, etc.
-* **Visual encodings**: Types of charts and visualizations to be used – e.g. bar chart, line chart, scatter plot, map, etc.
-* **Interactivity**: Static vs. dynamic/interactive elements – filtering, drill-down, tooltips, linked views, etc.
-* **Narrative and annotation**: Text elements, storytelling structure, annotations and contextual information.
-* **Target medium and integration**: Embedding in the target environment – e.g. website, intranet, app, print, etc.
+### Produkt: Scrollbare Data Story
 
-For each design decision, articulate the intended value along three dimensions:
+Die Data Story führt Lesende in vier narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster bis zum Klimaimpact und Zielfortschritt. Das Format adressiert sowohl Persona 1 (Lea, Bürgerin) als auch Persona 2 (Marc, Journalist).
 
-* **Cognitive and analytical value**: How does the design amplify the user's ability to detect patterns, identify outliers, understand distributions or discover relationships [@card1999; @vanwijk2005]?
-* **Communicative value**: How does the design support the communication of information to the target audience profile(s)? 
-* **Experiential and aesthetic value**: How do the visual and interactive qualities of the design foster engagement, trust and willingness to adopt the product in practice?
+---
 
-Justify the concept by mapping it explicitly to the project objectives and the user needs identified in the user analysis.
+### Kapitelstruktur und Visualisierungen
+
+**Kapitel 1 – Einleitung: Der Bundesratsjet im Kontext**
+- *Visualisierung:* Einzelkennzahl-Kacheln (Big Numbers): Gesamtemissionen Bundesverwaltung, Anteil Flugreisen (61%), Emissionen BR-Jets 2024.
+- *Narrativ:* Einstieg mit provokanter Frage: «Wie viel CO₂ verursacht die Schweizer Regierung auf Reisen?»
+- *Wert:* Schafft sofort Relevanz und Grössenordnung (kommunikativer Wert).
+
+**Kapitel 2 – Wer fliegt wohin? (2022–2024)**
+- *Visualisierung:* Interaktive Karte (Leaflet/Plotly) mit Flugverbindungen (Arc-Map), filterbar nach Jahr und Person. Ergänzt durch eine durchsuchbare Tabelle der Einzelflüge.
+- *Narrativ:* «Welche Destinationen wurden am häufigsten angeflogen?»
+- *Interaktivität:* Filter nach Jahr (2022, 2023, 2024), Dropdown nach Bundesratsmitglied / Departement.
+- *Wert:* Ermöglicht Mustererkennung geografisch (kognitiv-analytisch); gibt Journalisten eine Rechercheoberfläche (kommunikativ).
+
+**Kapitel 3 – Zeitliche Entwicklung der Emissionen**
+- *Visualisierung:* Linien-/Flächendiagramm der THG-Emissionen durch Flugverkehr (2006–2024) mit eingeblendetem Zielpfad (–30% bis 2030). Zweite Layer: BR-Jets vs. Linienflüge.
+- *Annotation:* Markierung von Ereignissen (COVID-Einbruch 2020, Economy-only-Regel EDA/EDI 2024).
+- *Narrativ:* «Ist die Bundesverwaltung auf Kurs?»
+- *Wert:* Trend und Zielfortschritt auf einen Blick; Anomalien (COVID) kontextualisiert (kognitiv-analytisch und kommunikativ).
+
+**Kapitel 4 – Der Impact: Was bedeutet das?**
+- *Visualisierung:* Proportionales Balken- oder Donut-Diagramm (Anteil BR-Jets an Gesamtemissionen Flugreisen); Vergleichsinfografik (z.B. «15'220 t CO₂ entsprechen X Autofahrten Zürich–Genf»).
+- *Narrativ:* Einordnung des Impacts und Ausblick auf den Aktionsplan Flugreisen.
+- *Wert:* Macht abstrakte Tonnenzahlen greifbar; schafft emotionalen Bezug (Erfahrungs- und kommunikativer Wert).
+
+---
+
+### Visuelle Encodings
+
+| Diagrammtyp | Einsatz | Begründung |
+|---|---|---|
+| Arc-Map (Kartenvisualisierung) | Flugdestinationen | Geografische Muster direkt wahrnehmbar |
+| Liniendiagramm + Zielpfad | Emissionstrend 2006–2024 | Zeitlicher Verlauf und Zielfortschritt |
+| Gestapeltes Balkendiagramm | Anteil BR-Jets vs. Linienflüge | Komposition und Vergleich |
+| Big Number / Kacheln | Kennzahlen-Einstieg | Sofortige Orientierung ohne Diagramm-Aufwand |
+| Durchsuchbare Tabelle | Einzelflüge | Tiefere Exploration für Journalisten |
+
+---
+
+### Interaktivität
+
+- Filterpanel (Jahr, Person/Departement) für Karte und Tabelle
+- Tooltips auf allen Diagrammen mit Detailwerten
+- Annotationen im Liniendiagramm ein-/ausblendbar
+
+---
+
+### Zielmedium
+
+Öffentlich zugängliche Webseite (Streamlit / Quarto-HTML), optimiert für Desktop und Tablet. Mobile Darstellung vereinfacht (Karte deaktiviert, Tabelle kollabiert).
+
+---
+
+### Mapping auf Projektziele und Nutzerbedürfnisse
+
+| Ziel / Nutzerbedürfnis | Wie adressiert |
+|---|---|
+| Transparenz (Lea: «wer fliegt wohin») | Karte + Tabelle Kapitel 2 |
+| Klimaimpact einordnen (Lea: Kontext) | Big Numbers + Vergleichsinfografik Kap. 1+4 |
+| Zeittrend (beide Personas) | Liniendiagramm Kapitel 3 mit Zielpfad |
+| Recherche (Marc: durchsuchbar) | Filterbare Tabelle, Quellenlinks |
+| Methodik (Marc: Vertrauen) | Dokumentierter Code, Quellenverweis im Footer |
 
 
 ## Project Plan
-Divide the project into individual phases, describe them briefly and draw up a preliminary timetable, e.g. as a Gantt chart:
 
 ```{mermaid}
 %%| label: fig-project-plan
-%%| fig-cap: Preliminary project plan in the form of a Gantt chart.
+%%| fig-cap: Vorläufiger Projektplan als Gantt-Diagramm.
 gantt
-    title Project Plan
+    title Projektplan Frühlingssemester 2026
     dateFormat YYYY-MM-DD
-    tickInterval 5day
-    section Project Understanding
-        Initiation workshop and context analysis     :a1, 2024-07-01, 1d
-        Stakeholder and user analysis     :a3, 2024-07-02, 5d
-        Situation assessment    :a4, 2024-07-06, 1d
-        Project objectives and visualization concept    :a5, 2024-07-07, 1d
-        Sign project charta: milestone, m1, 2024-07-08, 1d
-    
-    section Data Acquisition and Exploration
-        Acquire data :a6, 2024-07-08, 3d
-        Exploratory data analysis   :a7, 2024-07-09, 2d
-        Discuss data report: milestone, m2, 2024-07-11, 1d
-        
-    section Visual Encoding and Design
-        Overview charts   :a8, 2024-07-11, 3d
-        Maps :a9, 2024-07-11, 5d
-        Implement Dashboard prototype :a10, 2024-07-16, 5d
-        Complete visualization report :a10, 2024-07-21, 1d
+    tickInterval 7day
+    section Projektverständnis
+        Kontextanalyse und Datenquellen sichten     :a1, 2026-03-09, 3d
+        Stakeholder- und Nutzeranalyse              :a2, 2026-03-10, 4d
+        Situationsanalyse und Risikobeurteilung     :a3, 2026-03-13, 2d
+        Visualisierungskonzept                      :a4, 2026-03-16, 2d
+        Projektcharta unterzeichnen: milestone, m1, 2026-03-20, 1d
+
+    section Datenakquise und -exploration
+        PDF-Extraktion Flugdaten 2022–2024          :a5, 2026-03-23, 5d
+        Datenbereinigung und -strukturierung        :a6, 2026-03-26, 4d
+        Explorative Datenanalyse                    :a7, 2026-03-30, 4d
+        Datenbericht besprechen: milestone, m2, 2026-04-03, 1d
+
+    section Visuelle Encodierung und Design
+        Karte Flugdestinationen                     :a8, 2026-04-06, 7d
+        Emissionstrend-Diagramme                    :a9, 2026-04-09, 7d
+        Durchsuchbare Tabelle implementieren        :a10, 2026-04-14, 5d
+        Data Story Prototyp (Quarto)                :a11, 2026-04-20, 10d
+        Visualisierungsbericht abschliessen         :a12, 2026-05-04, 3d
+
     section Evaluation
-        Prepare presentation :a10, 2024-07-22, 2d
-        Project presentation : milestone, m2, 2024-07-24, 4m
+        Präsentation vorbereiten                    :a13, 2026-05-18, 5d
+        Projektpräsentation: milestone, m3, 2026-06-05, 1d
 ```
 
-See [Mermaid syntax for Gantt charts](https://mermaid.js.org/syntax/gantt.html). It might not be displayed correctly in Safari &#8594; use Chrome. [Live editor with export functionality](https://mermaid.live/)
+Siehe [Mermaid Syntax für Gantt-Diagramme](https://mermaid.js.org/syntax/gantt.html). Wird in Safari möglicherweise nicht korrekt angezeigt → Chrome verwenden. [Live-Editor mit Exportfunktion](https://mermaid.live/)
+
 
 ## Roles and Contact Details
-List the people involved in the development work here with their role titles, tasks and contact details.
+
+| Rolle | Person | Aufgaben | Kontakt |
+|---|---|---|---|
+| Studierende/r | *[Name]* | Datenakquise, -bereinigung, Visualisierung, Data Story, Dokumentation | *[E-Mail]* |
+| Betreuung / Auftraggeber | *[Dozierender Name]* | Fachliche Begleitung, Feedback, Abnahme Meilensteine | *[E-Mail]* |
+| Datenquelle 1 | Bundeskanzlei BK | Flugdaten LTDB (öffentl. PDFs) | - |
+| Datenquelle 2 | Fachstelle RUMBA, GS-UVEK | RUMBA Umweltbericht 2025 | – |
