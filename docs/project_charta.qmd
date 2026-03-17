@@ -1,6 +1,8 @@
 # Project Charta
 ## Context and Scope
 
+hoii
+
 **Domäne:** Öffentliche Verwaltung, Klimapolitik, Staatstransparenz
 
 Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LTDB), der Bundesratsmitgliedern und weiteren Behördenvertretern Flugreisen im In- und Ausland ermöglicht. Flugreisen stellen mit **61 Prozent** den mit Abstand grössten Hotspot der Treibhausgasemissionen (THG-Emissionen) der Bundesverwaltung dar (RUMBA-Umweltbericht 2025). 2024 beliefen sich die Emissionen aus Flugreisen auf 15'220 Tonnen CO₂-Äquivalente.
