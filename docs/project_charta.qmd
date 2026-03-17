@@ -1,7 +1,6 @@
 # Project Charta
 ## Context and Scope
 
-hoii
 
 **Domäne:** Öffentliche Verwaltung, Klimapolitik, Staatstransparenz
 
