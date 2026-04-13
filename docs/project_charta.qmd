@@ -47,7 +47,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 **Explizit ausgeschlossen (Out of Scope):**
 
-- Vergleich mit anderen Ländern / internationalen Regierungen
+- Systematischer Ländervergleich oder politische Bewertung anderer Regierungen (punktuelle Einordnung anhand öffentlich verfügbarer Emissionsberichte vergleichbarer Institutionen ist hingegen im Scope)
 - Emissionen aus anderen Dienstreisekategorien (Bahn, Auto) der Bundesverwaltung
 - Echtzeit-Flugtracking oder Live-Daten
 - Normative Bewertung einzelner Reisen oder Personen
