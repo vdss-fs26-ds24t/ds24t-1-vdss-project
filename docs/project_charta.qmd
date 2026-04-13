@@ -17,7 +17,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 1. Welche Reisemuster (Personen, Destinationen, Häufigkeit) lassen sich aus den Flugdaten der Bundeskanzlei (2022–2024) ablesen?
 2. Wie haben sich die THG-Emissionen der Bundeskanzleisflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
-3. Wie vergleichten sich die Gesamtemissionen der Bundesverwaltung mit den Emissionen anderer Regierungen oder Institutionen?
+3. Wie vergleichen sich die Gesamtemissionen der Bundesverwaltung mit den Emissionen anderer Regierungen oder Institutionen?
 
 **Veröffentlichung:** Öffentlich zugängliche, scrollbare Data Story (Website, GitHub Pages), und Dokumentation mit Quarto.
 
