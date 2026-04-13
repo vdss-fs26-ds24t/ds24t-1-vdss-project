@@ -108,7 +108,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ---
 
-### Anti-User-Persona : Marc, Datenjournalist (42, Bern)
+### Anti-User-Persona: Marc, Datenjournalist (42, Bern)
 
 **Profil:** Journalist bei einer Schweizer Tageszeitung, spezialisiert auf Recherchen zu Politik und Verwaltung. Erfahren im Umgang mit Daten und Tabellen. Nutzt Desktop und Laptop.
 
