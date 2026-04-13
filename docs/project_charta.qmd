@@ -147,7 +147,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 **«Interests» (systemische Bedürfnisse):**
 - *Physikalisch:* Jede vermiedene Tonne CO₂eq verringert die kumulierte Strahlungserwärmung. Auch kleine institutionelle Emissionsquellen zählen zur Gesamtbilanz.
-- *Politisch-systemisch:* Vorbildwirkung staatlicher Akteure beeinflusst gesellschaftliche Normen und politische Handlungsspielräume – sichtbare Daten erhöhen den Anpassungsdruck.
+- *Politisch-systemisch:* Vorbildwirkung staatlicher Akteure beeinflusst gesellschaftliche Normen und politische Handlungsspielräume. Sichtbare Daten erhöhen den Anpassungsdruck.
 - *Zeitlich:* Das Klima reagiert träge (CO₂-Verweilzeit: 100–300 Jahre). Entscheidungen heute haben Konsequenzen weit über den Zeithorizont der Data Story hinaus.
 
 **Pains:**
@@ -158,7 +158,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 **Gains:**
 - Öffentliche Sichtbarkeit der Einzelflug-Emissionen erhöht gesellschaftlichen und politischen Druck zur Verhaltensänderung.
 - Visualisierter Abstand zum –30%-Ziel macht Handlungsbedarf konkret und verhandelbar.
-- Vergleichsinfografiken (z.B. t CO₂ pro Kopf oder Äquivalente) übersetzen abstrakte Tonnenzahlen in greifbare Realität – und stärken das Klimabewusstsein.
+- Vergleichsinfografiken (z.B. t CO₂ pro Kopf oder Äquivalente) übersetzen abstrakte Tonnenzahlen in greifbare Realität und stärken das Klimabewusstsein.
 
 
 
