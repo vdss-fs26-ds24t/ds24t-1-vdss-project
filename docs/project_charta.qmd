@@ -195,7 +195,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ### Produkt: Scrollbare Data Story
 
-Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster und den Emissionstrend bis zum institutionellen Vergleich und dem persönlichen Bezug. Das Format adressiert Persona 1 (Lea, Bürgerin).
+Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster und den Emissionstrend bis zum institutionellen Vergleich und dem persönlichen Bezug. Das Format adressiert primär Persona 1 (Lea, Bürgerin), berücksichtigt mit institutionellem Vergleich und persönlichem Bezug jedoch auch weitere im Dokument definierte Perspektiven und (Anti-)Personas.
 
 ---
 
