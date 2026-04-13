@@ -8,15 +8,16 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 **Thematische Aspekte:**
 
 - Wer fliegt mit dem Bundesratsjet wohin und wann?
-- Wie haben sich die Emissionen der Bundesratsflüge über die Zeit entwickelt?
+- Wie haben sich die Emissionen der Bundeskanzleisflüge über die Zeit entwickelt?
 - Welchen Anteil haben die BR-Jets und -Helikopter an den Gesamtemissionen der Bundesverwaltung?
-- Was ist der konkrete klimatische Impact dieser Flüge?
+- Kann ein Impact durch ein Vergleich mit anderen Emissionsberichten von einer anderen Regierung oder Institution abgeschätzt werden?
+- Wie vergleicht sich ein normal Bürrger eine normal Bürgerin mit den Emissionen einer Person der Bundeskanzlei?
 
 **Leitfragen:**
 
 1. Welche Reisemuster (Personen, Destinationen, Häufigkeit) lassen sich aus den Flugdaten der Bundeskanzlei (2022–2024) ablesen?
-2. Wie haben sich die THG-Emissionen der Bundesratsflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
-3. Wie gross ist der Impact der Bundesratsflüge im Vergleich zu den Gesamtemissionen der Bundesverwaltung?
+2. Wie haben sich die THG-Emissionen der Bundeskanzleisflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
+3. Wie vergleichten sich die Gesamtemissionen der Bundesverwaltung mit den Emissionen anderer Regierungen oder Institutionen?
 
 **Veröffentlichung:** Öffentlich zugängliche, scrollbare Data Story (Website, GitHub Pages), und Dokumentation mit Quarto.
 
@@ -107,7 +108,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ---
 
-### Persona 2: Marc, Datenjournalist (42, Bern)
+### Anti-User-Persona : Marc, Datenjournalist (42, Bern)
 
 **Profil:** Journalist bei einer Schweizer Tageszeitung, spezialisiert auf Recherchen zu Politik und Verwaltung. Erfahren im Umgang mit Daten und Tabellen. Nutzt Desktop und Laptop.
 
@@ -130,6 +131,35 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 - Alle Flüge durchsuchbar und filterbar (nach Jahr, Person, Destination).
 - Direktlinks zu Originaldatenquellen (Bundeskanzlei-PDFs, RUMBA-Bericht).
 - Exportmöglichkeit oder klar dokumentierte Methodik für Weiterverarbeitung.
+
+---
+
+### Non-Human Persona: Das Klima
+
+**Profil:** Globales, physikalisch-chemisches System, das durch kumulierte Treibhausgasemissionen destabilisiert wird. Kein Bewusstsein, aber klare messbare Zustände und Schwellenwerte. «Nutzt» die Data Story nicht aktiv, ist jedoch das zentrale betroffene System hinter allen dargestellten Daten.
+
+**Zustand (Referenzpunkt 2024):** Globale Erwärmung +1,3 °C gegenüber vorindustriellem Niveau; Schweiz überproportional betroffen (+2,8 °C seit 1864). Restliches CO₂-Budget bis 1,5 °C-Ziel (IPCC AR6): ca. 250 Gt CO₂ global.
+
+**Systemrelevante Kennzahlen:**
+- Emissionen Bundesverwaltung Flugreisen 2024: 15'220 t CO₂eq
+- Anteil BR-Jets an Gesamtemissionen Bundesverwaltung: klein, aber symbolisch hochrelevant
+- Zielpfad Bundesverwaltung: –30% Flugemissionen bis 2030 gegenüber 2019
+
+**«Interests» (systemische Bedürfnisse):**
+- *Physikalisch:* Jede vermiedene Tonne CO₂eq verringert die kumulierte Strahlungserwärmung. Auch kleine institutionelle Emissionsquellen zählen zur Gesamtbilanz.
+- *Politisch-systemisch:* Vorbildwirkung staatlicher Akteure beeinflusst gesellschaftliche Normen und politische Handlungsspielräume – sichtbare Daten erhöhen den Anpassungsdruck.
+- *Zeitlich:* Das Klima reagiert träge (CO₂-Verweilzeit: 100–300 Jahre). Entscheidungen heute haben Konsequenzen weit über den Zeithorizont der Data Story hinaus.
+
+**Pains:**
+- Emissionen werden nicht reduziert, weil sie unsichtbar oder abstrakt bleiben (fehlende Datentransparenz).
+- Symbolische Emissionsquellen (BR-Jets) werden politisch nicht adressiert, weil aggregierte Zahlen keinen Handlungsdruck erzeugen.
+- Zielpfade existieren auf dem Papier, ohne nachvollziehbares Monitoring.
+
+**Gains:**
+- Öffentliche Sichtbarkeit der Einzelflug-Emissionen erhöht gesellschaftlichen und politischen Druck zur Verhaltensänderung.
+- Visualisierter Abstand zum –30%-Ziel macht Handlungsbedarf konkret und verhandelbar.
+- Vergleichsinfografiken (z.B. t CO₂ pro Kopf oder Äquivalente) übersetzen abstrakte Tonnenzahlen in greifbare Realität – und stärken das Klimabewusstsein.
+
 
 
 ## Situation Assessment
@@ -165,7 +195,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ### Produkt: Scrollbare Data Story
 
-Die Data Story führt Lesende in vier narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster bis zum Klimaimpact und Zielfortschritt. Das Format adressiert sowohl Persona 1 (Lea, Bürgerin) als auch Persona 2 (Marc, Journalist).
+Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster und den Emissionstrend bis zum institutionellen Vergleich und dem persönlichen Bezug. Das Format adressiert Persona 1 (Lea, Bürgerin).
 
 ---
 
@@ -180,18 +210,24 @@ Die Data Story führt Lesende in vier narrative Kapitel durch das Thema: von der
 - *Visualisierung:* Interaktive Karte (Leaflet/Plotly) mit Flugverbindungen (Arc-Map), filterbar nach Jahr und Person. Ergänzt durch eine durchsuchbare Tabelle der Einzelflüge.
 - *Narrativ:* «Welche Destinationen wurden am häufigsten angeflogen?»
 - *Interaktivität:* Filter nach Jahr (2022, 2023, 2024), Dropdown nach Bundesratsmitglied / Departement.
-- *Wert:* Ermöglicht Mustererkennung geografisch (kognitiv-analytisch); gibt Journalisten eine Rechercheoberfläche (kommunikativ).
+- *Wert:* Ermöglicht Mustererkennung geografisch (kognitiv-analytisch); macht Flugaktivität konkret erfahrbar (kommunikativer Wert).
 
 **Kapitel 3 – Zeitliche Entwicklung der Emissionen**
-- *Visualisierung:* Linien-/Flächendiagramm der THG-Emissionen durch Flugverkehr (2006–2024) mit eingeblendetem Zielpfad (–30% bis 2030). Zweite Layer: BR-Jets vs. Linienflüge.
+- *Visualisierung:* Linien-/Flächendiagramm der THG-Emissionen der Bundeskanzleiflüge (2006–2024) mit eingeblendetem Zielpfad (–30% bis 2030). Zweite Layer: BR-Jets vs. Linienflüge.
 - *Annotation:* Markierung von Ereignissen (COVID-Einbruch 2020, Economy-only-Regel EDA/EDI 2024).
 - *Narrativ:* «Ist die Bundesverwaltung auf Kurs?»
 - *Wert:* Trend und Zielfortschritt auf einen Blick; Anomalien (COVID) kontextualisiert (kognitiv-analytisch und kommunikativ).
 
-**Kapitel 4 – Der Impact: Was bedeutet das?**
-- *Visualisierung:* Proportionales Balken- oder Donut-Diagramm (Anteil BR-Jets an Gesamtemissionen Flugreisen); Vergleichsinfografik (z.B. «15'220 t CO₂ entsprechen X Autofahrten Zürich–Genf»).
-- *Narrativ:* Einordnung des Impacts und Ausblick auf den Aktionsplan Flugreisen.
-- *Wert:* Macht abstrakte Tonnenzahlen greifbar; schafft emotionalen Bezug (Erfahrungs- und kommunikativer Wert).
+**Kapitel 4 – Im Vergleich: Andere Regierungen und Institutionen**
+- *Visualisierung:* Gruppiertes Balkendiagramm oder Dot-Plot mit CO₂-Emissionen aus Dienstreisen vergleichbarer Regierungen oder Institutionen (z.B. EU-Kommission, Schweizer Grossunternehmen, Bundesbehörden anderer Länder, sofern Daten verfügbar).
+- *Narrativ:* «Wie schneidet die Schweizer Bundesverwaltung im Vergleich ab?»
+- *Einschränkungshinweis:* Methodische Unterschiede zwischen Berichten werden transparent ausgewiesen; Vergleich dient der Grössenordnung, nicht der Bewertung.
+- *Wert:* Kontextualisiert die Schweizer Zahlen ausserhalb der nationalen Perspektive; stärkt das Einordnungsvermögen (kognitiv-analytischer Wert).
+
+**Kapitel 5 – Was bedeutet das für mich? (Bürger-Vergleich)**
+- *Visualisierung:* Isotype- oder Unit-Chart: Gegenüberstellung der Pro-Kopf-Emissionen einer Person der Bundeskanzlei (aus Dienstreisen) mit den durchschnittlichen jährlichen Flug-CO₂-Emissionen einer Schweizer Normalbürgerin / eines Normalbürgers.
+- *Narrativ:* «Wie viele «Durchschnittsbürger:innen» bräuchte es, um die Emissionen einer Person der Bundeskanzlei zu erreichen?»
+- *Wert:* Macht abstrakte Tonnenzahlen mit persönlichem Bezug greifbar; schafft emotionalen Anknüpfungspunkt (Erfahrungs- und kommunikativer Wert).
 
 ---
 
@@ -199,11 +235,13 @@ Die Data Story führt Lesende in vier narrative Kapitel durch das Thema: von der
 
 | Diagrammtyp | Einsatz | Begründung |
 |---|---|---|
-| Arc-Map (Kartenvisualisierung) | Flugdestinationen | Geografische Muster direkt wahrnehmbar |
-| Liniendiagramm + Zielpfad | Emissionstrend 2006–2024 | Zeitlicher Verlauf und Zielfortschritt |
-| Gestapeltes Balkendiagramm | Anteil BR-Jets vs. Linienflüge | Komposition und Vergleich |
-| Big Number / Kacheln | Kennzahlen-Einstieg | Sofortige Orientierung ohne Diagramm-Aufwand |
-| Durchsuchbare Tabelle | Einzelflüge | Tiefere Exploration für Journalisten |
+| Arc-Map (Kartenvisualisierung) | Flugdestinationen (Kap. 2) | Geografische Muster direkt wahrnehmbar |
+| Liniendiagramm + Zielpfad | Emissionstrend 2006–2024 (Kap. 3) | Zeitlicher Verlauf und Zielfortschritt |
+| Gestapeltes Balkendiagramm | Anteil BR-Jets vs. Linienflüge (Kap. 3) | Komposition und Vergleich |
+| Big Number / Kacheln | Kennzahlen-Einstieg (Kap. 1) | Sofortige Orientierung ohne Diagramm-Aufwand |
+| Durchsuchbare Tabelle | Einzelflüge (Kap. 2) | Tiefere Exploration der Rohdaten |
+| Gruppiertes Balkendiagramm / Dot-Plot | Institutionenvergleich (Kap. 4) | Direkter Vergleich diskreter Kategorien |
+| Isotype- / Unit-Chart | Bürger-Vergleich Pro-Kopf-Emissionen (Kap. 5) | Abstrakte Tonnenzahlen in anschauliche Einheiten übersetzen |
 
 ---
 
@@ -226,10 +264,11 @@ Die Data Story führt Lesende in vier narrative Kapitel durch das Thema: von der
 | Ziel / Nutzerbedürfnis | Wie adressiert |
 |---|---|
 | Transparenz (Lea: «wer fliegt wohin») | Karte + Tabelle Kapitel 2 |
-| Klimaimpact einordnen (Lea: Kontext) | Big Numbers + Vergleichsinfografik Kap. 1+4 |
-| Zeittrend (beide Personas) | Liniendiagramm Kapitel 3 mit Zielpfad |
-| Recherche (Marc: durchsuchbar) | Filterbare Tabelle, Quellenlinks |
-| Methodik (Marc: Vertrauen) | Dokumentierter Code, Quellenverweis im Footer |
+| Klimaimpact einordnen (Lea: Kontext) | Big Numbers Kap. 1 + Bürger-Vergleich Kap. 5 |
+| Zeittrend und Zielfortschritt (Lea, Klima) | Liniendiagramm Kapitel 3 mit Zielpfad |
+| Institutionenvergleich (Leitfrage 3) | Gruppiertes Balkendiagramm Kapitel 4 |
+| Persönlicher Bezug (Lea: «Was bedeutet das für mich?») | Isotype-/Unit-Chart Kapitel 5 |
+| Methodik und Quellenvertrauen | Dokumentierter Code, Quellenverweis im Footer |
 
 
 ## Project Plan
@@ -273,7 +312,8 @@ Siehe [Mermaid Syntax für Gantt-Diagramme](https://mermaid.js.org/syntax/gantt.
 
 | Rolle | Person | Aufgaben | Kontakt |
 |---|---|---|---|
-| Studierende/r | *[Name]* | Datenakquise, -bereinigung, Visualisierung, Data Story, Dokumentation | *[E-Mail]* |
-| Betreuung / Auftraggeber | *[Dozierender Name]* | Fachliche Begleitung, Feedback, Abnahme Meilensteine | *[E-Mail]* |
+| Studierende/r | L. Locarnini | Datenakquise, Visualisierung, Data Story, Dokumentation | locarlil@students.zhaw.ch |
+| Studierende/r | A. Wyder | Datenbereinigung, Visualisierung, Data Story, Dokumentation | wyderali@students.zhaw.ch |
+| Betreuung / Auftraggeber | M. Döhmer | Fachliche Begleitung, Feedback, Abnahme Meilensteine | doem@zhaw.ch |
 | Datenquelle 1 | Bundeskanzlei BK | Flugdaten LTDB (öffentl. PDFs) | - |
 | Datenquelle 2 | Fachstelle RUMBA, GS-UVEK | RUMBA Umweltbericht 2025 | – |
