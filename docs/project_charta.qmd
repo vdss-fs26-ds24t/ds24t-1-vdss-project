@@ -10,7 +10,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 - Wer fliegt mit dem Bundesratsjet wohin und wann?
 - Wie haben sich die Emissionen der Bundeskanzleisflüge über die Zeit entwickelt?
 - Welchen Anteil haben die BR-Jets und -Helikopter an den Gesamtemissionen der Bundesverwaltung?
-- Kann ein Impact durch ein Vergleich mit anderen Emissionsberichten von einer anderen Regierung oder Institution abgeschätzt werden?
+- Kann ein Impact durch einen Vergleich mit Emissionsberichten anderer Regierungen oder Institutionen abgeschätzt werden?
 - Wie vergleicht sich ein normal Bürrger eine normal Bürgerin mit den Emissionen einer Person der Bundeskanzlei?
 
 **Leitfragen:**
