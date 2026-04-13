@@ -10,14 +10,14 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 - Wer fliegt mit dem Bundesratsjet wohin und wann?
 - Wie haben sich die Emissionen der Bundeskanzleisflüge über die Zeit entwickelt?
 - Welchen Anteil haben die BR-Jets und -Helikopter an den Gesamtemissionen der Bundesverwaltung?
-- Kann ein Impact durch ein Vergleich mit anderen Emissionsberichten von einer anderen Regierung oder Institution abgeschätzt werden?
-- Wie vergleicht sich ein normal Bürrger eine normal Bürgerin mit den Emissionen einer Person der Bundeskanzlei?
+- Kann ein Impact durch einen Vergleich mit Emissionsberichten anderer Regierungen oder Institutionen abgeschätzt werden?
+- Wie vergleicht sich ein normaler Bürger / eine normale Bürgerin mit den Emissionen einer Person der Bundeskanzlei?
 
 **Leitfragen:**
 
 1. Welche Reisemuster (Personen, Destinationen, Häufigkeit) lassen sich aus den Flugdaten der Bundeskanzlei (2022–2024) ablesen?
 2. Wie haben sich die THG-Emissionen der Bundeskanzleisflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
-3. Wie vergleichten sich die Gesamtemissionen der Bundesverwaltung mit den Emissionen anderer Regierungen oder Institutionen?
+3. Wie vergleichen sich die Gesamtemissionen der Bundesverwaltung mit den Emissionen anderer Regierungen oder Institutionen?
 
 **Veröffentlichung:** Öffentlich zugängliche, scrollbare Data Story (Website, GitHub Pages), und Dokumentation mit Quarto.
 
@@ -108,7 +108,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ---
 
-### Anti-User-Persona : Marc, Datenjournalist (42, Bern)
+### Anti-User-Persona: Marc, Datenjournalist (42, Bern)
 
 **Profil:** Journalist bei einer Schweizer Tageszeitung, spezialisiert auf Recherchen zu Politik und Verwaltung. Erfahren im Umgang mit Daten und Tabellen. Nutzt Desktop und Laptop.
 
@@ -195,7 +195,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ### Produkt: Scrollbare Data Story
 
-Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster und den Emissionstrend bis zum institutionellen Vergleich und dem persönlichen Bezug. Das Format adressiert Persona 1 (Lea, Bürgerin).
+Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster und den Emissionstrend bis zum institutionellen Vergleich und dem persönlichen Bezug. Das Format adressiert primär Persona 1 (Lea, Bürgerin), berücksichtigt mit institutionellem Vergleich und persönlichem Bezug jedoch auch weitere im Dokument definierte Perspektiven und (Anti-)Personas.
 
 ---
 
