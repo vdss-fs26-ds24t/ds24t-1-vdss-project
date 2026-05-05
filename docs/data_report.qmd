@@ -1,147 +1,123 @@
-# Data Report
-All information on the data used in the project is compiled in the data report in order to ensure the traceability and reproducibility of the results and to enable a systematic expansion of the database.
+# Datenbericht
 
-Typically, in the exploratory analysis of the acquired raw data, quality and other issues are identified, which require pre-processing, merging of individual datasets and feature engineering into processed datasets. Therefore, this template provides a separate section for the processed data, which then serves as a starting point for the modelling activities. This needs to be adapted to the specific project requirements.
+Dieser Bericht dokumentiert alle im Projekt verwendeten Datenquellen und stellt die Nachvollziehbarkeit und Reproduzierbarkeit der Ergebnisse sicher.
 
-## Raw data
-### Overview Raw Datasets
+## Rohdaten
 
-: Overview of raw datasets used in the project. {#tbl-raw-overview}
+### Übersicht Rohdatensätze
 
-| Name | Quelle | Storage location |
-|----------------|-----------------------------------------|--------------------------------------------------------------------------|
-| Dataset 1      | Name/short description of the data source | Link and/or short description of the location where the data is stored, e.g. accessible to the team |
-| Dataset 2      | …                                       | …                                                                        |
+: Übersicht der verwendeten Rohdatensätze. {#tbl-raw-overview}
 
-### Details Dataset 1
+| Name | Quelle | Speicherort |
+|---|---|---|
+| Flugliste 2021 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/flugliste-rumba-2021-fr.xlsx` (nicht versioniert) |
+| Flugliste 2022 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/flugliste-rumba-2022 (1).xlsx` (nicht versioniert) |
+| Flugliste 2023 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/Flugliste_2023.xlsx` (nicht versioniert) |
+| Flugliste 2024 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/Flugliste 2024 (3).xlsx` (nicht versioniert) |
+| Airports-Lookup | OpenFlights.org | `../data/airports.csv` (nicht versioniert) |
+| RUMBA Umweltberichte 2021–2024 | GS-UVEK, Fachstelle RUMBA | `data/*.pdf` (versioniert) |
 
-- Description of what information the dataset contains
-- Details of the data source/provider
-- Information on data procurement: description and possibly references to resources (download scripts, tools, online services, ...). Any new team member should be able to acquire the data indepentendently following these instructions.
-- Legal aspects of data use, licences, etc.
-- Data governance aspects: Categorisation of the data based on internal business requirements, e.g. public, business-relevant, personal
-- If applicable: categorisation into dependent (target variable, regressor) and independent (regressor) variables
-- ...
+### Details: Flugdaten 2021–2024
 
-#### Data Catalogue
-The data catalogue basically represents an extended schema of a relational database.
+Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourcen- und Umweltmanagement der Bundesverwaltung) als Excel-Dateien veröffentlicht. Sie enthalten alle Dienstreise-Flugabschnitte der erfassten Verwaltungseinheiten.
 
+- **Inhalt:** Einzelne Flugabschnitte (Legs) mit Abflug- und Ankunftsflughafen (Name + IATA-Code), Enddestination, Datum/Monat, Reiseklasse, Departement, Verwaltungseinheit, Strecke in km, Streckenkategorie.
+- **Wichtig:** Die Daten enthalten **keine Personennamen** — nur Departement und Verwaltungseinheit.
+- **Besonderheit:** Die Flugdistanz (km) ist bereits in den Rohdaten berechnet; Emissionen müssen separat berechnet werden.
+- **Rechtliches:** Öffentlich zugängliche Daten (bk.admin.ch); keine Personendaten enthalten.
+- **Datenschutz:** Da keine Einzelpersonen identifizierbar sind, gelten keine besonderen Datenschutzanforderungen.
 
-: Data catalogue for Dataset 1. {#tbl-data-catalogue}
+#### Datenkatalog (kanonisches Schema nach Bereinigung)
 
-| Column index | Column name |  Datatype | Values (Range, validation rules) | Short description |
+: Datenkatalog Fluglisten 2021–2024. {#tbl-data-catalogue}
+
+| Spaltenname (kanonisch) | Originalbezeichnung | Datentyp | Wertebereich / Validierung | Beschreibung |
 |---|---|---|---|---|
-| 1 |   |   |   |   |
-| 2 |   |   |   |   |
-|   |   |   |   |   |
+| `departure_airport` | Flughafen Abflug (A) | String | Flughafenname | Abflugflughafen |
+| `iata_from` | IATA-Code (A) | String (3 Zeichen) | Gültiger IATA-Code | IATA-Code Abflug |
+| `arrival_airport` | Flughafen Ankunft (B) | String | Flughafenname | Ankunftsflughafen |
+| `iata_to` | IATA-Code (B) | String (3 Zeichen) | Gültiger IATA-Code | IATA-Code Ankunft |
+| `final_destination` | Enddestination | String | Stadtname | Enddestination (relevant bei Umsteigeflügen) |
+| `date_raw` | Monat | String / Datetime | 2021: Monatsname DE; 2022–2024: Datetime (teils fehlerhaft) | Reisedatum/-monat |
+| `class_` | Klasse | String | `Economy`, `Business` | Reiseklasse |
+| `department` | Departement | String | z.B. EDA, EFD, WBF, VBS | Zuständiges Departement |
+| `unit` | Verwaltungseinheit | String | z.B. Agroscope, BAZG | Verwaltungseinheit |
+| `rumba_rums` | RUMBA/RUMS | String | `RUMBA`, `RUMS` | Zugehörigkeit zum Erfassungssystem |
+| `distance_km` | Direkte Fluglinie (km) | Float | > 0 | Orthodrome-Distanz (bereits berechnet) |
+| `haul_type_raw` | Kurz-/Mittel-/Langstreckenflug | String | DE (2021–2023) oder EN (2024) | Streckenkategorie |
+| `is_connecting` | Teilstrecke eines Gabelfluges | Boolean | True/False | Nur 2023–2024; 2021–2022 = False |
+| `source_year` | (aus Dateiname abgeleitet) | Integer | 2021–2024 | Datenjahr |
+| `haul_type` | (normalisiert) | String | `short`, `medium`, `long` | Normalisierte Streckenkategorie |
+| `co2_kg` | (berechnet) | Float | > 0 | Berechnete CO₂-Emissionen in kg |
 
+#### Datenqualität
 
-#### If applicable: Entity Relationship Diagram
+- **Zeilenanzahl:** 2021: 7'683 · 2022: 19'758 · 2023: 23'759 · 2024: 23'670 (total: 74'870 Legs)
+- **Klassen:** Economy-Anteil 2024: 88.9%, Business: 11.1%
+- **Datumsqualität:** 2021 enthält Monatsnamen (kein Datum); 2022 enthält einige Zeilen mit falschen Jahreszahlen (z.B. 2027, 2028) — wahrscheinlich Dateneingabefehler. Für das Datenjahr wird stets der Dateiname als Quelle verwendet.
+- **IATA-Abdeckung:** Nahezu vollständig; einzelne unbekannte Codes werden über `data_acquisition/airport_overrides.csv` nachgeschlagen.
+- **Fehlende Werte:** Keine fehlenden Werte in Pflichtfeldern (Distanz, IATA-Codes, Departement).
 
+### Details: RUMBA Umweltberichte 2021–2024
 
-#### Data Chracteristics and Quality
+Die RUMBA-Umweltberichte werden jährlich von der Fachstelle RUMBA / GS-UVEK publiziert. Sie enthalten aggregierte THG-Jahreswerte nach Umweltbereich.
 
-The methods of exploratory data analysis are used to describe relevant characteristics of the data and identify data quality issues. This includes, for example, 
+- **Relevante Werte (Flugreisen, t CO₂eq):** Siehe Tabelle unten.
+- **Wichtig:** Der RUMBA-Wert für Flugreisen umfasst Linienflüge UND Bundesratsjets/-helikopter. Er ist nicht identisch mit dem aus den Excel-Flugdaten berechneten Wert (unterschiedliche Methodik und ggf. abweichender Erfassungskreis).
+- **2019-Basisjahr:** Abgeleitet aus RUMBA Umweltbericht 2024, Kap. 4.2: «3'300 t zwischen 2019 und 2023 reduziert, was 16 Prozent entspricht» → Basiswert 2019 ≈ 20'200 t.
 
-the univariate andalysis of numerical variables:
+: RUMBA-Zeitreihe Flugreisen (t CO₂eq). {#tbl-rumba-series}
 
-* Number or fraction
-    * of unique values
-    * of missing values
-    * of zero values
-    * of negative values
-* Frequency distribution
-* Extreme values (minimum and maximum)
-* Histogram
-* Measures of central tendency:
-    * arithmetic mean
-    * median
-    * mode
-* Measures of dispersion and visualisation of dispersion:
-    * Range
-    * Quantiles and interquartile range (IQR)
-    * Box plot
-    * Variance and standard deviation 
+| Jahr | Emissionen Flugreisen (t CO₂eq) | Quelle |
+|---|---|---|
+| 2019 | ~20'200 (abgeleitet) | RUMBA Umweltbericht 2024, Kap. 4.2 |
+| 2020 | 6'719 (COVID) | RUMBA Umweltbericht 2021 |
+| 2021 | 10'020 | RUMBA Umweltbericht 2022 |
+| 2022 | 14'409 | RUMBA Umweltbericht 2023 |
+| 2023 | 16'904 | RUMBA Umweltbericht 2024 |
+| 2024 | k.A. (RUMBA 2025 nicht verfügbar) | — |
 
-and for categorical variables:
+### Details: Airports-Lookup
 
-* number of classes
-* and the corresponding distribution of values
-* fraction of missing values
+- **Quelle:** OpenFlights.org — `airports.dat` (gemeinfrei)
+- **Inhalt:** IATA-Code, Flughafenname, Stadt, Land, Breitengrad, Längengrad
+- **Verwendung:** Koordinaten für Arc-Map (Kapitel 2 der Data Story)
+- **Umfang:** 6'072 Einträge nach Bereinigung auf eindeutige IATA-Codes
 
-The correlation between variables in the form of
+---
 
-* correlation coefficients (e.g. Pearson, Spearman, Kendall)
-* and corresponding visualizations, e.g. scatter plot, heatmap, grouped box plot (for categorical-numerical relationships), ...
+## Verarbeitete Daten
 
+### Übersicht verarbeitete Datensätze
 
-The results the exploratory data analysis should be summarised here (code and full output in the `eda` subfolder) and the implications for the subsequent data pre-processing, visualization design and implementation steps should be discussed. Is the data quality and quantity sufficient to achieve the visualisation goals? Is it necessary to acquire additional or different data? Are there any limitations that need to be considered in the design and implementation of the visualisation product? Are there any specific data characteristics that can be used to enhance the visualisation design? For example, if there are a lot of missing values in a dataset, this might need to be taken into account in the design of the visualisation product, e.g. by using specific visual encodings to indicate missing values or by providing options for filtering or imputing missing values. 
+: Übersicht der verarbeiteten Datensätze. {#tbl-processed-overview}
 
-Tip: `Ydata-profiling` is a Python library that can be used to perform exploratory data analysis and generate a comprehensive report on the characteristics of the data, including the distribution of values, missing values, correlations between variables, and more. This can be a useful tool to generate the full analysis in the code section and then only include the relevant information here in the data report.
+| Name | Ausgangsdaten | Speicherort |
+|---|---|---|
+| Zusammengeführte Flugliste mit Emissionen | Fluglisten 2021–2024 | Im Speicher (Streamlit `@st.cache_data`); kein persistiertes CSV |
+| RUMBA-Zeitreihe | RUMBA Umweltberichte 2021–2024 | Hartcodiert in `app/lib/charts.py` (`RUMBA_SERIES`) |
 
-This is an example on how to incorporate executable Python code and show a figure output:
+### Emissionsberechnung (Methodik)
 
-```{python}
-#| label: fig-demo
-#| fig-cap: "Distribution of monthly revenue across product categories (sample data)."
-#| echo: true
-#| code-fold: true
-import matplotlib.pyplot as plt
+Die Emissionen pro Flugabschnitt werden auf Basis der bereits in den Rohdaten enthaltenen Distanz (km) und der normierten Streckenkategorie berechnet:
 
-# Sample data
-categories = ['Electronics', 'Clothing', 'Food', 'Books', 'Sports']
-revenue = [42000, 28500, 35200, 12800, 19400]
+**Emissionsfaktoren (myClimate-Methodik, Economy-Klasse, kg CO₂eq/km/Passagier, inkl. RFI):**
 
-# Create the bar chart
-fig, ax = plt.subplots(figsize=(6, 3.75))
+| Streckenkategorie | Distanzgrenze | Faktor (kg/km) |
+|---|---|---|
+| Kurzstrecke | < 1'500 km | 0.255 |
+| Mittelstrecke | 1'500–3'700 km | 0.185 |
+| Langstrecke | ≥ 3'700 km | 0.147 |
 
-bars = ax.bar(categories, revenue, color='#4C78A8', edgecolor='white')
+- **Business Class:** Multiplikator 2.0 (erhöhter Flächenbedarf pro Sitzplatz)
+- **Formel:** `co2_kg = distance_km × factor × class_multiplier`
 
-ax.set_xlabel('Product Category')
-ax.set_title('Monthly Revenue by Product Category')
+**Abweichung von offiziellen RUMBA-Werten:** Die berechneten Jahrestotale aus den Excel-Daten liegen systematisch ~20–25% unter den offiziellen RUMBA-Jahreswerten. Mögliche Gründe: unterschiedliche Emissionsmethodik (RUMBA verwendet TREMOD/EMFAC), abweichender Erfassungskreis (RUMS VBS separat), oder fehlende Flüge in den öffentlich verfügbaren Excel-Dateien. Die berechneten Werte werden in Kapitel 2 (Musteranalyse) verwendet; für Kapitel 3 (Trend) werden die offiziellen RUMBA-Werte verwendet.
 
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_visible(False)
-ax.yaxis.set_visible(False)
-ax.tick_params(axis='x', length=0)
+### Datenverarbeitungs-Code
 
-# Add value labels on bars
-for bar, val in zip(bars, revenue):
-    ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 500,
-            f'{val:,.0f}', ha='center', va='bottom', fontsize=9)
-
-plt.tight_layout()
-plt.show()
-```
-
-Then the figure can be referenced with @fig-demo.
-
-## Processed Data
-### Overview Processed Datasets
-
-: Overview of processed datasets used in the project. {#tbl-processed-overview}
-
-| Name | Quelle | Storage location |
-|----------------|-----------------------------------------|--------------------------------------------------------------------------|
-| Processed Dataset 1      | Name/short description of the data source | Link and/or short description of the location where the data is stored, e.g. accessible to the team |
-| Processed Dataset 2      | …                                       | …                                                                        |
-
-### Details Processed Dataset 1
-
-- Description of what information the dataset contains
-- Details and reasons for the processing steps -> Traceability and ensuring reproducibility
-- How can the data be accessed? Description, scripts, tools, ...
-- ...
-
-#### Data Catalogue
-
-
-#### If applicable: Entity Relationship Diagram
-
-
-#### Data Chracteristics and Quality
-
-
-### Details Processed Dataset 2
-...
+Die Verarbeitung erfolgt in `app/lib/data.py`:
+- `load_flights()` — lädt und vereinigt alle vier Excel-Dateien, normalisiert Spalten, berechnet `co2_kg`
+- `load_airports()` — lädt OpenFlights-Lookup
+- `yearly_totals()` — aggregiert berechnete CO₂-Jahressummen
+- `top_routes()` — aggregiert Top-N-Routen ab Schweizer Flughäfen für Arc-Map
