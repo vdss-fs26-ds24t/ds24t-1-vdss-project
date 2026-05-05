@@ -4,20 +4,29 @@ This report documents the systematic evaluation of the visualization prototype d
 ## Evaluation Setup
 
 ### Evaluation Objectives
-State what the evaluation aims to assess. Reference the success criteria from the Project Charta and map them to the three value dimensions:
+Die Evaluation prüft, ob die Data Story die Erfolgskriterien der [Projektcharta](project_charta.qmd) erfüllt:
 
-* **Cognitive and analytical value**: Can users effectively accomplish the intended analytical tasks (detect patterns, compare values, identify outliers, etc.)?
-* **Communicative value**: Does the visualization successfully convey its message to the target audiences with varying levels of data literacy?
-* **Experiential and aesthetic value**: Do users perceive the product as engaging, trustworthy and usable?
+* **Verständlichkeit:** Können Laien (Persona Lea) die Kernaussagen ohne Vorwissen erfassen?
+* **Vollständigkeit:** Sind alle 4 Datenjahre (2021–2024) dargestellt und 100% der verfügbaren Flugdaten integriert?
+* **Visualisierungsqualität:** Klare visuelle Hierarchie, konsistentes Design, mind. 3 unterschiedliche Diagrammtypen?
+* **Narrativer Fluss:** Führt die Data Story Lesende durch mind. 4 klar strukturierte Kapitel?
+* **Reproduzierbarkeit:** Sind Code und Daten vollständig dokumentiert und nachvollziehbar?
+
+Die drei Wertdimensionen:
+
+* **Kognitiv-analytisch:** Können Nutzer Reisemuster erkennen, Trend einordnen, Vergleich verstehen?
+* **Kommunikativ:** Werden die Kernbotschaften (Emissionen, Zielkurs, Vergleich, Bürger-Kontext) verständlich vermittelt?
+* **Erfahrungswert:** Ist das Produkt ansprechend, vertrauenswürdig und intuitiv bedienbar?
 
 ### Evaluation Method
-Describe the evaluation method(s) used. Common approaches for visualization products include:
+Geplante Methoden:
 
-* **Heuristic evaluation**: Expert review based on established visualization design principles (e.g. Munzner's design guidelines, Tufte's principles, Nielsen's usability heuristics adapted for visualization).
-* **User testing**: Task-based usability tests with representative users from the target segments identified in the user analysis. Document the tasks, think-aloud protocol, observation setup, etc.
-* **Questionnaire-based evaluation**: Standardised instruments such as the System Usability Scale (SUS), NASA-TLX for task load, or custom questionnaires aligned with the success criteria.
-* **Insight-based evaluation**: Analysis of the quantity, quality and depth of insights users derive from the visualization within a given time frame.
-* **Comparative evaluation**: Side-by-side comparison with the current approach (baseline) or alternative designs.
+* **Heuristische Evaluation:** Walkthrough durch alle 5 Kapitel gegen die Personas (Lea, Marc, Klima) — deckt jedes Kapitel die definierten Jobs, Pains und Gains ab?
+* **Nutzertests (Usability):** 2–3 Personen aus Zielgruppe Persona 1 (geringes Data-Literacy-Niveau). Aufgaben:
+    1. «Welches Departement fliegt am meisten im Jahr 2024?»
+    2. «Ist die Bundesverwaltung auf Kurs zum –30%-Ziel?»
+    3. «Wie vergleicht sich eine BK-Person mit einer Durchschnittsbürgerin?»
+* **Protokoll:** Think-Aloud, Beobachtung von Fehlern und Verständnislücken, Zeit pro Aufgabe.
 
 ### Participants
 If user testing or questionnaire-based evaluation was conducted, describe the participants:

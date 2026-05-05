@@ -1,70 +1,93 @@
-# Visualization Design Report
-This report documents the visual encoding and design decisions made during the development of the visualization product. It translates the visualization concept outlined in the [Project Charta](project_charta.qmd) into concrete design specifications and documents the resulting prototype(s).
+# Visualisierungsdesign-Bericht
 
-## Design Overview
-Briefly summarise the visualization concept from the Project Charta and describe any refinements or changes that emerged during the design process. Reference the project objectives and user needs that drive the design.
+Dieser Bericht dokumentiert die Designentscheidungen für die scrollbare Data Story «Bundesrat Flugemissionen», die mit Streamlit umgesetzt wurde.
 
-## Data-to-Visual Mapping
-Document the mapping of data variables to visual channels. For each view or chart in the visualization product, describe:
+## Design-Übersicht
 
-* **Data variables**: Which variables from the processed datasets (see [Data Report](data_report.qmd)) are represented?
-* **Marks**: What geometric primitives are used to represent data items – points, lines, areas, volumes?
-* **Visual channels**: How are data attributes encoded – position, length, angle, area, colour hue, colour saturation, brightness, shape, orientation, texture?
-* **Scale and axis design**: What scales are used (linear, logarithmic, categorical, temporal)? How are axes labelled and annotated?
-* **Colour design**: What colour palette is used and why? Consider colour-blindness accessibility (e.g. using `viridis`, `ColorBrewer` palettes) and semantic colour mappings (e.g. red for negative, green for positive).
+Das Visualisierungskonzept der [Projektcharta](project_charta.qmd) wurde in fünf narrative Kapitel überführt: Kontext (KPI-Kacheln), Flugmuster (Arc-Map + Tabelle), Emissionstrend (Liniendiagramm), institutioneller Vergleich (Dot-Plot) und Bürger-Vergleich (Balkendiagramm). Das Design orientiert sich am React/JSX-Prototyp aus `design_example/` und wurde für Streamlit adaptiert.
 
-A tabular overview can help provide a quick summary:
+**Änderungen gegenüber ursprünglichem Konzept:**
+- Filter nach «Person» entfällt (Personennamen nicht in Rohdaten vorhanden) → Filter nach Departement
+- Zeitreihe in Kapitel 3: RUMBA-offizielle Jahreswerte 2019–2023 statt 2006–2024-Reihe (letztere nicht vollständig rekonstruierbar ohne aktuellen RUMBA 2025-Bericht); 2024 als berechneter Schätzwert ergänzt
+- Kapitel 4: UK «Greening Government Commitments» statt breiter Ländervergleich (fehlende öffentliche Daten anderer Regierungen wird als Befund kommuniziert)
+- Isotype-Chart (Kap. 5) vereinfacht zu horizontalem Balkenvergleich
 
-: Data-to-visual mapping overview. {#tbl-encoding-overview}
+## Data-to-Visual-Mapping
 
-| View / Chart | Data variables | Mark type | Visual channels | Scale |
+: Übersicht Data-to-Visual-Mapping. {#tbl-encoding-overview}
+
+| Kapitel / Chart | Datenvariablen | Marktyp | Visuelle Kanäle | Skala |
 |---|---|---|---|---|
-| e.g. Sales by Region | region (cat.), revenue (quant.) | bar | x-position, length, colour hue | categorical, linear |
-| ... | ... | ... | ... | ... |
+| 1 — KPI-Kacheln | CO₂-Total 2023, Anteil Flugreisen 61%, Anzahl Legs | Text | Grösse, Farbe (Warm/Cool/Akzent) | — |
+| 2 — Arc-Map | iata_from, iata_to, co2_kg (aggregiert) | Linien + Punkte | Position (geo), Linienstärke, Opacity | Geografisch, linear (CO₂) |
+| 2 — Tabelle | Alle Felder je Flugabschnitt | Zeilen | Position | Kategorisch, numerisch |
+| 3 — Liniendiagramm | year, co2_t (RUMBA-offiziell + berechnet 2024) | Linie + Fläche | Position x/y, Farbe (Warm = Ist, Cool = Ziel) | Temporal, linear |
+| 4 — Dot-Plot | Institution, co2_t | Punkte + Linien | Position x, Farbe (Warm = CH, Cool = UK) | Linear |
+| 5 — Balkendiagramm | Kategorie, co2_t | Balken (horizontal) | Länge, Farbe | Linear |
 
-## Layout and Composition
-Describe how individual views are composed into the overall visualization product:
+## Layout und Komposition
 
-* **Spatial arrangement**: How are views arranged on the screen or page? Grid layout, free-form, scrollable narrative, etc.
-* **Coordination between views**: Are views linked (e.g. brushing and linking, shared filters, coordinated highlighting)?
-* **Hierarchy and navigation**: How does the user navigate between different levels of detail or different thematic sections?
-* **Responsive design**: How does the layout adapt to different screen sizes and devices, if applicable?
+- **Struktur:** Einseitige, scrollbare Streamlit-App (`app/app.py`). Kapitel folgen sequenziell; keine Seitennavigation.
+- **Breite:** Max. 1'180 px Content-Breite, per CSS-Injection begrenzt.
+- **Kapitelstruktur:** Jedes Kapitel beginnt mit einer 1 px Trennlinie, gefolgt von Eyebrow (Monospace, Grossbuchstaben), H2-Überschrift (Serif), Lead-Text (Muted).
+- **Spalten:** Kapitel 2 und 5: zwei Spalten (Viz + Tabelle/Text). Kapitel 3: zwei Spalten (Diagramm + Schrittnavigation).
+- **Koordination:** Jahres- und Departement-Filter in Kapitel 2 wirken auf Arc-Map und Tabelle gleichzeitig.
+- **Mobile:** Streamlit passt Spalten automatisch auf Mobilgeräten an; Map-Tooltips funktionieren per Touch.
 
-Include annotated wireframes or layout sketches to illustrate the composition.
+## Interaktionsdesign
 
-## Interaction Design
-If the visualization product includes interactive elements, document them here:
+| Interaktion | Umsetzung | Unterstützter User Task |
+|---|---|---|
+| Jahresfilter (Kapitel 2) | `st.selectbox` | Lea: «Wann wurde besonders viel geflogen?» |
+| Departement-Filter (Kapitel 2) | `st.selectbox` | Marc: «Welches Departement fliegt am meisten?» |
+| Hover-Tooltips (alle Diagramme) | Plotly `hovertemplate` | Alle: Detailwerte on demand |
+| Sortierbare Tabelle (Kapitel 2) | `st.dataframe` mit Klick-Sortierung | Marc: «Welche Strecken verursachen am meisten CO₂?» |
+| Schrittnarrative (Kapitel 3) | Statische HTML-Karten neben Diagramm | Lea: Kontextualisierung des Trends |
 
-* **Interaction techniques**: Selection, filtering, zooming, panning, brushing, details-on-demand, drill-down, etc.
-* **Input modalities**: Mouse, touch, keyboard shortcuts, search fields, etc.
-* **State management**: How does the system respond to user interactions? What state transitions occur?
-* **Feedback and transitions**: How are changes communicated to the user – animations, highlighting, progressive disclosure?
+## Visueller Stil
 
-For each interaction, describe which user task (from the user analysis in the Project Charta) it supports and how it contributes to the cognitive, communicative or experiential value of the product.
+Das Design folgt dem **«Editorial»-Theme** aus dem React-Prototyp (`design_example/app.jsx`):
 
-## Visual Style and Aesthetics
-Document the overall visual design language:
+| Element | Wert |
+|---|---|
+| Hintergrund | `#fbf8f3` (warmes Creme) |
+| Sekundärer Hintergrund | `#f3ede1` |
+| Primärtext | `#1a1a1a` |
+| Muted / Labels | `#6b6258` |
+| Trennlinien | `#e3dccd` |
+| Warm-Akzent (Datenpunkte, Highlights) | `#c0622a` (oklch 0.55 0.18 35) |
+| Cool-Akzent (Zielwerte, Sekundär) | `#3a7fa8` (oklch 0.55 0.12 235) |
+| Schrift Überschriften | Source Serif 4, Georgia, serif |
+| Schrift Fliesstext | Source Sans 3, system-ui, sans-serif |
+| Schrift Labels / Zahlen | JetBrains Mono, monospace |
 
-* **Typography**: Font families, sizes, hierarchy of text elements (titles, labels, annotations, body text).
-* **Colour palette**: Primary and secondary colours, background, accent colours. Provide colour codes (hex/RGB).
-* **Spacing and alignment**: Grid system, margins, padding, whitespace strategy.
-* **Branding**: Integration of organisational identity, logos, visual style guides, if applicable.
-* **Accessibility**: Considerations for colour-blindness, contrast ratios, screen reader compatibility, font legibility.
+- **Farbzugang:** Warm- und Cool-Akzent sind für die häufigsten Formen von Farbenblindheit (Deuteranopie, Protanopie) ausreichend unterscheidbar; keine Rot-Grün-Kodierungen.
+- **Kontrast:** Alle Textelemente auf Hintergrund erfüllen WCAG AA (mind. 4.5:1).
 
-## Prototype Description
-Document the developed prototype(s):
+## Prototyp-Beschreibung
 
-* **Prototype fidelity**: Low-fidelity (sketches, wireframes), medium-fidelity (static mockups), high-fidelity (interactive implementation)?
-* **Screenshots and/or link**: Include representative screenshots of the prototype. If the prototype is accessible online, provide the URL.
-* **Technology stack**: Tools, libraries and frameworks used for implementation (e.g. D3.js, Plotly, Tableau, Power BI, Streamlit, Observable, etc.).
-* **Code and version control**: Link to the code repository, branch or tag corresponding to the current prototype version.
+- **Fidelity:** High-fidelity, voll funktionale Streamlit-App
+- **Technologie:** Python 3.12 · Streamlit · Plotly · pandas · openpyxl · pdfplumber
+- **Repository:** [github.com/vdss-fs26-ds24t/ds24t-1-vdss-project](https://github.com/vdss-fs26-ds24t/ds24t-1-vdss-project), Branch `feature/lilli`
+- **Lokaler Start:** `uv run streamlit run app/app.py`
+- **Deployment:** Streamlit Community Cloud (öffentlich zugänglich nach Deployment)
 
-## Design Rationale and Iterations
-Document key design decisions, alternatives considered and the rationale for the chosen approach. This section ensures traceability and supports the evaluation phase.
+## Design-Rationale und Iterationen
 
-* **Design alternatives**: What alternative designs were considered? Sketches, mockups or descriptions of discarded approaches can be valuable for documentation.
-* **Design rationale**: Why was the chosen design preferred? Reference the project objectives, user needs (jobs, pains, gains) and the three value dimensions (cognitive, communicative, experiential).
-* **Iteration history**: If the design evolved through multiple iterations (e.g. based on informal feedback or internal reviews), briefly describe the key changes and their motivation.
+**Wichtigste Entscheidungen:**
 
-## Conclusions and Next Steps
-Summarise the key design decisions and their expected impact on the project objectives. Identify open questions, known limitations of the current prototype and topics to be addressed in the [Evaluation](evaluation.qmd) phase.
+1. **Plotly statt D3/Globe:** Einfachere Integration in Streamlit, keine Mapbox-API-Abhängigkeit, direkte Interaktivität ohne zusätzliche Komponenten.
+
+2. **Einzelseite statt Mehrseiten-App:** Scrollable Story-Format entspricht dem Nutzungsverhalten von Persona 1 (Lea) besser als Navigation zwischen Seiten.
+
+3. **RUMBA-Werte statt berechnete Totale in Kap. 3:** Die offiziellen RUMBA-Jahreswerte sind die Referenz für die politische Bewertung (Aktionsplan). Abweichungen zwischen RUMBA und berechneten Werten werden transparent dokumentiert.
+
+4. **Dot-Plot statt Balkendiagramm für Kap. 4:** Dot-Plots kommunizieren Vergleiche bei wenigen Datenpunkten prägnanter und folgen dem Design-Prototyp.
+
+5. **«Auf Zielkurs»-Framing für Kap. 3:** Die ursprünglich geplante Aussage «Ziel rückt nicht näher» war nicht korrekt. Laut RUMBA Umweltbericht 2024 ist die Bundesverwaltung für die Linienflüge auf Zielkurs; jedoch sind die BR-Jet-Emissionen um 39% gestiegen — eine differenziertere, aber ehrlichere Botschaft.
+
+## Schlussfolgerungen und nächste Schritte
+
+- Arc-Map zeigt alle Routen ab Schweizer Flughäfen; Aggregation auf Top-60 Routen für Performance.
+- Kapitel 5 (Pro-Kopf-Vergleich) verwendet eine Schätzung von ~5'000 fliegenden Mitarbeitenden; eine präzisere Zahl würde die Aussagekraft erhöhen.
+- Offene Punkte: Deployment auf Streamlit Cloud, finale URL in `index.qmd` eintragen, mobile Darstellung verifizieren.
