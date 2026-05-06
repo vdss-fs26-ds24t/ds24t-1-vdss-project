@@ -2,11 +2,19 @@
 
 import logging
 
-import pandas as pd
 import streamlit as st
 
-from app.lib import charts, styles
-from app.lib.data import load_airports, load_flights, top_routes, yearly_totals
+from lib import charts, styles
+from lib.data import (
+    add_destination_country,
+    filter_flights,
+    globe_routes,
+    load_airports,
+    load_flights,
+    top_routes,
+    yearly_totals,
+)
+from lib.globe import render_globe
 
 logging.basicConfig(level=logging.INFO)
 
@@ -24,6 +32,7 @@ styles.inject()
 
 flights = load_flights()
 airports = load_airports()
+flights = add_destination_country(flights, airports)
 
 if flights.empty:
     st.error("Flugdaten konnten nicht geladen werden. Bitte prüfe den Pfad ../data/.")
@@ -32,34 +41,59 @@ if flights.empty:
 ytotals = yearly_totals(flights)
 all_years = sorted(flights["source_year"].unique().tolist())
 all_depts = ["Alle"] + sorted(flights["department"].dropna().unique().tolist())
+all_countries = ["Alle"] + sorted(flights["dest_country"].dropna().unique().tolist())
 latest_year = max(all_years)
 latest_total_t = ytotals[ytotals["year"] == latest_year]["co2_t"].values[0]
 
 
 # ── Hero ─────────────────────────────────────────────────────────────────────
-
-styles.html(f"""
-<div class="hero-section">
-  <div style="max-width:680px">
+hero_left, hero_right = st.columns([1.2, 1])
+with hero_left:
+        styles.html("""
+<div style="padding:80px 0 20px">
     <div class="eyebrow">Daten-Story · Frühlingssemester 2026 · ZHAW</div>
     <h1 class="hero-title">Wie viel CO₂ verursacht die Schweizer Regierung auf Reisen?</h1>
     <p class="hero-subtitle">
-      Ein datengestützter Blick auf die Flugemissionen der Bundesverwaltung,
-      2021–2024 — und die Frage: Ist die Schweiz auf Kurs?
+        Ein datengestützter Blick auf die Flugemissionen der Bundesverwaltung,
+        2021–2024 — und die Frage: Ist die Schweiz auf Kurs?
     </p>
-  </div>
-  <div style="margin-top:48px">
-    <div class="hero-number">{latest_total_t:,.0f} t</div>
-    <div class="hero-number-label">CO₂eq aus Dienstflügen · {latest_year}</div>
-  </div>
-  <div style="margin-top:48px; display:flex; align-items:center; gap:12px;
-              font-family:var(--mono); font-size:11px; letter-spacing:0.1em;
-              text-transform:uppercase; color:var(--muted)">
-    <div style="width:24px; height:1px; background:var(--muted)"></div>
-    Scrollen, um zu erkunden
-  </div>
 </div>
 """)
+        styles.html('<div class="filter-label">Jahr</div>')
+        hero_year = st.radio(
+                "Jahr",
+                options=all_years,
+                index=all_years.index(latest_year),
+                horizontal=True,
+                label_visibility="collapsed",
+                key="hero_year",
+        )
+        hero_total_row = ytotals[ytotals["year"] == hero_year]
+        hero_total_t = float(hero_total_row["co2_t"].iloc[0]) if not hero_total_row.empty else 0.0
+        styles.html(f"""
+<div style="margin-top:32px">
+    <div class="hero-number">{hero_total_t:,.0f} t</div>
+    <div class="hero-number-label">CO₂eq aus Dienstflügen · {hero_year}</div>
+</div>
+<div style="margin-top:40px; display:flex; align-items:center; gap:12px;
+                        font-family:var(--mono); font-size:11px; letter-spacing:0.1em;
+                        text-transform:uppercase; color:var(--muted)">
+    <div style="width:24px; height:1px; background:var(--muted)"></div>
+    Scrollen, um zu erkunden
+</div>
+""")
+with hero_right:
+        styles.html("<div style='height:80px'></div>")
+        hero_globe_data = globe_routes(flights, airports, year=hero_year, department=None, top_n=140)
+        if hero_globe_data:
+                render_globe(hero_globe_data, height=520)
+        else:
+                hero_routes = top_routes(flights, year=hero_year, department=None, top_n=60)
+                st.plotly_chart(
+                        charts.arc_map(hero_routes, airports),
+                        use_container_width=True,
+                        config={"displayModeBar": False},
+                )
 
 st.divider()
 
@@ -109,12 +143,12 @@ styles.chapter_header(
     lead=(
         "Zwischen 2021 und 2024 flogen Mitarbeitende der Bundesverwaltung zu Treffen, "
         "Konferenzen und Staatsbesuchen rund um die Welt. "
-        "Die Karte zeigt die häufigsten Routen ab Schweizer Flughäfen."
+        "Die Karte zeigt die häufigsten Routen mit Start- und Zielorten weltweit."
     ),
 )
 
 # Filters
-fc1, fc2, _ = st.columns([1, 1, 3])
+fc1, fc2, fc3, _ = st.columns([1, 1, 1, 2])
 with fc1:
     styles.html('<div class="filter-label">Jahr</div>')
     sel_year_raw = st.selectbox(
@@ -128,16 +162,38 @@ with fc2:
         "Departement", options=all_depts,
         label_visibility="collapsed", key="ch2_dept",
     )
+with fc3:
+    styles.html('<div class="filter-label">Zielland</div>')
+    sel_country = st.selectbox(
+        "Zielland", options=all_countries,
+        label_visibility="collapsed", key="ch2_country",
+    )
 
-routes = top_routes(flights, year=sel_year, department=sel_dept, top_n=60)
-n_filtered = len(flights[
-    ((flights["source_year"] == sel_year) if sel_year else True) &
-    ((flights["department"] == sel_dept) if sel_dept != "Alle" else True)
-])
-co2_filtered_t = flights[
-    ((flights["source_year"] == sel_year) if sel_year else True) &
-    ((flights["department"] == sel_dept) if sel_dept != "Alle" else True)
-]["co2_kg"].sum() / 1000
+routes = top_routes(
+    flights,
+    year=sel_year,
+    department=sel_dept,
+    dest_country=sel_country,
+    top_n=60,
+)
+globe_data = globe_routes(
+    flights,
+    airports,
+    year=sel_year,
+    department=sel_dept,
+    dest_country=sel_country,
+    top_n=120,
+)
+
+filtered = filter_flights(
+    flights,
+    year=sel_year,
+    department=sel_dept,
+    dest_country=sel_country,
+)
+n_filtered = len(filtered)
+co2_filtered_t = filtered["co2_kg"].sum() / 1000
+
 
 styles.html(
     f'<div class="method-note" style="margin-bottom:16px">'
@@ -146,17 +202,17 @@ styles.html(
 
 map_col, table_col = st.columns([1.1, 1])
 with map_col:
-    st.plotly_chart(
-        charts.arc_map(routes, airports),
-        use_container_width=True,
-        config={"displayModeBar": False},
-    )
+    if globe_data:
+        render_globe(globe_data, height=520)
+    else:
+        st.plotly_chart(
+            charts.arc_map(routes, airports),
+            use_container_width=True,
+            config={"displayModeBar": False},
+        )
 with table_col:
     table_data = (
-        flights[
-            ((flights["source_year"] == sel_year) if sel_year else True) &
-            ((flights["department"] == sel_dept) if sel_dept != "Alle" else True)
-        ]
+        filtered
         .assign(co2_t=lambda d: (d["co2_kg"] / 1000).round(2))
         .sort_values("co2_t", ascending=False)
         [[
@@ -188,7 +244,12 @@ with table_col:
         },
     )
 
-styles.html('<div class="method-note">Tabelle zeigt max. 500 Einträge, sortiert nach CO₂.</div>')
+styles.html(
+    '<div class="method-note">'
+    'Tabelle zeigt max. 500 Einträge, sortiert nach CO₂. '
+    'Ziellandfilter = Ankunftsland; enthält Hin- und Rückflüge.'
+    '</div>'
+)
 st.divider()
 
 
@@ -326,7 +387,7 @@ st.divider()
 
 # ── Footer ───────────────────────────────────────────────────────────────────
 
-styles.html(f"""
+styles.html("""
 <div class="footer-section">
   <div class="footer-title">Methodik &amp; Quellen</div>
   <p class="footer-text">
