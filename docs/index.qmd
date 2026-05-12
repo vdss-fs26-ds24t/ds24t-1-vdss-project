@@ -2,11 +2,11 @@
 
 Diese Dokumentation beschreibt die Konzeption, Entwicklung und Evaluation eines Datenvisualisierungsprodukts im Rahmen einer ZHAW-Semesterarbeit (Frühlingssemester 2026).
 
-**Thema:** Flugemissionen der Schweizer Bundesverwaltung (2021–2024) — wer fliegt wohin, wie viel CO₂ entsteht dabei, und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels von –30% bis 2030?
+**Thema:** Flugemissionen der Schweizer Bundesverwaltung (2020–2024) — wer fliegt wohin, wie viel CO₂ entsteht dabei, und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels von –30% bis 2030?
 
 **Produkt:** Öffentlich zugängliche, scrollbare Streamlit-Data-Story, gehostet auf Streamlit Community Cloud.
 
-**Datenbasis:** RUMBA-Flugdaten der Bundeskanzlei 2021–2024 (Excel) sowie offizielle THG-Jahreswerte aus den RUMBA-Umweltberichten 2021–2024 (GS-UVEK).
+**Datenbasis:** RUMBA-Flugdaten der Bundeskanzlei 2020–2024 (Excel) sowie offizielle THG-Jahreswerte aus den RUMBA-Umweltberichten 2021–2024 (GS-UVEK).
 
 ![Der Entwicklungsprozess für Datenvisualisierungsprodukte](pics/vizproductprocess.png){#fig-vizprocess}
 

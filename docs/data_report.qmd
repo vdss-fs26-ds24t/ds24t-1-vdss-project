@@ -10,6 +10,7 @@ Dieser Bericht dokumentiert alle im Projekt verwendeten Datenquellen und stellt 
 
 | Name | Quelle | Speicherort |
 |---|---|---|
+| Flugliste 2020 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/flugliste-rumba-2020-de.xlsx` (nicht versioniert) |
 | Flugliste 2021 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/flugliste-rumba-2021-fr.xlsx` (nicht versioniert) |
 | Flugliste 2022 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/flugliste-rumba-2022 (1).xlsx` (nicht versioniert) |
 | Flugliste 2023 | Bundeskanzlei / RUMBA, bk.admin.ch | `../data/Flugliste_2023.xlsx` (nicht versioniert) |
@@ -17,7 +18,7 @@ Dieser Bericht dokumentiert alle im Projekt verwendeten Datenquellen und stellt 
 | Airports-Lookup | OpenFlights.org | `../data/airports.csv` (nicht versioniert) |
 | RUMBA Umweltberichte 2021–2024 | GS-UVEK, Fachstelle RUMBA | `data/*.pdf` (versioniert) |
 
-### Details: Flugdaten 2021–2024
+### Details: Flugdaten 2020–2024
 
 Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourcen- und Umweltmanagement der Bundesverwaltung) als Excel-Dateien veröffentlicht. Sie enthalten alle Dienstreise-Flugabschnitte der erfassten Verwaltungseinheiten.
 
@@ -29,7 +30,7 @@ Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourc
 
 #### Datenkatalog (kanonisches Schema nach Bereinigung)
 
-: Datenkatalog Fluglisten 2021–2024. {#tbl-data-catalogue}
+: Datenkatalog Fluglisten 2020–2024. {#tbl-data-catalogue}
 
 | Spaltenname (kanonisch) | Originalbezeichnung | Datentyp | Wertebereich / Validierung | Beschreibung |
 |---|---|---|---|---|
@@ -38,7 +39,7 @@ Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourc
 | `arrival_airport` | Flughafen Ankunft (B) | String | Flughafenname | Ankunftsflughafen |
 | `iata_to` | IATA-Code (B) | String (3 Zeichen) | Gültiger IATA-Code | IATA-Code Ankunft |
 | `final_destination` | Enddestination | String | Stadtname | Enddestination (relevant bei Umsteigeflügen) |
-| `date_raw` | Monat | String / Datetime | 2021: Monatsname DE; 2022–2024: Datetime (teils fehlerhaft) | Reisedatum/-monat |
+| `date_raw` | Monat | String / Datetime | 2020–2021: Monatsname DE; 2022–2024: Datetime (teils fehlerhaft) | Reisedatum/-monat |
 | `class_` | Klasse | String | `Economy`, `Business` | Reiseklasse |
 | `department` | Departement | String | z.B. EDA, EFD, WBF, VBS | Zuständiges Departement |
 | `unit` | Verwaltungseinheit | String | z.B. Agroscope, BAZG | Verwaltungseinheit |
@@ -46,13 +47,13 @@ Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourc
 | `distance_km` | Direkte Fluglinie (km) | Float | > 0 | Orthodrome-Distanz (bereits berechnet) |
 | `haul_type_raw` | Kurz-/Mittel-/Langstreckenflug | String | DE (2021–2023) oder EN (2024) | Streckenkategorie |
 | `is_connecting` | Teilstrecke eines Gabelfluges | Boolean | True/False | Nur 2023–2024; 2021–2022 = False |
-| `source_year` | (aus Dateiname abgeleitet) | Integer | 2021–2024 | Datenjahr |
+| `source_year` | (aus Dateiname abgeleitet) | Integer | 2020–2024 | Datenjahr |
 | `haul_type` | (normalisiert) | String | `short`, `medium`, `long` | Normalisierte Streckenkategorie |
 | `co2_kg` | (berechnet) | Float | > 0 | Berechnete CO₂-Emissionen in kg |
 
 #### Datenqualität
 
-- **Zeilenanzahl:** 2021: 7'683 · 2022: 19'758 · 2023: 23'759 · 2024: 23'670 (total: 74'870 Legs)
+- **Zeilenanzahl:** 2020: 7'516 · 2021: 7'683 · 2022: 19'758 · 2023: 23'759 · 2024: 23'670 (total: 82'386 Legs)
 - **Klassen:** Economy-Anteil 2024: 88.9%, Business: 11.1%
 - **Datumsqualität:** 2021 enthält Monatsnamen (kein Datum); 2022 enthält einige Zeilen mit falschen Jahreszahlen (z.B. 2027, 2028) — wahrscheinlich Dateneingabefehler. Für das Datenjahr wird stets der Dateiname als Quelle verwendet.
 - **IATA-Abdeckung:** Nahezu vollständig; einzelne unbekannte Codes werden über `data_acquisition/airport_overrides.csv` nachgeschlagen.
@@ -94,7 +95,7 @@ Die RUMBA-Umweltberichte werden jährlich von der Fachstelle RUMBA / GS-UVEK pub
 
 | Name | Ausgangsdaten | Speicherort |
 |---|---|---|
-| Zusammengeführte Flugliste mit Emissionen | Fluglisten 2021–2024 | Im Speicher (Streamlit `@st.cache_data`); kein persistiertes CSV |
+| Zusammengeführte Flugliste mit Emissionen | Fluglisten 2020–2024 | Im Speicher (Streamlit `@st.cache_data`); kein persistiertes CSV |
 | RUMBA-Zeitreihe | RUMBA Umweltberichte 2021–2024 | Hartcodiert in `app/lib/charts.py` (`RUMBA_SERIES`) |
 
 ### Emissionsberechnung (Methodik)
@@ -117,7 +118,7 @@ Die Emissionen pro Flugabschnitt werden auf Basis der bereits in den Rohdaten en
 ### Datenverarbeitungs-Code
 
 Die Verarbeitung erfolgt in `app/lib/data.py`:
-- `load_flights()` — lädt und vereinigt alle vier Excel-Dateien, normalisiert Spalten, berechnet `co2_kg`
+- `load_flights()` — lädt und vereinigt alle fünf Excel-Dateien, normalisiert Spalten, berechnet `co2_kg`
 - `load_airports()` — lädt OpenFlights-Lookup
 - `yearly_totals()` — aggregiert berechnete CO₂-Jahressummen
 - `top_routes()` — aggregiert Top-N-Routen ab Schweizer Flughäfen für Arc-Map
