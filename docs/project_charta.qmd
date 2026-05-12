@@ -15,7 +15,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 **Leitfragen:**
 
-1. Welche Reisemuster (Personen, Destinationen, Häufigkeit) lassen sich aus den Flugdaten der Bundeskanzlei (2021–2024) ablesen?
+1. Welche Reisemuster (Personen, Destinationen, Häufigkeit) lassen sich aus den Flugdaten der Bundeskanzlei (2020–2024) ablesen?
 2. Wie haben sich die THG-Emissionen der Bundeskanzleisflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
 3. Wie vergleichen sich die Gesamtemissionen der Bundesverwaltung mit den Emissionen anderer Regierungen oder Institutionen?
 
@@ -23,7 +23,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 **Datenquellen:**
 
-- Flugdaten der Bundeskanzlei 2021–2024 (Excel, [bk.admin.ch](https://www.bk.admin.ch/bk/de/home/dokumentation/medienmitteilungen/flugdaten_bk.html))
+- Flugdaten der Bundeskanzlei 2020–2024 (Excel, [bk.admin.ch](https://www.bk.admin.ch/bk/de/home/dokumentation/medienmitteilungen/flugdaten_bk.html))
 - RUMBA – Umweltberichte 2021–2024, GS-UVEK, mit THG-Emissionen Flugreisen je Berichtsjahr
 - Flüge des Bundesrates mit dem Lufttransportdienst ([admin.ch](https://www.admin.ch/gov/de/start/bundesrat/aufgaben-des-bundesrates/flugreisen.html))
 
@@ -40,7 +40,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 | Kriterium | Qualitativ | Quantitativ (Zielwert) |
 |---|---|---|
 | Verständlichkeit | Laien können Kernaussagen ohne Vorwissen erfassen | Mind. 2 Personas abgedeckt |
-| Vollständigkeit | Alle 4 Datenjahre (2021–2024) dargestellt | 100% der verfügbaren Flugdaten integriert |
+| Vollständigkeit | Alle 5 Datenjahre (2020–2024) dargestellt | 100% der verfügbaren Flugdaten integriert |
 | Visualisierungsqualität | Klare visuelle Hierarchie, konsistentes Design | Mind. 3 unterschiedliche Diagrammtypen |
 | Narrativer Fluss | Data Story führt Lesende durch die Kernbotschaften | Mind. 4 klar strukturierte Story-Kapitel |
 | Reproduzierbarkeit | Code und Daten sind dokumentiert und nachvollziehbar | Vollständig in Quarto/Git versioniert |
@@ -168,7 +168,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 | Quelle | Inhalt | Format | Zeitraum | Einschränkungen |
 |---|---|---|---|---|
-| Bundeskanzlei (bk.admin.ch) | Flüge LTDB inkl. Mitreisende (Name, Funktion, Destination, Datum) | Excel (RUMBA-Fluglisten) | 2021–2024 | Emissionswerte nicht direkt enthalten; Distanz pro Abschnitt bereits berechnet; keine Personennamen in den Daten |
+| Bundeskanzlei (bk.admin.ch) | Flüge LTDB inkl. Mitreisende (Name, Funktion, Destination, Datum) | Excel (RUMBA-Fluglisten) | 2020–2024 | Emissionswerte nicht direkt enthalten; Distanz pro Abschnitt bereits berechnet; keine Personennamen in den Daten |
 | RUMBA Umweltberichte 2021–2024 | THG-Emissionen Bundesverwaltung gesamt und nach Kategorie inkl. Flugreisen; BR-Jets/Helikopter separat | PDF (Diagramme) | 2020–2023 (je Bericht ein Datenjahr) | Aggregierte Jahreswerte; keine Einzelflug-Emissionen; 2024er Daten noch nicht publiziert |
 | admin.ch Flugreisen | Kontext, Regeln, Aktionsplan | Webseite | Aktuell | Wenig quantitative Daten |
 
@@ -187,7 +187,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 |---|---|---|---|
 | Flugdaten-PDFs sind schlecht maschinenlesbar | Hoch | Mittel | Frühe Extraktion testen; manuelle Nachbearbeitung einplanen |
 | Emissionsdaten für BR-Jets nicht granular genug | Mittel | Mittel | Aggregierte RUMBA-Werte nutzen; Methodik transparent dokumentieren |
-| Datenlücken vor 2021 (keine Einzelflug-Excel-Daten) | Gering | Gering | Flugdaten 2021 vorhanden (Excel); RUMBA-Zeitreihe ergänzt Trend ab 2019 |
+| Datenlücken vor 2020 (keine Einzelflug-Excel-Daten) | Gering | Gering | Flugdaten 2020 vorhanden (Excel); RUMBA-Zeitreihe ergänzt Trend ab 2019 |
 | Zeitaufwand für PDF-Extraktion unterschätzt | Mittel | Hoch | Datenakquise priorisieren; Aufwand früh abschätzen |
 
 
@@ -206,7 +206,7 @@ Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von de
 - *Narrativ:* Einstieg mit provokanter Frage: «Wie viel CO₂ verursacht die Schweizer Regierung auf Reisen?»
 - *Wert:* Schafft sofort Relevanz und Grössenordnung (kommunikativer Wert).
 
-**Kapitel 2 – Wer fliegt wohin? (2021–2024)**
+**Kapitel 2 – Wer fliegt wohin? (2020–2024)**
 - *Visualisierung:* Interaktive Arc-Map (Plotly Scattergeo) mit Flugverbindungen ab Schweizer Flughäfen, filterbar nach Jahr und Departement. Ergänzt durch eine durchsuchbare Tabelle der Einzelflüge.
 - *Narrativ:* «Welche Destinationen wurden am häufigsten angeflogen?»
 - *Interaktivität:* Filter nach Jahr (2021, 2022, 2023, 2024), Dropdown nach Departement. Hinweis: Einzelnamen sind in den veröffentlichten RUMBA-Flugdaten nicht enthalten.
@@ -288,7 +288,7 @@ gantt
         Projektcharta unterzeichnen: milestone, m1, 2026-03-20, 1d
 
     section Datenakquise und -exploration
-        Excel-Datenaufbereitung Flugdaten 2021–2024  :a5, 2026-03-23, 5d
+        Excel-Datenaufbereitung Flugdaten 2020–2024  :a5, 2026-03-23, 5d
         Datenbereinigung und -strukturierung        :a6, 2026-03-26, 4d
         Explorative Datenanalyse                    :a7, 2026-03-30, 4d
         Datenbericht besprechen: milestone, m2, 2026-04-03, 1d

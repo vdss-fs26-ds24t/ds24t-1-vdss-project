@@ -7,7 +7,7 @@ This report documents the systematic evaluation of the visualization prototype d
 Die Evaluation prüft, ob die Data Story die Erfolgskriterien der [Projektcharta](project_charta.qmd) erfüllt:
 
 * **Verständlichkeit:** Können Laien (Persona Lea) die Kernaussagen ohne Vorwissen erfassen?
-* **Vollständigkeit:** Sind alle 4 Datenjahre (2021–2024) dargestellt und 100% der verfügbaren Flugdaten integriert?
+* **Vollständigkeit:** Sind alle 5 Datenjahre (2020–2024) dargestellt und 100% der verfügbaren Flugdaten integriert?
 * **Visualisierungsqualität:** Klare visuelle Hierarchie, konsistentes Design, mind. 3 unterschiedliche Diagrammtypen?
 * **Narrativer Fluss:** Führt die Data Story Lesende durch mind. 4 klar strukturierte Kapitel?
 * **Reproduzierbarkeit:** Sind Code und Daten vollständig dokumentiert und nachvollziehbar?
