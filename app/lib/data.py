@@ -115,7 +115,7 @@ def _load_airports() -> pd.DataFrame:
     # OpenFlights format: no header row
     cols = ["id", "name", "city", "country", "iata", "icao", "lat", "lon",
             "altitude", "tz_offset", "dst", "tz", "type", "source"]
-    airports = pd.read_csv(path, header=None, names=cols, low_memory=False)
+    airports = pd.read_csv(path, header=None, names=cols, low_memory=False, sep=",", quotechar='"')
     airports = airports[airports["iata"].notna() & (airports["iata"] != "\\N")]
     return airports[["iata", "name", "city", "country", "lat", "lon"]].drop_duplicates("iata")
 
