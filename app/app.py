@@ -35,6 +35,16 @@ class RumbaReportInfo:
     source: str
 
 
+@dataclass(frozen=True)
+class TrendStep:
+    """Narrative step for the Chapter 3 trend story."""
+
+    year: int
+    label: str
+    heading: str
+    detail: str
+
+
 st.set_page_config(
     page_title="Bundesrat Flugemissionen",
     page_icon="✈",
@@ -52,7 +62,7 @@ airports = load_airports()
 flights = add_destination_country(flights, airports)
 
 if flights.empty:
-    st.error("Flugdaten konnten nicht geladen werden. Bitte prüfe den Pfad ../data/.")
+    st.error("Flugdaten konnten nicht geladen werden. Bitte prüfe den Ordner data/ im Repo.")
     st.stop()
 
 ytotals = yearly_totals(flights)
@@ -158,7 +168,10 @@ with hero_left:
     <h1 class="hero-title">Wie viel CO₂ verursacht die Schweizer Regierung auf Reisen?</h1>
     <p class="hero-subtitle">
         Ein datengestützter Blick auf die Flugemissionen der Bundesverwaltung,
-        2020–2024 — und die Frage: Ist die Schweiz auf Kurs?
+        2020–2024 
+    </p>
+    <p class="hero-subtitle">
+        Und die Frage: Ist die Schweiz auf Kurs?
     </p>
 </div>
 """)
@@ -281,7 +294,7 @@ styles.html(
     'Quellen: RUMBA 2021, Kap. 1.1; RUMBA 2025, Kap. 1.'
     '</div>'
 )
-
+"---"
 styles.html("""
 <div class="callout">
     <div class="callout-title">Grundlage zur Frage: Ist die Schweiz auf Kurs?</div>
@@ -297,204 +310,234 @@ Zur praktischen Umsetzung wurden im Rahmen des Programms „RUMBA 2020+“ verbi
 </div>
 """)
 
-styles.html('<div class="filter-label">RUMBA-Bericht auswählen</div>')
-# report_labels = [
-#     f"{info.report_year} (Datenjahr {info.data_year})" for info in RUMBA_REPORTS
-# ]
-rumba_years_cht1 = sorted(RUMBA_KEY_FIGURES)
-default_rumba_index = (
-    rumba_years_cht1.index(latest_year)
-    if latest_year in rumba_years_cht1
-    else len(rumba_years_cht1) - 1
-)
-report_by_label = {label: info for label, info in zip(rumba_years_cht1, RUMBA_REPORTS)}
+# styles.html('<div class="filter-label">RUMBA-Bericht auswählen</div>')
+# rumba_years_cht1 = sorted(RUMBA_KEY_FIGURES)
+# default_rumba_index = (
+#     rumba_years_cht1.index(latest_year)
+#     if latest_year in rumba_years_cht1
+#     else len(rumba_years_cht1) - 1
+# )
+# report_by_label = {label: info for label, info in zip(rumba_years_cht1, RUMBA_REPORTS)}
 
-rumba_col_left, rumba_col_right = st.columns([3, 1])
-with rumba_col_left:
-    rumba_year_cht1 = st.radio(
-        "Datenjahr (RUMBA)",
-        options=rumba_years_cht1,
-        index=default_rumba_index,
-        horizontal=True,
-        label_visibility="collapsed",
-        key="ch0_rumba_year",
-    )
-# report_col_left, report_col_right = st.columns([4, 1])
-# with report_col_left:
-#     # constrain the radio group's width similar to the hero control
-#     selected_report_label = st.radio(
-#         "RUMBA-Bericht auswählen",
-#         options=report_labels,
-#         index=len(report_labels) - 1,
+# rumba_col_left, rumba_col_right = st.columns([3, 1])
+# with rumba_col_left:
+#     rumba_year_cht1 = st.radio(
+#         "Datenjahr (RUMBA)",
+#         options=rumba_years_cht1,
+#         index=default_rumba_index,
 #         horizontal=True,
 #         label_visibility="collapsed",
-#         key="ch0_report",
+#         key="ch0_rumba_year",
 #     )
-# selected_report_label = st.radio(
-#     "RUMBA-Bericht auswählen",
-#     options=report_labels,
-#     index=len(report_labels) - 1,
-#     horizontal=True,
-#     label_visibility="visible",
-#     key="ch0_report",
+# selected_report = report_by_label[rumba_year_cht1]
+
+# rc1, rc2, rc3 = st.columns(3)
+# with rc1:
+#     styles.kpi_tile(
+#         value=str(selected_report.report_year),
+#         label="Berichtsjahr",
+#         bar="warm",
+#     )
+# with rc2:
+#     styles.kpi_tile(
+#         value=str(selected_report.data_year),
+#         label="Datenjahr",
+#         bar="accent",
+#     )
+# with rc3:
+#     styles.kpi_tile(
+#         value=selected_report.publisher_short,
+#         label="Herausgeber",
+#         bar="cool",
+#     )
+
+# styles.html(
+#     f'<div class="method-note">'
+#     f'Quellen: {selected_report.source}; RUMBA 2021, Kap. 1.1; RUMBA 2023, Kap. 1.2. '
+#     'Hinweis: Herausgeberwechsel BFE (Berichte 2021–2022) → GS-UVEK (ab Bericht 2023).'
+#     '</div>'
 # )
-selected_report = report_by_label[rumba_year_cht1]
-
-rc1, rc2, rc3 = st.columns(3)
-with rc1:
-    styles.kpi_tile(
-        value=str(selected_report.report_year),
-        label="Berichtsjahr",
-        bar="warm",
-    )
-with rc2:
-    styles.kpi_tile(
-        value=str(selected_report.data_year),
-        label="Datenjahr",
-        bar="accent",
-    )
-with rc3:
-    styles.kpi_tile(
-        value=selected_report.publisher_short,
-        label="Herausgeber",
-        bar="cool",
-    )
-
-styles.html(
-    f'<div class="method-note">'
-    f'Quellen: {selected_report.source}; RUMBA 2021, Kap. 1.1; RUMBA 2023, Kap. 1.2. '
-    'Hinweis: Herausgeberwechsel BFE (Berichte 2021–2022) → GS-UVEK (ab Bericht 2023).'
-    '</div>'
-)
-
-tab_overview, tab_scope, tab_programs, tab_methods, tab_ubp = st.tabs(
+"---"
+tab_scope, tab_reports, tab_programs, tab_methods, tab_ubp, tab_other = st.tabs(
     [
-        "Überblick",
-        "Systemgrenzen",
-        "Programme",
-        "Methodik",
-        "UBP erklärt",
+        "Was ist RUMBA?",
+        "Berichte",
+        "Klimapaket & Aktionsplan",
+        "Methodik & Referenzjahre",
+        "UBP (Umweltbelastung)",
+        "Weitere Informationen"
     ]
 )
-
-with tab_overview:
-        st.markdown(
-                """
-Bevor wir die Zahlen vergleichen, lohnt sich ein kurzer Rahmen: RUMBA bündelt
-die wichtigsten Umweltwirkungen der Bundesverwaltung in einem einheitlichen System.
-"""
-        )
 
 with tab_scope:
     st.markdown(
         """
-Die Systemgrenze ist entscheidend: RUMBA umfasst die Bundesverwaltung
-**ohne VBS**. Seit 2020 werden VBS-Einheiten nur noch im System
-**RUMS-VBS** ausgewiesen, damit es keine Doppelzählungen gibt.
-"""
+        **RUMBA (Ressourcen- und Umweltmanagement der Bundesverwaltung)** erfasst die Umweltbelastungen der zivilen Bundesverwaltung.
+        
+        * **Organisationen:** Das System umfasst sechs Departemente, die Bundeskanzlei und die Parlamentsdienste. Wichtig: Das **VBS** (Verteidigung, Bevölkerungsschutz und Sport) ist nicht Teil von RUMBA. Es bilanziert seine Emissionen seit 2001 separat über das System «RUMS-VBS», um Doppelzählungen zu vermeiden.
+        * **Themenbereiche:** Traditionell deckt RUMBA die grössten Hebel ab: Dienstreisen, den Gebäudebereich (Wärme, Strom, Wasser, Abfall) und den Papierverbrauch. 
+        * **Ausblick:** Ab dem Berichtsjahr 2025 wird der Scope um Kältemittel sowie um fünf Satellit-Themen erweitert (IT-Material, Verpflegung, mobiles Arbeiten, Pendelfahrten und Plastikrecycling).
+        """
     )
     styles.html(
-        '<div class="method-note">Quelle: RUMBA 2021, Kap. 1.1.</div>'
+        '<div class="method-note">Quellen: RUMBA 2021, Kap. 1.1; RUMBA 2025, Kap. 1.</div>'
+    )
+with tab_reports:
+    # styles.html('<div class="filter-label">RUMBA-Bericht auswählen</div>')
+    # rumba_years_cht1 = sorted(RUMBA_KEY_FIGURES)
+    # default_rumba_index = (
+    #     rumba_years_cht1.index(latest_year)
+    #     if latest_year in rumba_years_cht1
+    #     else len(rumba_years_cht1) - 1
+    # )
+    # report_by_label = {label: info for label, info in zip(rumba_years_cht1, RUMBA_REPORTS)}
+
+    # rumba_col_left, rumba_col_right = st.columns([3, 1])
+    # with rumba_col_left:
+    #     rumba_year_cht1 = st.radio(
+    #         "Datenjahr (RUMBA)",
+    #         options=rumba_years_cht1,
+    #         index=default_rumba_index,
+    #         horizontal=True,
+    #         label_visibility="collapsed",
+    #         key="ch0_rumba_year",
+    #     )
+    # selected_report = report_by_label[rumba_year_cht1]
+
+    # rc1, rc2, rc3 = st.columns(3)
+    # with rc1:
+    #     styles.kpi_tile(
+    #         value=str(selected_report.report_year),
+    #         label="Berichtsjahr",
+    #         bar="warm",
+    #     )
+    # with rc2:
+    #     styles.kpi_tile(
+    #         value=str(selected_report.data_year),
+    #         label="Datenjahr",
+    #         bar="accent",
+    #     )
+    # with rc3:
+    #     styles.kpi_tile(
+    #         value=selected_report.publisher_short,
+    #         label="Herausgeber",
+    #         bar="cool",
+    #     )
+
+    # styles.html(
+    #     f'<div class="method-note">'
+    #     f'Quellen: {selected_report.source}; RUMBA 2021, Kap. 1.1; RUMBA 2023, Kap. 1.2. '
+    #     'Hinweis: Herausgeberwechsel BFE (Berichte 2021–2022) → GS-UVEK (ab Bericht 2023).'
+    #     '</div>'
+    # )
+    st.markdown(
+        "Die folgende Tabelle bietet eine kompakte Übersicht über die publizierten RUMBA-Umweltberichte, "
+        "die zugrundeliegenden Datenjahre sowie die jeweils zuständigen Herausgeber."
+    )
+    
+    # Daten für die Tabelle aus der RUMBA_REPORTS Liste aufbereiten
+    report_data = [
+        {
+            "Berichtsjahr": str(report.report_year),
+            "Datenjahr": str(report.data_year),
+            "Herausgeber": report.publisher,
+            "Quelle": report.source
+        }
+        for report in RUMBA_REPORTS
+    ]
+    
+    # Tabelle anzeigen
+    st.dataframe(
+        pd.DataFrame(report_data),
+        use_container_width=True,
+        hide_index=True
+    )
+
+    styles.html(
+        '<div class="method-note">'
+        'Hinweis: Herausgeberwechsel BFE (Berichte 2021–2022) → GS-UVEK (ab Bericht 2023).'
+        '</div>'
     )
 
 with tab_programs:
     st.markdown(
         """
-Zwei Programme geben die Richtung vor: das Klimapaket für die Gesamtverwaltung
-und der Aktionsplan für Flugreisen. Beide liefern den Referenzrahmen für die Frage,
-ob die Schweiz «auf Kurs» ist.
-"""
+        Die Reduktionspfade der Bundesverwaltung basieren auf zwei zentralen politischen Beschlüssen aus dem Jahr 2019, die vorgeben, ob RUMBA «auf Kurs» ist:
+        
+        **1. Das Klimapaket Bundesverwaltung (Juli 2019)**
+        * **Das Ziel:** Reduktion der Treibhausgasemissionen (THG) der Verwaltung im Inland bis **2030 um 50 %** gegenüber dem Basisjahr 2006.
+        * **Klimaneutralität:** Verbleibende Emissionen werden vollständig kompensiert (bis 2021 durch Zertifikate, ab 2022 durch internationale Bescheinigungen).
+        
+        **2. Der Aktionsplan Flugreisen (Dezember 2019)**
+        Fokussiert spezifisch auf den grössten Hotspot der Verwaltung:
+        * **Das Ziel:** Reduktion der THG-Emissionen aus Flugreisen um **30 % bis 2030** (gegenüber 2019).
+        * **Konkrete Massnahmen:** * *Zug statt Flugzeug:* Bei einer Reisezeit unter 6 Stunden muss der Zug genutzt werden.
+          * *Economy statt Business:* Direktflüge bis 9h und Flüge mit Zwischenlandung bis 11h erfolgen zwingend in Economy. (EDA und EDI haben 2024 sogar eine generelle «Economy-only»-Regel eingeführt).
+          * *Kleinere Delegationen:* Mehr als 5 Personen müssen speziell begründet werden.
+          * *Virtuelle Meetings:* Vermeidung von Reisen durch Telefon- und Videokonferenzen.
+        """
     )
-with st.expander("Klimapaket Bundesverwaltung (Beschluss 2019)", expanded=True):
-    st.markdown(
-            """
-Das Klimapaket definiert den Gesamtpfad der Bundesverwaltung:
-
-- **Ziel:** −50 % THG-Emissionen bis 2030 vs. 2006 (ohne VBS).
-- **Kompensation:** bis 2021 über Zertifikate, ab 2022 über internationale Bescheinigungen.
-- **VBS:** eigenes Ziel im System RUMS-VBS (−40 % vs. 2001).
-"""
-        )
     styles.html(
-            '<div class="method-note">Quelle: RUMBA 2021, Kap. 1.3; '
-            'RUMBA 2025, Kap. 3.1.</div>'
-        )
-
-with st.expander("Aktionsplan Flugreisen (Dezember 2019)", expanded=False):
-        st.markdown(
-            """
-Der Aktionsplan fokussiert spezifisch auf Flugreisen:
-
-- **Ziel:** −30 % THG aus Flugreisen bis 2030 vs. 2019.
-- **Hebel:** Economy statt Business, Zug statt Flug, Video-/Telefonkonferenzen,
-  kleinere Delegationen.
-"""
-        )
-        styles.html(
-            '<div class="method-note">Quelle: RUMBA 2021, Kap. 1.3.1 & 3.2; '
-            'RUMBA 2025, Kap. 3.2.</div>'
-        )
+        '<div class="method-note">Quellen: RUMBA 2021, Kap. 1.3 & 3.2; RUMBA 2024, Kap. 4; RUMBA 2025, Kap. 3.2.</div>'
+    )
 
 with tab_methods:
     st.markdown(
         """
-Für die Einordnung der Trends sind zwei Punkte wichtig. Erstens war 2020
-ein pandemiebedingtes **Ausnahmejahr**. Für die Zielberechnung wurde daher
-ein **extrapoliertes Referenzjahr 2020** eingeführt (Bundesratsbeschluss
-vom 11. Dezember 2020); dieses Referenzjahr ist nicht identisch mit den realen
-2020er-Werten.
-"""
-    )
-    st.markdown(
+        Bei der Interpretation der RUMBA-Daten müssen wichtige methodische Besonderheiten beachtet werden:
+        
+        **Das extrapolierte Referenzjahr 2020**
+        Das reale Jahr 2020 war durch die Covid-19-Pandemie (Homeoffice, Flugverbote) ein massiver Ausreisser. Für die Zielüberwachung rechnet der Bundesrat daher nicht mit den realen Pandemie-Zahlen, sondern mit einem **extrapolierten (fiktiven) Referenzjahr 2020**. Dieses basiert auf den Werten von 2019 abzüglich des politisch geforderten Absenkpfads.
+        
+        **Erweiterte Systemgrenzen ab 2020**
+        Zahlen vor 2020 sind nicht 1:1 mit den heutigen Werten vergleichbar. Ab 2020 wurden die Messungen deutlich verschärft:
+        * **Bundesratsjets & Helikopter:** Werden seither vollumfänglich bei den Flugreisen mitgezählt. (Allein 2020 machten diese auf Anhieb 46 % der gesamten Flug-Emissionen aus).
+        * **Papier:** Neu wurden sämtliche externen Druckaufträge (wie Abstimmungsbüchlein oder Publikationen) sowie Hygienepapier bilanziert.
+        
+        **⚠️ Wichtig bei Datenanalysen: Excel-Listen vs. RUMBA-Bericht**
+        Es gibt einen fundamentalen Unterschied zwischen den verschiedenen Datensätzen der Bundesverwaltung:
+        * **Die Excel-Fluglisten (Rohdaten):** Die öffentlich publizierten Excel-Dateien enthalten ausschliesslich die über zivile Reisebüros gebuchten *Linienflüge*. Die Flüge der Bundesratsjets und Armee-Helikopter (Lufttransportdienst des Bundes LTDB) fehlen in diesen Listen komplett.
+        * **Der RUMBA-Umweltbericht (Gesamtabrechnung):** In den offiziellen Berichten und den dort ausgewiesenen CO₂-Gesamtemissionen (die als Grundlage für die Kapitel 1 und 3 dieser Story dienen) sind die Staatsjets seit 2020 *vollständig eingerechnet*.
+        
+        *Wer für eigene Auswertungen nur die Excel-Listen nutzt, übersieht daher systematisch den CO₂-Ausstoss der Regierungsflieger.*
         """
-Zweitens gab es methodische Anpassungen, die die Vergleichbarkeit einschränken:
-
-- 2017: Anpassungen (Details nicht spezifiziert).
-- 2020: erneuerbarer Strommix, Erfassung Bundesratsjets/Helikopter, externer Druck.
-- Ab Bericht 2022: aktualisierte KBOB-Faktoren für Wärme.
-"""
     )
     styles.html(
         '<div class="method-note">'
-        'Quellen: RUMBA 2022, Fussnote 7 zu Kap. 2.1; RUMBA 2021, Kap. 3.1; '
-        'RUMBA 2022, Fussnote 8 zu Kap. 2.3.2.</div>'
+        'Quellen: RUMBA 2021, Kap. 3.1; RUMBA 2022, Fussnote 7 zu Kap. 2.1; UVEK-Dokumentation zu den Fluglisten.</div>'
     )
-
-# with tab_ontrack:
-#     st.markdown(
-#         """
-# **Warum die Frage «auf Kurs?»** RUMBA arbeitet mit Zielperioden und Referenzjahren.
-# Die Bundesverwaltung (ohne VBS) steuert zwei Pfade:
-
-# - **Klimapaket:** −50 % THG bis 2030 vs. 2006; verbleibende Emissionen werden kompensiert.
-# - **Aktionsplan Flugreisen:** −30 % Flug-THG bis 2030 vs. 2019.
-
-# Zusätzlich bewertet RUMBA Zielperioden gegenüber dem **extrapolierten Referenzjahr 2020**:
-
-# - **Zielperiode 2020–2023:** −9 % THG und −8 % UBP/FTE; 2023 erreicht (−14 % THG, −17 % UBP/FTE).
-# - **Zielperiode 2024–2027:** −24 % THG und −21 % UBP/FTE; 2024 bei −23 % THG und −25 % UBP/FTE.
-
-# Für Flugreisen zeigt RUMBA: **−16 % (2023)** bzw. **−25 % (2024)** gegenüber 2019.
-# """
-#     )
-#     styles.html(
-#         '<div class="method-note">'
-#         'Quellen: RUMBA 2021, Management Summary; RUMBA 2024, Kap. 2/3; '
-#         'RUMBA 2025, Kap. 2/3.2.</div>'
-#     )
 
 with tab_ubp:
     st.markdown(
         """
-**UBP (Umweltbelastungspunkte)** basieren auf der Methode der ökologischen
-Knappheit. Sie berücksichtigen Emissionen in Boden, Wasser und Luft sowie
-Ressourcenerschöpfung. Dadurch kann z.B. **Papier** in der UBP-Perspektive
-stärker ins Gewicht fallen als bei THG.
-"""
+        Neben den Treibhausgasen (THG) weist RUMBA die **UBP (Umweltbelastungspunkte)** als zweite Hauptkennzahl aus. Das Ziel ist eine Reduktion der UBP pro Vollzeitstelle (FTE) um 21 % bis 2027.
+        
+        * **Die Methode:** Die UBP basieren auf der «Methode der ökologischen Knappheit» des BAFU. Sie messen nicht nur Klimagase, sondern vollaggregiert auch Emissionen in Boden, Wasser und Luft sowie Lärm und Ressourcenerschöpfung (wie Kies, Süsswasser oder Landnutzung).
+        * **Ein anderer Blickwinkel:** Die UBP-Sichtweise verschiebt die Gewichtung der Umwelt-Hotspots dramatisch. Während *Flugreisen* bei den CO₂-Emissionen unangefochten auf Platz 1 stehen, ist in der UBP-Perspektive oft das **Papier** der grösste Hebel. Der Frischfaserverbrauch von externen Druckaufträgen fällt bei der Ressourcenerschöpfung extrem stark ins Gewicht.
+        """
     )
     styles.html(
-        '<div class="method-note">Quellen: RUMBA 2021, Fussnote 1; '
+        '<div class="method-note">Quellen: RUMBA 2021, Kap. 2.2.3 & Fussnote 1; '
         'RUMBA 2024, Kap. 2.2.</div>'
+    )
+with tab_other:
+    st.markdown(
+        """
+        Neben den Flugreisen treibt die Bundesverwaltung die Dekarbonisierung auch in ihren anderen Kernbereichen durch strikte Vorgaben voran:
+        
+        **Fahrzeugflotte (Mobilität am Boden)**
+        * **Elektrifizierung:** Gemäss einer revidierten Weisung (seit Januar 2021) dürfen grundsätzlich nur noch Fahrzeuge mit alternativen Antrieben (Energieeffizienzklasse A oder B) beschafft werden. 
+        * **Langfristiger Wandel:** Der Umstieg von fossilen Fahrzeugen auf Elektroautos geschieht schrittweise, da Fahrzeuge erst am Ende ihrer Lebensdauer ersetzt werden. Dennoch hat sich die elektrisch zurückgelegte Strecke zwischen 2020 und 2024 bereits **ver-13-facht**.
+        * **Mobilitätsprinzipien:** Priorität hat der Verzicht auf Fahrten, gefolgt vom öffentlichen Verkehr (ÖV) und Carsharing/Carpooling.
+        
+        **Gebäudebereich (Wärme & Strom)**
+        * **Abschied von Fossilenergie:** Die Umsetzungskonzepte der Bau- und Liegenschaftsorgane (ab 2020) sehen den Verzicht auf den Einbau neuer fossiler Heizungen sowie den kompletten Ersatz bestehender Ölheizungen bis 2030 vor. 
+        * **Nachhaltiges Bauen:** Neubauten und Sanierungen orientieren sich an strengen Zertifizierungen wie dem Standard Nachhaltiges Bauen Schweiz (SNBS) Hochbau oder Minergie-P/A/ECO.
+        * **Betriebsoptimierung:** Auch kleine Massnahmen zeigen Wirkung. So half beispielsweise die Winter-Energiespar-Initiative 2022/2023 (u.a. Reduktion der Raumtemperatur auf 20 °C) den Energiebedarf spürbar zu senken.
+        """
+    )
+    styles.html(
+        '<div class="method-note">Quellen: RUMBA 2021, Kap. 1.3.3 & 3.3; RUMBA 2023, Kap. 2.3.2; RUMBA 2024, Kap. 4.3; RUMBA 2025, Kap. 2.2.1 & 2.2.2.</div>'
     )
 
 st.divider()
@@ -712,11 +755,19 @@ st.divider()
 
 # ── Chapter 3 — Trend ───────────────────────────────────────────────────────
 
+rumba_2021 = charts.RUMBA_SERIES[2021]
+rumba_2022 = charts.RUMBA_SERIES[2022]
 rumba_2023 = charts.RUMBA_SERIES[2023]
+rumba_2024 = charts.RUMBA_SERIES[2024]
 rumba_baseline = charts.RUMBA_2019_BASELINE_T
 target_2030 = rumba_baseline * 0.70
-reduction_pct = round((rumba_baseline - rumba_2023) / rumba_baseline * 100, 0)
-gap_2023 = rumba_2023 - target_2030
+reduction_pct = round((rumba_baseline - rumba_2024) / rumba_baseline * 100, 0)
+gap_2024 = rumba_2024 - target_2030
+
+# Lineare Fortsetzung basierend auf den offiziellen 2019–2024 Werten.
+forecast_years = 2024 - 2019
+forecast_slope = (rumba_2024 - rumba_baseline) / forecast_years
+forecast_2025_t = rumba_2024 + forecast_slope
 
 styles.chapter_header(
     eyebrow="Kapitel 3",
@@ -724,42 +775,146 @@ styles.chapter_header(
     lead=(
         f"Der Aktionsplan Flugreisen strebt bis 2030 eine Reduktion von 30 Prozent der THG-Emissionen "
         f"aus Flugreisen gegenüber 2019 an (Zielwert: {target_2030:,.0f} t CO₂eq). "
-        f"Zwischen 2019 und 2023 konnten die Emissionen bereits um {reduction_pct:.0f} Prozent gesenkt werden — "
-        f"die Bundesverwaltung befindet sich laut RUMBA-Umweltbericht 2024 «auf Zielkurs»."
+        f"Zwischen 2019 und 2024 konnten die Emissionen bereits um {reduction_pct:.0f} Prozent gesenkt werden."
+        f"Das heisst, die Bundesverwaltung befindet sich laut RUMBA-Umweltbericht 2025 weiterhin «auf Kurs»."
     ),
 )
 
-trend_col, steps_col = st.columns([1.6, 1])
-with trend_col:
+chart_slot = st.container()
+steps_slot = st.container()
+
+steps: list[TrendStep] = [
+    TrendStep(
+        year=2019,
+        label="2019",
+        heading=f"Das Vorkrisen-Basisjahr — {rumba_baseline:,.0f} t",
+        detail="""
+        Mit rund 20'200 Tonnen CO₂-eq** bildet das Jahr 2019 den historischen Massstab für den 
+        Aktionsplan Flugreisen. Es repräsentiert die administrative Realität vor der Pandemie: 
+        Der Flugbetrieb lief auf Hochtouren, internationale Diplomatie fand fast ausschliesslich 
+        physisch statt und virtuelle Meetings waren in der Bundesverwaltung noch die absolute Ausnahme. 
+        Hier wurde der Grundstein für die geforderte Reduktion um 30 % bis 2030 gelegt.
+        """,
+    ),
+    TrendStep(
+        year=2020,
+        label="2020",
+        heading="Der Corona-Schock & neue Messgrössen — 6'719 t",
+        detail="""
+        Die Emissionen brechen durch den globalen Lockdown, strenge Reiserestriktionen und den 
+        massiven Wechsel ins Homeoffice historisch auf 6'719 Tonnen CO₂-eq ein (ein Minus von fast 67 %). 
+        Methodischer Meilenstein: Mitten in der Krise verschärft der Bundesrat die Systemgrenzen. 
+        Ab 2020 werden die Bundesratsjets (LTDB) und sämtliche externen Druckaufträge (z. B. Abstimmungsbüchlein) 
+        vollständig mitgezählt. Ohne die Pandemie hätte dies zu einem massiven Sprung nach oben geführt.
+        """,
+    ),
+    TrendStep(
+        year=2021,
+        label="2021",
+        heading=f"Die gedämpfte Rückkehr — {rumba_2021:,.0f} t",
+        detail="""
+        Mit 10'020 Tonnen CO₂-eq erholen sich die Emissionen leicht, bleiben aber künstlich gedämpft. 
+        Das Jahr ist immer noch stark von der Pandemie geprägt: Laufende Quarantäneregelungen, 
+        internationale Einreisebeschränkungen und das etablierte Bewusstsein für digitale Konferenzen 
+        halten den Flugverkehr auf einem niedrigen Niveau. Die Verwaltung beweist, dass Betrieb auch mit 
+        weniger Reisetätigkeit funktioniert.
+        """,
+    ),
+    TrendStep(
+        year=2022,
+        label="2022",
+        heading=f"Der Rebound-Effekt & die Energiekrise — {rumba_2022:,.0f} t",
+        detail="""
+        Die Emissionen schiessen nach dem Wegfall fast aller Corona-Massnahmen auf 14'409 Tonnen CO₂-eq hoch. 
+        Nachholbedarf bei der physischen Diplomatie und aufgestaute Reiselust führen zu einer regelrechten 
+        Flug-Explosion. Demgegenüber steht ein Erfolg im Gebäudebereich: Die *Winter-Energiespar-Initiative 2022/2023* (u. a. Absenkung der Raumtemperatur in Bundesbauten auf 20 °C) dämpft den fossilen Energieverbrauch spürbar.
+        """,
+    ),
+    TrendStep(
+        year=2023,
+        label="2023",
+        heading=f"Der Post-Corona-Peak & politischer Druck — {rumba_2023:,.0f} t",
+        detail="""
+        Die Emissionen erreichen mit 16'904 Tonnen CO₂-eq ihren Höchststand nach der Pandemie. 
+        Die Reisetätigkeit nähert sich gefährlich nah dem Vorkrisenniveau. Es wird politisch und medial 
+        offensichtlich: Freiwilliger Verzicht reicht nicht aus, um die Klimaziele einzuhalten. 
+        Die Departemente geraten unter Zugzwang. Das EDA und das EDI reagieren und bereiten für das 
+        Folgejahr verschärfte, verbindliche Richtlinien vor (u. a. weitreichende 'Economy-Only'-Zwänge).
+        """,
+    ),
+    TrendStep(
+        year=2024,
+        label="2024",
+        heading=f"Die Trendwende durch Struktur — {rumba_2024:,.0f} t",
+        detail="""
+        Erstmals sinken die Emissionen im regulären Betrieb wieder spürbar auf **15'220 Tonnen CO₂-eq (ca. -10 % zum Vorjahr). 
+        Dieser Rückgang ist kein Zufall oder Pandemie-Effekt mehr, sondern das Resultat struktureller Vorgaben. 
+        Die griffigen Massnahmen des Aktionsplans,  wie das strikte Zug-Gebot bei Reisen unter 6 Stunden und die 
+        restriktiven Economy-Vorgaben bei Langstrecken, greifen nun flächendeckend im Alltag der Bundesangestellten. 
+        Die Kurve biegt endlich in die richtige Richtung ab.
+        """,
+    ),
+    TrendStep(
+        year=2025,
+        label="2025",
+        heading=f"Prognose — {forecast_2025_t:,.0f} t",
+        detail=(
+            "Lineare Fortsetzung 2019–2024; keine offizielle RUMBA-Zahl."
+        ),
+    ),
+]
+
+default_step_index = next(
+    (i for i, step in enumerate(steps) if step.year == 2024),
+    0,
+)
+if "ch3_step_index" not in st.session_state:
+    st.session_state["ch3_step_index"] = default_step_index
+
+max_step_index = len(steps) - 1
+current_index = st.session_state["ch3_step_index"]
+
+with steps_slot:
+    nav_left, nav_mid, nav_right = st.columns([1, 5, 1])
+    with nav_left:
+        if st.button("←", key="ch3_prev"):
+            st.session_state["ch3_step_index"] = max(0, current_index - 1)
+    with nav_right:
+        if st.button("→", key="ch3_next"):
+            st.session_state["ch3_step_index"] = min(max_step_index, current_index + 1)
+
+    current_index = st.session_state["ch3_step_index"]
+    with nav_mid:
+        styles.html(
+            f"<div class=\"step-number\" style=\"text-align:center; margin-top:6px\">"
+            f"Schritt {str(current_index + 1).zfill(2)} / {str(len(steps)).zfill(2)}"
+            "</div>"
+        )
+    current_step = steps[current_index]
+
+    st.markdown("<div style='padding-top:24px'></div>", unsafe_allow_html=True)
+    styles.html(f"""
+<div class="step-card-active">
+  <div class="step-number">Schritt {str(current_index+1).zfill(2)} / {str(len(steps)).zfill(2)}</div>
+  <div class="step-text">{current_step.label}: {current_step.heading}</div>
+  <div class="step-detail">{current_step.detail}</div>
+</div>
+""")
+
+with chart_slot:
     st.plotly_chart(
-        charts.trend_chart(computed_2024_t=latest_total_t),
+        charts.trend_chart(
+            computed_2024_t=latest_total_t,
+            forecast_2025_t=forecast_2025_t,
+            max_year=current_step.year,
+        ),
         use_container_width=True,
         config={"displayModeBar": False},
     )
-with steps_col:
-    steps = [
-        ("2019", f"Basisjahr — {rumba_baseline:,.0f} t",
-         "Referenzwert für das −30%-Reduktionsziel bis 2030. "
-         "Quelle: RUMBA Umweltbericht 2024, GS-UVEK."),
-        ("2020", "COVID-Einbruch — 6'719 t",
-         "Der globale Reisestopp halbierte die Emissionen. Kein klimapolitischer Erfolg, "
-         "sondern ein Pandemieeffekt — daher aus der Trendlinie ausgeblendet."),
-        ("2021–2023", "Erholung und Massnahmen",
-         "Mit dem Ende der Pandemie stiegen die Emissionen wieder. Massnahmen wie "
-         "Bahnvorrang und Economy-Pflicht bremsten den Wiederanstieg."),
-        ("2023", f"«Auf Zielkurs» — {rumba_2023:,.0f} t",
-         f"Die Emissionen liegen {gap_2023:,.0f} t über dem 2030-Ziel, "
-         f"aber noch auf dem linearen Absenkpfad. "
-         f"BR-Jet-Emissionen sind seit 2019 allerdings um 39% gestiegen."),
-    ]
 
-    st.markdown("<div style='padding-top:40px'></div>", unsafe_allow_html=True)
-    for i, (year_lbl, heading, detail) in enumerate(steps):
-        styles.html(f"""
-<div class="step-card">
-  <div class="step-number">Schritt {str(i+1).zfill(2)} / {str(len(steps)).zfill(2)}</div>
-  <div class="step-text">{year_lbl}: {heading}</div>
-  <div class="step-detail">{detail}</div>
+styles.html("""
+<div class="method-note">
+  Quelle: RUMBA-Umweltberichte 2021 bis 2025 (Datenjahre 2020–2024); historische Grundlagendaten gemäss Aktionsplan Flugreisen (Basisjahr 2019).
 </div>
 """)
 
@@ -772,27 +927,56 @@ styles.chapter_header(
     eyebrow="Kapitel 4",
     title="Im Vergleich",
     lead=(
-        "Wie steht die Schweizer Bundesverwaltung im Vergleich zu anderen Regierungen? "
-        "Öffentlich zugängliche Emissionsdaten aus Dienstreisen sind selten — "
-        "die meisten Regierungen publizieren diese Zahlen nicht. "
-        "Das Vereinigte Königreich bildet eine Ausnahme."
+        "Wie unterscheiden sich die Klimaziele der Schweizer Bundesverwaltung von jenen "
+        "der britischen Regierung? Dieser Vergleich zeigt: Die Schweiz nimmt sich mehr Zeit, "
+        "setzt dafür aber auf viel striktere Verbote."
     ),
 )
 
-st.plotly_chart(
-    charts.comparison_chart(ch_total_t=latest_total_t),
-    use_container_width=True,
-    config={"displayModeBar": False},
+styles.html(
+    """
+<div class="warning-callout">
+  <div class="warning-callout-title">Wichtiger Hinweis</div>
+  <div class="warning-callout-text">
+    In diesem Kapitel werden die unterschiedliche Zielmodelle der Schweiz und Grossbritanien verglichen. 
+    Ein direkter Vergleich der Bilanzen ist nicht seriös möglich, da sich die Basisjahre, 
+    die Systemgrenzen (z.B. Einbezug des Militärs) und die Messgrössen (CO₂-Ausstoss vs. 
+    geflogene Distanz) fundamental unterscheiden.
+  </div>
+</div>
+"""
 )
+st.subheader("Der Blick über die Grenze")
+
+st.markdown(
+    """
+    #### Transparenz & Policy-Vergleich
+    Anstatt absoluter Zahlen lohnt sich ein Blick auf die Spielregeln. Die Schweiz sticht international vor allem durch ihre Daten-Transparenz hervor (jeder zivile Linienflug ist in Excel-Listen einsehbar). 
+    
+    | Kriterium | 🇨🇭 Schweiz (Aktionsplan Flugreisen) | 🇬🇧 UK (Greening Gov. Commitments) |
+    | :--- | :--- | :--- |
+    | **Vergleichstyp** | Relative Zielkurve für Flugemissionen | Zielpfad für reduzierte Flugdistanz |
+    | **Basisjahr** | 2019 | 2017/18 |
+    | **Bemessungsgröße** | Flug-CO₂ laut RUMBA | Geflogene Distanz |
+    | **Hauptziel** | - 30 % CO₂ (bis 2030) | - 30 % Distanz (bis 2025) |
+    | **Zug-Vorgaben** | Zug obligatorisch bei Reise < 6h | Keine harte, generelle Stunden-Regel |
+    | **Economy-Regel** | Zwingend bis 9h (Direkt) / 11h | "Economy Class first"-Policy |
+    | **Inlandflüge** | Keine spezifische Regelung | Explizites Ziel: -30% "Domestic Flights" |
+    """
+)
+
+# Render new indexed chart
+fig_comp = charts.indexed_comparison_chart()
+st.plotly_chart(fig_comp, use_container_width=True, config={"displayModeBar": False})
+
 styles.html("""
 <div class="method-note">
-  ⚠ Methodische Unterschiede zwischen Berichten —
-  der Vergleich dient der Grössenordnung, nicht der Bewertung.<br>
-  Datenquellen: Bundesverwaltung CH (berechnet), UK Greening Government Commitments Report.
+  Quellen: UK Greening Government Commitments (2021-2025); RUMBA Aktionsplan Flugreisen. 
+  Der Chart indexiert die unterschiedlichen Basisjahre (CH: 2019, UK: 2017/2018) und stellt reale Schweizer Ziele
+  neben dem offiziellen UK-Zielpfad dar. Dieser Vergleich soll die Ambition der Zielpfade verdeutlichen, nicht
+  eine direkte absolute CO₂-Bilanz.
 </div>
 """)
-st.divider()
-
 
 # ── Chapter 5 — Per-capita ───────────────────────────────────────────────────
 
@@ -1083,28 +1267,68 @@ with tab_advanced:
 st.divider()
 
 
+# # ── Footer ───────────────────────────────────────────────────────────────────
+
+# styles.html("""
+# <div class="footer-section">
+#   <div class="footer-title">Methodik &amp; Quellen</div>
+#   <p class="footer-text">
+#     Kapitel 2 verwendet berechnete Emissionen aus den Flugdaten der Bundeskanzlei (2020–2024).
+#     Emissionsfaktor: myClimate-Methodik (kg CO₂eq/km/Passagier, inkl. RFI):
+#     0.255 kg/km (Kurzstrecke &lt;1'500 km), 0.185 kg/km (Mittelstrecke), 0.147 kg/km (Langstrecke).
+#     Business Class: Faktor 2.0.
+#     Kapitel 3 verwendet offizielle RUMBA-Zahlen aus den Umweltberichten 2021–2025 (GS-UVEK):
+#     2019 = 20'200 t (Aktionsplan-Basisjahr, abgeleitet), 2020 = 6'719 t, 2021 = 10'020 t,
+#     2022 = 14'409 t, 2023 = 16'904 t, 2024 = 15'220 t. Zusätzlich: 2024 berechnet (Flugdaten)
+#     und Prognose 2025 als lineare Fortsetzung 2019–2024.
+#     Kapitel 4: UK-Vergleichswert aus Greening Government Commitments Report (gov.uk).
+#     Kapitel 5: Schweizer Durchschnitt 1.4 t/Person (BAFU).
+#   </p>
+#   <p class="footer-sources">
+#     Originalquellen: bk.admin.ch · admin.ch/gov/de/start/bundesrat/flugreisen ·
+#     RUMBA-Bericht GS-UVEK · gov.uk Greening Government Commitments · BAFU Treibhausgasinventar
+#   </p>
+#   <p class="footer-sources" style="margin-top:12px">
+#     ZHAW Semesterarbeit Frühlingssemester 2026 · L. Locarnini · A. Wyder
+#   </p>
+# </div>
+# """)
 # ── Footer ───────────────────────────────────────────────────────────────────
 
 styles.html("""
 <div class="footer-section">
-  <div class="footer-title">Methodik &amp; Quellen</div>
-  <p class="footer-text">
-    Kapitel 2 verwendet berechnete Emissionen aus den Flugdaten der Bundeskanzlei (2020–2024).
-    Emissionsfaktor: myClimate-Methodik (kg CO₂eq/km/Passagier, inkl. RFI):
-    0.255 kg/km (Kurzstrecke &lt;1'500 km), 0.185 kg/km (Mittelstrecke), 0.147 kg/km (Langstrecke).
-    Business Class: Faktor 2.0.
-    Kapitel 3 verwendet offizielle RUMBA-Zahlen aus den Umweltberichten 2021–2024 (GS-UVEK):
-    2019 = 20'200 t (Aktionsplan-Basisjahr, abgeleitet), 2020 = 6'719 t, 2021 = 10'020 t,
-    2022 = 14'409 t, 2023 = 16'904 t. Der Wert 2024 ist aus Flugdaten berechnet (keine offizielle RUMBA-Zahl verfügbar).
-    Kapitel 4: UK-Vergleichswert aus Greening Government Commitments Report (gov.uk).
-    Kapitel 5: Schweizer Durchschnitt 1.4 t/Person (BAFU).
-  </p>
-  <p class="footer-sources">
-    Originalquellen: bk.admin.ch · admin.ch/gov/de/start/bundesrat/flugreisen ·
-    RUMBA-Bericht GS-UVEK · gov.uk Greening Government Commitments · BAFU Treibhausgasinventar
-  </p>
-  <p class="footer-sources" style="margin-top:12px">
-    ZHAW Semesterarbeit Frühlingssemester 2026 · L. Locarnini · A. Wyder
-  </p>
+  <div class="footer-title">Methodik</div>
+  <ul class="footer-text" style="list-style-type: none; padding-left: 0; margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px;">
+    <li>
+      <strong>Kapitel 2 & 5 (Berechnungen):</strong> Basieren auf den veröffentlichten zivilen Flugdaten. 
+      Verwendete Emissionsfaktoren (myClimate-Methodik inkl. RFI): 0.255 kg CO₂eq/km (Kurzstrecke &lt;1'500 km), 
+      0.185 kg/km (Mittelstrecke), 0.147 kg/km (Langstrecke). Business Class: Faktor 2.0. 
+      Schweizer Durchschnitt: 1.4 t/Person (BAFU).
+    </li>
+    <li>
+      <strong>Kapitel 1 & 3 (RUMBA-Zahlen):</strong> Verwenden die offiziellen RUMBA-Umweltberichte 2021–2025 
+      (Herausgeber GS-UVEK). Die historischen Werte für 2019 (20'200 t) dienen als Aktionsplan-Basisjahr. 
+      Die Prognose für 2025 ist eine einfache lineare Fortsetzung der Jahre 2019–2024.
+    </li>
+    <li>
+      <strong>Kapitel 4 (UK-Vergleich):</strong> Zieht für die Gegenüberstellung die offiziellen 
+      Greening Government Commitments der britischen Regierung heran.
+    </li>
+  </ul>
+
+  <div class="footer-title">Quellen & Links</div>
+  <ul class="footer-text" style="list-style-type: none; padding-left: 0; margin-bottom: 32px; display: flex; flex-direction: column; gap: 8px;">
+    <li><a href="https://vdss-fs26-ds24t.github.io/ds24t-1-vdss-project/" target="_blank" style="color: inherit; text-decoration: underline;">Dokumentation der Data Story (GitHub)</a></li>
+    <li><a href="https://www.uvek.admin.ch/de/rumba#Liste-der-Flugreisen" target="_blank" style="color: inherit; text-decoration: underline;">Liste der zivilen Flugreisen (UVEK/RUMBA)</a></li>
+    <li><a href="https://www.uvek.admin.ch/de/lufttransportdienst-des-bundes-fluege-der-departementsvorsteherin-des-departementvorstehers" target="_blank" style="color: inherit; text-decoration: underline;">Lufttransportdienst des Bundes (Bundesratsjets & Helikopter)</a></li>
+    <li><a href="https://www.gov.uk/government/collections/greening-government-commitments" target="_blank" style="color: inherit; text-decoration: underline;">UK Greening Government Commitments (Übersicht)</a></li>
+    <li><a href="https://www.gov.uk/government/publications/greening-government-commitments-2021-to-2025/greening-government-commitments-2021-to-2025" target="_blank" style="color: inherit; text-decoration: underline;">UK Greening Government Commitments (2021 bis 2025)</a></li>
+  </ul>
+
+  <div style="border-top: 1px solid var(--muted); padding-top: 16px; margin-top: 16px;">
+    <p class="footer-sources" style="margin: 0;">
+      <strong>ZHAW Semesterarbeit Frühlingssemester 2026</strong> · L. Locarnini · A. Wyder
+    </p>
+  </div>
 </div>
 """)
