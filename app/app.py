@@ -67,6 +67,10 @@ flights = load_flights()
 airports = load_airports()
 flights = add_destination_country(flights, airports)
 
+st.write("flights:", flights.shape)
+st.write("airports:", airports.shape)
+st.write("years:", sorted(flights["source_year"].unique()) if not flights.empty else "NO FLIGHTS")
+
 if flights.empty:
     st.error("Flugdaten konnten nicht geladen werden. Bitte prüfe den Ordner data/ im Repo.")
     st.stop()
