@@ -6,8 +6,8 @@ from dataclasses import dataclass
 import pandas as pd
 import streamlit as st
 
-from lib import charts, styles
-from lib.data import (
+from app.lib import charts, styles
+from app.lib.data import (
     add_destination_country,
     avg_leg_metrics,
     co2_for_distance,
