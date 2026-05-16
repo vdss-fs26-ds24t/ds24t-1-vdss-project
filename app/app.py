@@ -2,6 +2,7 @@
 
 import logging
 from dataclasses import dataclass
+import os
 
 import pandas as pd
 import streamlit as st
@@ -56,6 +57,11 @@ styles.inject()
 
 
 # ── Data ────────────────────────────────────────────────────────────────────
+from pathlib import Path
+import os
+st.write("CWD:", os.getcwd())
+st.write("data dir exists:", Path("data").exists())
+st.write("data dir listing:", [p.name for p in Path("data").glob("*")] if Path("data").exists() else "NO DATA DIR")
 
 flights = load_flights()
 airports = load_airports()
@@ -909,10 +915,11 @@ with chart_slot:
             computed_2024_t=latest_total_t,
             forecast_2025_t=forecast_2025_t,
             max_year=current_step.year,
-            key=f"ch3_trend_{current_step.year}"
+            
         ),
         use_container_width=True,
         config={"displayModeBar": False},
+        key=f"ch3_trend_{current_step.year}"
     )
 
 styles.html("""
