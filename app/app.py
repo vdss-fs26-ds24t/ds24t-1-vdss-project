@@ -238,6 +238,7 @@ with hero_right:
                         charts.arc_map(hero_routes, airports),
                         use_container_width=True,
                         config={"displayModeBar": False},
+                        key="hero_arcmap",
                 )
 
 st.divider()
@@ -709,6 +710,7 @@ with map_col:
             charts.arc_map(routes, airports),
             use_container_width=True,
             config={"displayModeBar": False},
+            key="ch2_arcmap",
         )
 with table_col:
     table_data = (
@@ -907,6 +909,7 @@ with chart_slot:
             computed_2024_t=latest_total_t,
             forecast_2025_t=forecast_2025_t,
             max_year=current_step.year,
+            key=f"ch3_trend_{current_step.year}"
         ),
         use_container_width=True,
         config={"displayModeBar": False},
@@ -967,7 +970,7 @@ st.markdown(
 
 # Render new indexed chart
 fig_comp = charts.indexed_comparison_chart()
-st.plotly_chart(fig_comp, use_container_width=True, config={"displayModeBar": False})
+st.plotly_chart(fig_comp, use_container_width=True, config={"displayModeBar": False}, key="ch4_comparison")
 
 styles.html("""
 <div class="method-note">
@@ -1063,6 +1066,7 @@ with tab_light:
             charts.per_capita_chart(bk_pp_light, user_t_light),
             use_container_width=True,
             config={"displayModeBar": False},
+            key=f"ch5_light_pc_{light_year}"
         )
     with text_col:
         ratio_swiss = (
@@ -1222,6 +1226,7 @@ with tab_advanced:
             charts.per_capita_chart(bk_pp_adv, user_t_adv),
             use_container_width=True,
             config={"displayModeBar": False},
+            key=f"ch5_adv_pc_{adv_year}"
         )
     with text_col_adv:
         ratio_swiss_adv = (
