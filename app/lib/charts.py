@@ -3,7 +3,7 @@
 import pandas as pd
 import plotly.graph_objects as go
 
-from app.lib.styles import WARM, COOL, BG, BG2, TEXT, MUTED, GRID, FONT_BODY, FONT_MONO, ACCENT
+from lib.styles import WARM, COOL, BG, BG2, TEXT, MUTED, GRID, FONT_BODY, FONT_MONO, ACCENT
 
 # RUMBA official flight emissions time series (t CO₂eq, Bundesverwaltung Flugreisen).
 # Covers all Linienflüge + Bundesratsjets + Bundesratshelikopter.
