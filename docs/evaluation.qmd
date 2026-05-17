@@ -1,71 +1,79 @@
-# Evaluation Report
-This report documents the systematic evaluation of the visualization prototype developed in the [Visual Encoding and Design](viz_design_report.qmd) phase against the project objectives and success criteria defined in the [Project Charta](project_charta.qmd).
+# Evaluationsbericht
 
-## Evaluation Setup
+Dieser Bericht dokumentiert die systematische Evaluation des im [Visualisierungsdesign-Bericht](viz_design_report.qmd) entwickelten Prototyps gegenüber den Erfolgskriterien aus der [Projektcharta](project_charta.qmd).
 
-### Evaluation Objectives
+## Evaluations-Setup
+
+### Evaluationsziele
+
 Die Evaluation prüft, ob die Data Story die Erfolgskriterien der [Projektcharta](project_charta.qmd) erfüllt:
 
 * **Verständlichkeit:** Können Laien (Persona Lea) die Kernaussagen ohne Vorwissen erfassen?
-* **Vollständigkeit:** Sind alle 5 Datenjahre (2020–2024) dargestellt und 100% der verfügbaren Flugdaten integriert?
-* **Visualisierungsqualität:** Klare visuelle Hierarchie, konsistentes Design, mind. 3 unterschiedliche Diagrammtypen?
-* **Narrativer Fluss:** Führt die Data Story Lesende durch mind. 4 klar strukturierte Kapitel?
+* **Vollständigkeit:** Sind alle fünf Datenjahre (2020–2024) dargestellt und 100 % der verfügbaren Flugdaten integriert?
+* **Visualisierungsqualität:** Klare visuelle Hierarchie, konsistentes Design, mindestens drei unterschiedliche Diagrammtypen?
+* **Narrativer Fluss:** Führt die Data Story Lesende durch mindestens vier klar strukturierte Kapitel? (Aktueller Stand: Hero + Kapitel 0–5; das Ziel ist damit übertroffen.)
 * **Reproduzierbarkeit:** Sind Code und Daten vollständig dokumentiert und nachvollziehbar?
 
-Die drei Wertdimensionen:
+Die drei Wertdimensionen aus der Charta:
 
-* **Kognitiv-analytisch:** Können Nutzer Reisemuster erkennen, Trend einordnen, Vergleich verstehen?
-* **Kommunikativ:** Werden die Kernbotschaften (Emissionen, Zielkurs, Vergleich, Bürger-Kontext) verständlich vermittelt?
+* **Kognitiv-analytisch:** Können Nutzende Reisemuster erkennen, den Trend einordnen und den institutionellen Vergleich verstehen?
+* **Kommunikativ:** Werden die Kernbotschaften (Flugemissionen, Zielkurs, Vergleich, Bürger-Bezug) verständlich vermittelt?
 * **Erfahrungswert:** Ist das Produkt ansprechend, vertrauenswürdig und intuitiv bedienbar?
 
-### Evaluation Method
+### Evaluationsmethode
+
 Geplante Methoden:
 
-* **Heuristische Evaluation:** Walkthrough durch alle 5 Kapitel gegen die Personas (Lea, Marc, Klima) — deckt jedes Kapitel die definierten Jobs, Pains und Gains ab?
-* **Nutzertests (Usability):** 2–3 Personen aus Zielgruppe Persona 1 (geringes Data-Literacy-Niveau). Aufgaben:
-    1. «Welches Departement fliegt am meisten im Jahr 2024?»
-    2. «Ist die Bundesverwaltung auf Kurs zum –30%-Ziel?»
-    3. «Wie vergleicht sich eine BK-Person mit einer Durchschnittsbürgerin?»
+* **Heuristische Evaluation:** Walkthrough durch Hero und alle sechs Kapitel (Kapitel 0–5) gegen die Personas (Lea, Marc, Klima) — deckt jedes Kapitel die definierten Jobs, Pains und Gains ab?
+* **Nutzertests (Usability):** 2–3 Personen aus der Zielgruppe Persona 1 (geringes Data-Literacy-Niveau). Aufgaben (an die aktuelle App angepasst):
+    1. *Filter-Verständnis:* «Welches Departement fliegt 2024 am meisten nach Asien?» (Kapitel 2, drei Filter Jahr / Departement / Zielland)
+    2. *Trend-Lesen:* «Ist die Bundesverwaltung auf Kurs zum −30 %-Ziel 2030?» (Kapitel 3, sieben Narrativ-Schritte mit Prev/Next)
+    3. *Persönlicher Bezug:* «Wie viele Tonnen CO₂ verursachen drei Flüge Zürich–New York in Business Class — und wie verhält sich das zu einer BK-Person?» (Kapitel 5, Advanced-Modus mit `st.data_editor`)
 * **Protokoll:** Think-Aloud, Beobachtung von Fehlern und Verständnislücken, Zeit pro Aufgabe.
 
-### Participants
-If user testing or questionnaire-based evaluation was conducted, describe the participants:
+### Teilnehmende
 
-* Number of participants per user segment
-* Relevant characteristics (domain expertise, data literacy, familiarity with similar tools)
-* Recruitment method
+*Noch zu ergänzen — sobald die Nutzertests durchgeführt sind.* Zu dokumentieren:
 
-## Results
-Summarise the evaluation results structured by success criteria. For each criterion, report:
+* Anzahl Teilnehmender je Persona-Segment
+* Relevante Merkmale (Domänenkenntnis, Data Literacy, Vorerfahrung mit ähnlichen Tools)
+* Rekrutierungsmethode
 
-* The observed outcome (qualitative observations, quantitative metrics)
-* Whether the target value was met
-* Notable findings, unexpected observations or edge cases
+## Ergebnisse
 
-Use tables, charts or annotated screenshots where they support clarity.
+*Noch zu ergänzen — nach Abschluss der heuristischen Evaluation und der Nutzertests.* Strukturierung je Erfolgskriterium:
 
-## Discussion
-Interpret the results in the context of the project objectives and user needs:
+* beobachtete Ergebnisse (qualitative Beobachtungen, quantitative Messwerte),
+* Zielwert erreicht ja/nein,
+* auffällige Befunde, unerwartete Beobachtungen oder Edge Cases.
 
-* Which aspects of the visualization concept worked well? Which user pains were effectively relieved, which gains were created?
-* Where did the design fall short of expectations? What are possible explanations?
-* Are there trade-offs between the three value dimensions (e.g. analytical depth vs. accessibility for non-expert users)?
-* What are the limitations of the evaluation itself (e.g. small sample size, lab vs. field conditions, prototype fidelity constraints)?
+Tabellen, Charts oder annotierte Screenshots einsetzen, wo sie die Aussage stützen.
 
-## Checkpoint Decision
-Document the decision taken by the project team and stakeholders based on the evaluation results:
+## Diskussion
 
-* **Proceed to deployment**: The prototype meets the success criteria and is ready for deployment (with or without minor adjustments).
-* **Iterate**: An additional design iteration is needed. Specify which aspects require reworking:
-    * Revised or additional data acquisition
-    * Changes to visual encoding or interaction design
-    * Adjustments to layout, narrative or visual style
-    * Addressing accessibility, performance or governance issues
-* **Discontinue**: The project objectives cannot be met with the current approach. Document the rationale.
+*Noch zu ergänzen — nach Vorliegen der Ergebnisse.* Zu beantworten:
 
-Record who participated in the decision and when it was taken.
+* Welche Aspekte des Visualisierungskonzepts haben gut funktioniert? Welche User Pains wurden tatsächlich gemildert, welche Gains erzeugt?
+* Wo blieb das Design hinter den Erwartungen zurück? Mögliche Erklärungen?
+* Gibt es Trade-offs zwischen den drei Wertdimensionen (z. B. analytische Tiefe vs. Zugänglichkeit für Laien)?
+* Limitationen der Evaluation selbst (Stichprobengrösse, Lab- vs. Field-Bedingungen, Prototyp-Fidelity).
 
-## Additional Requirements and Deployment Planning
-If the decision is to proceed to deployment, document any additional requirements that emerged from the evaluation (e.g. features requested by users, data refresh needs, access control) and outline the plan for the [Deployment](deployment.qmd) phase.
+## Checkpoint-Entscheidung
 
-Any presentation material created for evaluation workshops should be stored in the `docs` folder.
+*Noch zu ergänzen — nach der Auswertung.* Mögliche Ausgänge:
+
+* **Proceed to deployment:** Prototyp erfüllt die Erfolgskriterien und ist (mit oder ohne kleinere Anpassungen) reif für das Deployment.
+* **Iterate:** Eine weitere Designiteration ist nötig. Konkretisieren, welche Aspekte überarbeitet werden:
+    * zusätzliche oder revidierte Datenakquise,
+    * Anpassungen an Visual Encoding oder Interaktionsdesign,
+    * Layout, Narrativ oder visueller Stil,
+    * Accessibility, Performance oder Governance.
+* **Discontinue:** Die Projektziele lassen sich mit dem aktuellen Ansatz nicht erreichen. Begründung dokumentieren.
+
+Zu erfassen: Wer war an der Entscheidung beteiligt und wann wurde sie getroffen?
+
+## Zusätzliche Anforderungen und Deployment-Planung
+
+Wenn die Entscheidung «Proceed to deployment» lautet, hier alle aus der Evaluation entstandenen Zusatzanforderungen festhalten (z. B. von Nutzenden gewünschte Features, Datenaktualisierungs-Bedarf, Zugriffskontrolle). Operatives Setup und Schritte sind in [Deployment](deployment.qmd) beschrieben.
+
+Präsentationsmaterialien aus Evaluations-Workshops können im Ordner `docs/` abgelegt werden.

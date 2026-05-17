@@ -83,7 +83,11 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 ## User Analysis
 
 ### Persona 1: Lea, interessierte Bürgerin (35, Zürich)
+::: {#fig-elephant}
+![](pics/Gemini_Persona.png)
 
+Bild 1: Mit Nano Banana von Gemini erstelltes Persona-Porträt. 
+:::
 **Profil:** Lehrerin, politisch interessiert, liest regelmässig Tamedia-Medien und SRF-Online. Keine Fachkenntnisse in der Datenanalyse. Nutzt Smartphone und Laptop gleichermässig.
 
 **Domänenexpertise:** Gering (kennt den Bundesrat, weiss wenig über LTDB oder RUMBA)
@@ -109,7 +113,11 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 ---
 
 ### Anti-User-Persona: Marc, Datenjournalist (42, Bern)
+::: {#fig-elephant}
+![](pics/Gemini_AntiPersona.png)
 
+Bild 2: Mit Nano Banana von Gemini erstelltes Anti-Persona-Porträt. 
+:::
 **Profil:** Journalist bei einer Schweizer Tageszeitung, spezialisiert auf Recherchen zu Politik und Verwaltung. Erfahren im Umgang mit Daten und Tabellen. Nutzt Desktop und Laptop.
 
 **Domänenexpertise:** Hoch (kennt RUMBA, Klimaziele der Bundesverwaltung, Aktionsplan Flugreisen)
@@ -135,7 +143,11 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 ---
 
 ### Non-Human Persona: Das Klima
+::: {#fig-elephant}
+![](pics/Gemini_NonHumanPersona.png)
 
+Bild 3: Mit Nano Banana von Gemini erstelltes Non-Human-Persona Bild. 
+:::
 **Profil:** Globales, physikalisch-chemisches System, das durch kumulierte Treibhausgasemissionen destabilisiert wird. Kein Bewusstsein, aber klare messbare Zustände und Schwellenwerte. «Nutzt» die Data Story nicht aktiv, ist jedoch das zentrale betroffene System hinter allen dargestellten Daten.
 
 **Zustand (Referenzpunkt 2024):** Globale Erwärmung +1,3 °C gegenüber vorindustriellem Niveau; Schweiz überproportional betroffen (+2,8 °C seit 1864). Restliches CO₂-Budget bis 1,5 °C-Ziel (IPCC AR6): ca. 250 Gt CO₂ global.
