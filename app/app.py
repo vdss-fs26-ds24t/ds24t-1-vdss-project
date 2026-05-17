@@ -379,6 +379,14 @@ with tab_scope:
         **RUMBA (Ressourcen- und Umweltmanagement der Bundesverwaltung)** erfasst die Umweltbelastungen der zivilen Bundesverwaltung.
         
         * **Organisationen:** Das System umfasst sechs Departemente, die Bundeskanzlei und die Parlamentsdienste. Wichtig: Das **VBS** (Verteidigung, Bevölkerungsschutz und Sport) ist nicht Teil von RUMBA. Es bilanziert seine Emissionen seit 2001 separat über das System «RUMS-VBS», um Doppelzählungen zu vermeiden.
+                    * **Departemente im Überblick:**
+                        - **EDA** – Eidgenössisches Departement für auswärtige Angelegenheiten
+                        - **EDI** – Eidgenössisches Departement des Innern
+                        - **EJPD** – Eidgenössisches Justiz- und Polizeidepartement
+                        - **VBS** – Eidgenössisches Departement für Verteidigung, Bevölkerungsschutz und Sport
+                        - **EFD** – Eidgenössisches Finanzdepartement
+                        - **WBF** – Eidgenössisches Departement für Wirtschaft, Bildung und Forschung
+                        - **UVEK** – Eidgenössisches Departement für Umwelt, Verkehr, Energie und Kommunikation
         * **Themenbereiche:** Traditionell deckt RUMBA die grössten Hebel ab: Dienstreisen, den Gebäudebereich (Wärme, Strom, Wasser, Abfall) und den Papierverbrauch. 
         * **Ausblick:** Ab dem Berichtsjahr 2025 wird der Scope um Kältemittel sowie um fünf Satellit-Themen erweitert (IT-Material, Verpflegung, mobiles Arbeiten, Pendelfahrten und Plastikrecycling).
         """
