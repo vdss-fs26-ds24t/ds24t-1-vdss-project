@@ -4,13 +4,15 @@ Dieser Bericht dokumentiert die Designentscheidungen für die scrollbare Data St
 
 ## Design-Übersicht
 
-Das Visualisierungskonzept der [Projektcharta](project_charta.qmd) wurde in fünf narrative Kapitel überführt: Kontext (KPI-Kacheln), Flugmuster (Arc-Map + Tabelle), Emissionstrend (Liniendiagramm), institutioneller Vergleich (Dot-Plot) und Bürger-Vergleich (Balkendiagramm). Das Design orientiert sich am React/JSX-Prototyp aus `design_example/` und wurde für Streamlit adaptiert.
+Das Visualisierungskonzept der [Projektcharta](project_charta.qmd) wurde in eine Hero-Sektion und sechs narrative Kapitel (Kapitel 0–5) überführt: Grundlagen (KPI-Kacheln + Callout), Kontext (KPI-Kacheln aus RUMBA-Berichten), Flugmuster (3-D-Globus mit Plotly-Arc-Map als Fallback + Tabelle), Emissionstrend (Liniendiagramm mit Schritt-Narrativ), institutioneller Vergleich (indizierter Linienvergleich CH vs. UK) und Bürger-Vergleich (interaktiver Pro-Kopf-Rechner). Das Design orientiert sich am Editorial-Theme aus dem React/JSX-Prototyp `design_example/app.jsx` (historische Referenz, nicht Teil des Auslieferungsprodukts) und wurde für Streamlit adaptiert.
 
 **Änderungen gegenüber ursprünglichem Konzept:**
-- Filter nach «Person» entfällt (Personennamen nicht in Rohdaten vorhanden) → Filter nach Departement
-- Zeitreihe in Kapitel 3: RUMBA-offizielle Jahreswerte 2019–2023 statt 2006–2024-Reihe (letztere nicht vollständig rekonstruierbar ohne aktuellen RUMBA 2025-Bericht); 2024 als berechneter Schätzwert ergänzt
-- Kapitel 4: UK «Greening Government Commitments» statt breiter Ländervergleich (fehlende öffentliche Daten anderer Regierungen wird als Befund kommuniziert)
-- Isotype-Chart (Kap. 5) vereinfacht zu horizontalem Balkenvergleich
+- Filter nach «Person» entfällt (Personennamen nicht in Rohdaten vorhanden) → drei Filter: Jahr, Departement und **Zielland**.
+- Hero und Kapitel 0 (Grundlagen zu RUMBA) ergänzt, um Begriffsklärung vor den Zahlen zu liefern.
+- Karte: zusätzlich zum Plotly-Scattergeo wird ein eigener 3-D-Globus (`app/lib/globe.py`) als primäre Darstellung verwendet; die Plotly-Arc-Map bleibt als robuster Fallback erhalten.
+- Zeitreihe in Kapitel 3: RUMBA-offizielle Jahreswerte 2019–2024 (statt 2006–2024-Reihe; letztere nicht vollständig rekonstruierbar). Die Erzählung wird in sieben Schritte zerlegt, durch Prev/Next-Buttons gesteuert (Position persistiert in `st.session_state["ch3_step_index"]`).
+- Kapitel 4: UK «Greening Government Commitments» statt breiter Ländervergleich; Darstellung als indizierter Linienvergleich plus Markdown-Vergleichstabelle der Policies (die im Charter-Plan ursprünglich vorgesehene Dot-Plot-Variante wurde verworfen, weil die Zeitreihe inhaltlich aussagekräftiger ist als ein Endpunkt-Vergleich).
+- Kapitel 5: statt eines statischen Isotype-/Balken-Diagramms wird ein interaktiver Pro-Kopf-Rechner umgesetzt — Light-Modus (`st.number_input` Anzahl Flüge) und Advanced-Modus (`st.data_editor` mit IATA-Routen-Tabelle und Klasse Economy/Business). Vergleich gegen die durchschnittliche Pro-Kopf-Emission eines BK-Mitarbeitenden (Annahme `n_staff_estimate = 5'000`).
 
 ## Data-to-Visual-Mapping
 
@@ -18,31 +20,40 @@ Das Visualisierungskonzept der [Projektcharta](project_charta.qmd) wurde in fün
 
 | Kapitel / Chart | Datenvariablen | Marktyp | Visuelle Kanäle | Skala |
 |---|---|---|---|---|
-| 1 — KPI-Kacheln | CO₂-Total 2023, Anteil Flugreisen 61%, Anzahl Legs | Text | Grösse, Farbe (Warm/Cool/Akzent) | — |
-| 2 — Arc-Map | iata_from, iata_to, co2_kg (aggregiert) | Linien + Punkte | Position (geo), Linienstärke, Opacity | Geografisch, linear (CO₂) |
-| 2 — Tabelle | Alle Felder je Flugabschnitt | Zeilen | Position | Kategorisch, numerisch |
-| 3 — Liniendiagramm | year, co2_t (RUMBA-offiziell + berechnet 2024) | Linie + Fläche | Position x/y, Farbe (Warm = Ist, Cool = Ziel) | Temporal, linear |
-| 4 — Dot-Plot | Institution, co2_t | Punkte + Linien | Position x, Farbe (Warm = CH, Cool = UK) | Linear |
-| 5 — Balkendiagramm | Kategorie, co2_t | Balken (horizontal) | Länge, Farbe | Linear |
+| Hero — Globus + Big Number | iata_from/to, co2_kg, Jahressumme CO₂eq, RUMBA-Referenzwert | Bögen auf WebGL-Globus + Text-Kachel | Position (geo), Linienstärke, Grösse, Farbe (Warm/Muted) | Geografisch, linear (CO₂) |
+| 0 — KPI-Kacheln + Callout | RUMBA-Umfang, Organisation, neue Themen | Text + Icon | Grösse, Farbe (Akzentleisten) | — |
+| 1 — KPI-Kacheln | Total THG, Anteil Flugreisen, Flug-THG, FTE-Wert je Berichtsjahr | Text | Grösse, Farbe (Warm/Cool/Akzent) | — |
+| 2 — 3-D-Globus | iata_from, iata_to, co2_kg, Flugzahl (aggregiert) | Bögen auf rotierendem Globus | Position (geo), Linienstärke, Opacity | Geografisch, linear (CO₂) |
+| 2 — Arc-Map (Fallback) | iata_from, iata_to, co2_kg (aggregiert) | Linien + Punkte (Plotly Scattergeo) | Position (geo), Linienstärke, Opacity | Geografisch, linear (CO₂) |
+| 2 — Tabelle | Alle Felder je Flugabschnitt nach Filterung | Zeilen (`st.dataframe`, sortierbar) | Position | Kategorisch, numerisch |
+| 3 — Liniendiagramm + Schrittnavigation | year, co2_t (RUMBA-offiziell 2019–2024), Zielpfad | Linie + Fläche; HTML-Karte je Schritt | Position x/y, Farbe (Warm = Ist, Cool = Ziel) | Temporal, linear |
+| 4 — Indizierter Linienvergleich | year, co2_indexed (CH/UK, 2019 = 100) | Linien (zwei Serien) | Position x/y, Farbe (Warm = CH, Cool = UK) | Temporal, linear |
+| 5 — Pro-Kopf-Rechner | Eingegebene Flüge, berechnete Emissionen, BK-Schnitt, CH-Bevölkerungsschnitt | Editierbare Tabelle (`st.data_editor`) + Vergleichschart | Länge, Farbe; Direkteingabe | Linear |
 
 ## Layout und Komposition
 
-- **Struktur:** Einseitige, scrollbare Streamlit-App (`app/app.py`). Kapitel folgen sequenziell; keine Seitennavigation.
-- **Breite:** Max. 1'180 px Content-Breite, per CSS-Injection begrenzt.
-- **Kapitelstruktur:** Jedes Kapitel beginnt mit einer 1 px Trennlinie, gefolgt von Eyebrow (Monospace, Grossbuchstaben), H2-Überschrift (Serif), Lead-Text (Muted).
-- **Spalten:** Kapitel 2 und 5: zwei Spalten (Viz + Tabelle/Text). Kapitel 3: zwei Spalten (Diagramm + Schrittnavigation).
-- **Koordination:** Jahres- und Departement-Filter in Kapitel 2 wirken auf Arc-Map und Tabelle gleichzeitig.
+- **Struktur:** Einseitige, scrollbare Streamlit-App (`app/app.py`). Hero und Kapitel folgen sequenziell; keine Seitennavigation.
+- **Breite:** Max. 1'180 px Content-Breite, per CSS-Injection begrenzt (Modul `app/lib/styles.py`).
+- **Hero:** Zwei Spalten — links Titel, Lead, Jahresauswahl, Big-Number-Tile + RUMBA-Vergleichszeile; rechts der rotierende 3-D-Globus.
+- **Kapitelstruktur:** Jedes Kapitel beginnt mit `st.divider()`, gefolgt von Eyebrow (Monospace, Grossbuchstaben), H2-Überschrift (Serif), Lead-Text (Muted) — gerendert über `styles.chapter_header()`.
+- **Spalten:** Kapitel 0 und 1: dreispaltige KPI-Kachel-Reihen. Kapitel 2 und 5: zwei Spalten (Viz + Tabelle/Eingabe). Kapitel 3: zwei Spalten (Diagramm + Schrittnavigation mit Prev/Next-Buttons).
+- **Koordination:** Die drei Filter in Kapitel 2 (Jahr, Departement, Zielland) wirken simultan auf Globus und Tabelle.
 - **Mobile:** Streamlit passt Spalten automatisch auf Mobilgeräten an; Map-Tooltips funktionieren per Touch.
 
 ## Interaktionsdesign
 
 | Interaktion | Umsetzung | Unterstützter User Task |
 |---|---|---|
-| Jahresfilter (Kapitel 2) | `st.selectbox` | Lea: «Wann wurde besonders viel geflogen?» |
+| Jahresauswahl (Hero) | `st.radio` (horizontal) | Lea: Schnelle Orientierung pro Jahr |
+| RUMBA-Berichtsjahr (Kapitel 1) | `st.radio` (horizontal) | Lea: Kennzahlen je RUMBA-Bericht vergleichen |
+| Jahresfilter (Kapitel 2) | `st.selectbox` | Marc: «Wann wurde besonders viel geflogen?» |
 | Departement-Filter (Kapitel 2) | `st.selectbox` | Marc: «Welches Departement fliegt am meisten?» |
-| Hover-Tooltips (alle Diagramme) | Plotly `hovertemplate` | Alle: Detailwerte on demand |
+| Ziellandfilter (Kapitel 2) | `st.selectbox` | Marc: «Welche Destinationsländer dominieren?» |
+| Schrittnavigation (Kapitel 3) | Prev/Next-Buttons; Index in `st.session_state["ch3_step_index"]`; jede Position rendert eine HTML-Karte neben dem Diagramm | Lea: Schrittweise Kontextualisierung des Trends |
+| Modus-Wechsel (Kapitel 5) | `st.tabs(["Light", "Advanced"])` | Lea (Light) / Marc (Advanced): Persönliche Schätzung |
+| Editierbare Routen-Tabelle (Kapitel 5 Advanced) | `st.data_editor` mit IATA-Spalten und Klasse-Auswahl | Marc: Detaillierte Was-wäre-wenn-Rechnung |
+| Hover-Tooltips (alle Diagramme) | Plotly `hovertemplate`; Globus-Tooltips über das eigene HTML/JS-Modul | Alle: Detailwerte on demand |
 | Sortierbare Tabelle (Kapitel 2) | `st.dataframe` mit Klick-Sortierung | Marc: «Welche Strecken verursachen am meisten CO₂?» |
-| Schrittnarrative (Kapitel 3) | Statische HTML-Karten neben Diagramm | Lea: Kontextualisierung des Trends |
 
 ## Visueller Stil
 
@@ -67,24 +78,27 @@ Das Design folgt dem **«Editorial»-Theme** aus dem React-Prototyp (`design_exa
 ## Prototyp-Beschreibung
 
 - **Fidelity:** High-fidelity, voll funktionale Streamlit-App
-- **Technologie:** Python 3.12 · Streamlit · Plotly · pandas · openpyxl · pdfplumber
-- **Repository:** [github.com/vdss-fs26-ds24t/ds24t-1-vdss-project](https://github.com/vdss-fs26-ds24t/ds24t-1-vdss-project), Branch `feature/lilli`
-- **Lokaler Start:** `uv run streamlit run app/app.py`
-- **Deployment:** Streamlit Community Cloud (öffentlich zugänglich nach Deployment)
+- **Technologie:** Python 3.12 · Streamlit · Plotly · pandas · openpyxl · pdfplumber · eigener Globus-Renderer (HTML/JS, eingebunden über `streamlit.components.v1.html`, Landmassen aus `app/assets/land_110m.json`)
+- **App-Module:** `app/app.py` (Storyboard) + `app/lib/{charts,data,styles,globe}.py` (Diagramme, Datenpipeline, CSS-Injection, Globus-Renderer)
+- **Repository:** [github.com/vdss-fs26-ds24t/ds24t-1-vdss-project](https://github.com/vdss-fs26-ds24t/ds24t-1-vdss-project), Branch `main`
+- **Lokaler Start:** `uv sync && uv run streamlit run app/app.py`
+- **Deployment:** Streamlit Community Cloud (öffentlich zugänglich nach Deployment); keine Umgebungsvariablen oder Secrets erforderlich.
 
 ## Design-Rationale und Iterationen
 
 **Wichtigste Entscheidungen:**
 
-1. **Plotly statt D3/Globe:** Einfachere Integration in Streamlit, keine Mapbox-API-Abhängigkeit, direkte Interaktivität ohne zusätzliche Komponenten.
+1. **3-D-Globus als primäre Karten-Darstellung, Plotly-Arc-Map als Fallback:** Der rotierende Globus erzeugt Aufmerksamkeit im Hero und vermittelt die globale Ausdehnung der Dienstreisen sofort räumlich. Die Plotly-Arc-Map bleibt als robuster Fallback bestehen — sie wird genutzt, falls der Globus keine Routen erhält (leerer Filterausschnitt oder Three.js-Initialisierungsproblem). Beide Marken nutzen dasselbe `top_routes()`-Aggregat aus `app/lib/data.py`; visuelle Konsistenz ist dadurch gewährleistet.
 
 2. **Einzelseite statt Mehrseiten-App:** Scrollable Story-Format entspricht dem Nutzungsverhalten von Persona 1 (Lea) besser als Navigation zwischen Seiten.
 
-3. **RUMBA-Werte statt berechnete Totale in Kap. 3:** Die offiziellen RUMBA-Jahreswerte sind die Referenz für die politische Bewertung (Aktionsplan). Abweichungen zwischen RUMBA und berechneten Werten werden transparent dokumentiert.
+3. **RUMBA-Werte statt berechnete Totale in Kap. 3:** Die offiziellen RUMBA-Jahreswerte sind die Referenz für die politische Bewertung (Aktionsplan). Abweichungen zwischen RUMBA und berechneten Werten werden im Hero transparent gegenübergestellt (Big-Number-Tile mit RUMBA-Δ).
 
-4. **Dot-Plot statt Balkendiagramm für Kap. 4:** Dot-Plots kommunizieren Vergleiche bei wenigen Datenpunkten prägnanter und folgen dem Design-Prototyp.
+4. **Indizierter Linienvergleich für Kap. 4:** Anstelle eines Dot-Plot-Endpunktvergleichs zeigt der indizierte Verlauf (2019 = 100) die Dynamik der Reduktion bei beiden Regierungen. Eine begleitende Markdown-Tabelle stellt die wichtigsten Policy-Unterschiede gegenüber.
 
-5. **«Auf Zielkurs»-Framing für Kap. 3:** Die ursprünglich geplante Aussage «Ziel rückt nicht näher» war nicht korrekt. Laut RUMBA Umweltbericht 2024 ist die Bundesverwaltung für die Linienflüge auf Zielkurs; jedoch sind die BR-Jet-Emissionen um 39% gestiegen — eine differenziertere, aber ehrlichere Botschaft.
+5. **Interaktiver Pro-Kopf-Rechner für Kap. 5:** Statt eines statischen Isotype-Bilds erleben Lesende den eigenen Beitrag durch direkte Manipulation (Light: Anzahl Flüge; Advanced: `st.data_editor` mit IATA-Routen). Das emotionale Lernen «Was würde ich verursachen?» wirkt stärker als ein vorgegebener Vergleich.
+
+6. **«Auf Zielkurs»-Framing für Kap. 3:** Die ursprünglich geplante Aussage «Ziel rückt nicht näher» war nicht korrekt. Laut RUMBA Umweltbericht 2024 ist die Bundesverwaltung für die Flugemissionen auf Zielkurs; die Erzählung wird in sieben Narrativ-Schritten differenziert ausgerollt.
 
 ## Schlussfolgerungen und nächste Schritte
 

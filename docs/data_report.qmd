@@ -113,12 +113,42 @@ Die Emissionen pro Flugabschnitt werden auf Basis der bereits in den Rohdaten en
 - **Business Class:** Multiplikator 2.0 (erhöhter Flächenbedarf pro Sitzplatz)
 - **Formel:** `co2_kg = distance_km × factor × class_multiplier`
 
-**Abweichung von offiziellen RUMBA-Werten:** Die berechneten Jahrestotale aus den Excel-Daten liegen systematisch ~20–25% unter den offiziellen RUMBA-Jahreswerten. Mögliche Gründe: unterschiedliche Emissionsmethodik (RUMBA verwendet TREMOD/EMFAC), abweichender Erfassungskreis (RUMS VBS separat), oder fehlende Flüge in den öffentlich verfügbaren Excel-Dateien. Die berechneten Werte werden in Kapitel 2 (Musteranalyse) verwendet; für Kapitel 3 (Trend) werden die offiziellen RUMBA-Werte verwendet.
+**Abweichung von offiziellen RUMBA-Werten:** Die berechneten Jahrestotale aus den Excel-Daten liegen systematisch ~20–25 % unter den offiziellen RUMBA-Jahreswerten. Mögliche Gründe: unterschiedliche Emissionsmethodik (RUMBA verwendet TREMOD/EMFAC), abweichender Erfassungskreis (RUMS VBS separat), oder fehlende Flüge in den öffentlich verfügbaren Excel-Dateien. Die berechneten Werte werden in Kapitel 2 (Musteranalyse) verwendet; für Kapitel 3 (Trend) werden die offiziellen RUMBA-Werte verwendet. **In der Hero-Sektion der Data Story werden für jedes ausgewählte Jahr beide Werte explizit gegenübergestellt** (berechnetes Total + RUMBA-Referenz inkl. prozentualer Differenz), damit Lesende die Methodendiskrepanz unmittelbar einordnen können.
+
+### Personalisierte Emissionsschätzung (Kapitel 5)
+
+Für den interaktiven Pro-Kopf-Rechner werden Einzelflüge auf Basis von IATA-Codes berechnet:
+
+- **Distanz:** Orthodrome-Distanz (Haversine-Formel, Erdradius 6'371 km) zwischen den Koordinaten der beiden Flughäfen aus dem OpenFlights-Lookup. Implementierung: `haversine_km()` in `app/lib/data.py`.
+- **Emissionsfaktor:** Streckenkategorie aus der berechneten Distanz abgeleitet (`< 1'500` km → short, `< 3'700` km → medium, sonst long). Anschliessend gleiche myClimate-Faktoren und Business-Multiplikator wie in der Pipeline-Berechnung — kapselt in `co2_for_distance()`.
+- **Pro-Kopf-Vergleich:** Die jährliche Pro-Kopf-Emission eines BK-Mitarbeitenden wird aus der berechneten Jahressumme dividiert durch eine fix verdrahtete Belegschafts-Annahme abgeleitet (siehe «Hard-coded Annahmen» unten).
+
+### Hard-coded Annahmen
+
+Diese Werte sind direkt im Code hinterlegt und nicht über Konfigurationsdateien änderbar:
+
+| Wert | Bedeutung | Speicherort |
+|---|---|---|
+| `n_staff_estimate = 5'000` | Geschätzte Anzahl fliegender Mitarbeitender für die Pro-Kopf-Emission in Kapitel 5 | `app/app.py` |
+| 2019-Basiswert ≈ 20'200 t | Referenzwert für den Zielpfad −30 % bis 2030 (abgeleitet aus RUMBA Umweltbericht 2024, Kap. 4.2) | Kapitel 3 (`app/lib/charts.py`, `RUMBA_2019_BASELINE_T`) |
+| RUMBA-Jahreswerte 2020–2024 | Offizielle Flugemissionen je Berichtsjahr | `app/app.py` (`RUMBA_KEY_FIGURES`) und `app/lib/charts.py` (`RUMBA_SERIES`) |
+| myClimate-Faktoren 0.255 / 0.185 / 0.147 kg CO₂eq/km | Economy-Emissionsfaktoren je Streckenkategorie | `app/lib/data.py` (`_ECO_FACTORS`) |
+| `_BUSINESS_MULTIPLIER = 2.0` | Verdopplung der Economy-Emissionen für Business Class | `app/lib/data.py` |
 
 ### Datenverarbeitungs-Code
 
-Die Verarbeitung erfolgt in `app/lib/data.py`:
-- `load_flights()` — lädt und vereinigt alle fünf Excel-Dateien, normalisiert Spalten, berechnet `co2_kg`
-- `load_airports()` — lädt OpenFlights-Lookup
-- `yearly_totals()` — aggregiert berechnete CO₂-Jahressummen
-- `top_routes()` — aggregiert Top-N-Routen ab Schweizer Flughäfen für Arc-Map
+Die Verarbeitung erfolgt in `app/lib/data.py`. Funktionen mit `@st.cache_data` werden zwischen Streamlit-Reruns automatisch zwischengespeichert.
+
+| Funktion | Cache | Zweck |
+|---|---|---|
+| `load_flights()` | ja | Lädt und vereinigt alle fünf Excel-Dateien, normalisiert Spalten, berechnet `co2_kg`. |
+| `load_airports()` | ja | Lädt den OpenFlights-Lookup (IATA, Name, Stadt, Land, Lat/Lon). |
+| `add_destination_country(df, airports)` | nein | Fügt die Spalte `dest_country` über den IATA-Lookup hinzu (Basis für den Ziellandfilter). |
+| `filter_flights(df, year, department, dest_country, swiss_only)` | nein | Wendet die drei Filterachsen (plus optionalen Swiss-Origin-Filter) auf das Flight-Legs-DataFrame an. |
+| `yearly_totals(df)` | ja | Aggregiert berechnete CO₂-Jahressummen in Tonnen. |
+| `top_routes(df, year, department, dest_country, top_n, swiss_only)` | ja | Liefert die Top-N-Routen für Arc-Map und Globus, sortiert nach CO₂. |
+| `globe_routes(df, airports, year, department, dest_country, top_n, swiss_only)` | ja | Erweitert `top_routes()` um Koordinaten und gibt eine Liste von Dicts für den WebGL-Globus zurück. |
+| `avg_leg_metrics(df, year)` | nein | Mittlere Distanz und mittlere CO₂-Emission je Flugabschnitt für ein Berichtsjahr. |
+| `co2_for_distance(distance_km, class_)` | nein | Einzelflug-CO₂ aus Distanz und Klasse (myClimate-Faktoren, Business-Multiplikator). Wird in Kapitel 5 verwendet. |
+| `route_distance_km(airports, iata_from, iata_to)` | nein | Haversine-Distanz zwischen zwei IATA-Codes aus dem Airport-Lookup. Wird in Kapitel 5 für editierbare Routen verwendet. |
+| `haversine_km(lat1, lon1, lat2, lon2)` | nein | Reine Geometrie-Helferfunktion; Erdradius = 6'371 km. |

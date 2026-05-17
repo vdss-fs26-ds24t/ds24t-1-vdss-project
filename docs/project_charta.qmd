@@ -195,37 +195,53 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ### Produkt: Scrollbare Data Story
 
-Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von der Einordnung über die Flugmuster und den Emissionstrend bis zum institutionellen Vergleich und dem persönlichen Bezug. Das Format adressiert primär Persona 1 (Lea, Bürgerin), berücksichtigt mit institutionellem Vergleich und persönlichem Bezug jedoch auch weitere im Dokument definierte Perspektiven und (Anti-)Personas.
+Die Data Story führt Lesende durch eine Hero-Sektion und sechs narrative Kapitel (Kapitel 0–5): von den begrifflichen Grundlagen über die Einordnung, die Flugmuster und den Emissionstrend bis zum institutionellen Vergleich und dem persönlichen Bezug. Das Format adressiert primär Persona 1 (Lea, Bürgerin), berücksichtigt mit institutionellem Vergleich und persönlichem Bezug jedoch auch weitere im Dokument definierte Perspektiven und (Anti-)Personas.
 
 ---
 
 ### Kapitelstruktur und Visualisierungen
 
-**Kapitel 1 – Einleitung: Der Bundesratsjet im Kontext**
-- *Visualisierung:* Einzelkennzahl-Kacheln (Big Numbers): Gesamtemissionen Bundesverwaltung, Anteil Flugreisen (61%), Emissionen BR-Jets 2024.
-- *Narrativ:* Einstieg mit provokanter Frage: «Wie viel CO₂ verursacht die Schweizer Regierung auf Reisen?»
+**Hero – Aufmacher der Story**
+- *Visualisierung:* Interaktiver 3-D-Globus (eigenes WebGL-Modul, `app/lib/globe.py`) mit den Top-Routen ab Schweizer Flughäfen; daneben ein Big-Number-Tile mit der berechneten Jahresmenge CO₂eq und einer dazu gestellten Vergleichszahl aus dem offiziellen RUMBA-Bericht (Tooltip erklärt die Methodendiskrepanz).
+- *Narrativ:* Provokante Einstiegsfrage: «Wie viel CO₂ verursacht die Schweizer Regierung auf Reisen?»
+- *Interaktivität:* Jahresauswahl per `st.radio` (alle Datenjahre 2020–2024); aktualisiert Globus und Big-Number-Tile simultan.
+- *Wert:* Sofortige Orientierung; ehrliche Einordnung der Methodendifferenz zwischen berechneten Werten und offiziellem RUMBA-Total.
+
+**Kapitel 0 – Grundlagen zu den RUMBA-Umweltberichten**
+- *Visualisierung:* Drei KPI-Kacheln (Umfang, Organisation, neue Themen) plus ein erläuternder Callout zum Klimapaket Bundesverwaltung und Aktionsplan Flugreisen.
+- *Narrativ:* Was misst RUMBA? Welche Einheiten sind erfasst (sechs Departemente, Bundeskanzlei und Parlamentsdienste; das VBS läuft separat in RUMS-VBS)? Was kommt ab Bericht 2025 neu hinzu (Kältemittel, Satellit-Themen)?
+- *Wert:* Schafft die konzeptuelle Grundlage, damit nachfolgende Zahlen korrekt interpretierbar sind.
+
+**Kapitel 1 – Einleitung: Die Flüge der Bundesverwaltung im Kontext**
+- *Visualisierung:* Einzelkennzahl-Kacheln (Big Numbers) aus `RUMBA_KEY_FIGURES`: Gesamtemissionen Bundesverwaltung, Anteil Flugreisen (36–61 %), Emissionen Flugreisen pro Berichtsjahr.
+- *Interaktivität:* RUMBA-Berichtsjahr per `st.radio`; alle Kennzahlen in den Kacheln aktualisieren sich gemeinsam.
+- *Narrativ:* Verortet die Flugemissionen als grössten Hotspot innerhalb der Gesamtbilanz.
 - *Wert:* Schafft sofort Relevanz und Grössenordnung (kommunikativer Wert).
 
 **Kapitel 2 – Wer fliegt wohin? (2020–2024)**
-- *Visualisierung:* Interaktive Arc-Map (Plotly Scattergeo) mit Flugverbindungen ab Schweizer Flughäfen, filterbar nach Jahr und Departement. Ergänzt durch eine durchsuchbare Tabelle der Einzelflüge.
+- *Visualisierung:* Interaktiver 3-D-Globus (eigenes WebGL-Modul, `app/lib/globe.py`) mit Flugverbindungen ab Schweizer Flughäfen; Plotly-Arc-Map (Scattergeo) als Fallback, falls die Globus-Daten leer sind. Ergänzt durch eine durchsuchbare Tabelle der Einzelflüge.
 - *Narrativ:* «Welche Destinationen wurden am häufigsten angeflogen?»
-- *Interaktivität:* Filter nach Jahr (2021, 2022, 2023, 2024), Dropdown nach Departement. Hinweis: Einzelnamen sind in den veröffentlichten RUMBA-Flugdaten nicht enthalten.
+- *Interaktivität:* Drei gekoppelte Filter (Jahr, Departement, **Zielland**) per `st.selectbox`, wirken simultan auf Globus und Tabelle. Hinweis: Einzelnamen sind in den veröffentlichten RUMBA-Flugdaten nicht enthalten.
 - *Wert:* Ermöglicht geografische Mustererkennung (kognitiv-analytisch); macht Flugaktivität konkret erfahrbar (kommunikativer Wert).
 
 **Kapitel 3 – Zeitliche Entwicklung der Emissionen**
-- *Visualisierung:* Linien-/Flächendiagramm der offiziellen RUMBA-Flugemissionen (2019–2023) mit Zielpfad (–30% bis 2030, Aktionsplan Flugreisen). 2020 wird als isolierter Punkt dargestellt (COVID, nicht repräsentativ). 2024 wird als Diamond-Marker «berechnet» ergänzt.
-- *Annotation:* 2019-Basisjahr (20'200 t, abgeleitet aus RUMBA 2024), «auf Zielkurs»-Status (RUMBA Umweltbericht 2024, Kap. 4.2).
+- *Visualisierung:* Liniendiagramm der offiziellen RUMBA-Flugemissionen (2019–2024) mit Zielpfad (–30 % bis 2030, Aktionsplan Flugreisen). 2020 wird als COVID-Sondereffekt markiert; 2024 ist der jüngste offizielle RUMBA-Wert.
+- *Schrittnavigation:* Sieben Narrativ-Schritte (von 2019-Basisjahr über die jährlichen Stationen bis 2024-Trendwende und 2025-Forecast / 2030-Ziel), gesteuert über Prev/Next-Buttons. Die aktuelle Position wird in `st.session_state["ch3_step_index"]` persistiert; jeder Schritt rendert eine Karte mit Heading + Detailtext neben dem Diagramm.
+- *Annotation:* 2019-Basisjahr (20'200 t, abgeleitet aus RUMBA 2024), «auf Zielkurs»-Status (RUMBA 2025).
 - *Narrativ:* «Ist die Bundesverwaltung auf Kurs?»
-- *Wert:* Offizielle Zeitreihe und Zielfortschritt auf einen Blick; differenzierte Botschaft: Linienflüge auf Kurs, BR-Jets +39% seit 2019 (kognitiv-analytisch und kommunikativ).
+- *Wert:* Offizielle Zeitreihe und Zielfortschritt schrittweise erzählt; differenzierte Botschaft statt einzelner Headline (kognitiv-analytisch und kommunikativ).
 
 **Kapitel 4 – Im Vergleich: Vereinigtes Königreich**
-- *Visualisierung:* Dot-Plot (Dumbbell-Stil) mit CH Bundesverwaltung vs. UK Central Government (Greening Government Commitments Report).
+- *Visualisierung:* Indizierter Linienvergleich CH Bundesverwaltung vs. UK Central Government (Greening Government Commitments Report); flankiert von einer Markdown-Tabelle mit den wichtigsten Policy-Unterschieden.
 - *Narrativ:* «Wie schneidet die Schweizer Bundesverwaltung im Vergleich ab?»
 - *Einschränkungshinweis:* Kaum eine andere Regierung publiziert vergleichbare Daten öffentlich — die Datenlücke wird als eigenständiger Befund kommuniziert. Methodische Unterschiede zwischen CH und UK werden transparent ausgewiesen.
 - *Wert:* Kontextualisiert die Schweizer Zahlen; die fehlende Vergleichbarkeit macht die Ausnahmestellung öffentlicher Berichterstattung sichtbar (kognitiv-analytischer Wert).
 
 **Kapitel 5 – Was bedeutet das für mich? (Bürger-Vergleich)**
-- *Visualisierung:* Isotype- oder Unit-Chart: Gegenüberstellung der Pro-Kopf-Emissionen einer Person der Bundeskanzlei (aus Dienstreisen) mit den durchschnittlichen jährlichen Flug-CO₂-Emissionen einer Schweizer Normalbürgerin / eines Normalbürgers.
+- *Visualisierung:* Interaktiver Pro-Kopf-Rechner mit zwei Modi (`st.tabs`):
+  - *Light:* `st.number_input` für die Anzahl typischer Flüge.
+  - *Advanced:* `st.data_editor` mit editierbarer Routen-Tabelle (IATA-Abflug, IATA-Ziel, Anzahl, Klasse Economy/Business); Distanzen via Haversine aus dem Airport-Lookup, Emissionen via myClimate-Faktoren.
+- *Vergleichswert:* Durchschnittliche Pro-Kopf-Emission eines BK-Mitarbeitenden, hochgerechnet aus der Jahressumme über eine fix verdrahtete Belegschafts-Annahme (`n_staff_estimate = 5'000`).
 - *Narrativ:* «Wie viele «Durchschnittsbürger:innen» bräuchte es, um die Emissionen einer Person der Bundeskanzlei zu erreichen?»
 - *Wert:* Macht abstrakte Tonnenzahlen mit persönlichem Bezug greifbar; schafft emotionalen Anknüpfungspunkt (Erfahrungs- und kommunikativer Wert).
 
@@ -235,21 +251,26 @@ Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von de
 
 | Diagrammtyp | Einsatz | Begründung |
 |---|---|---|
-| Arc-Map (Kartenvisualisierung) | Flugdestinationen (Kap. 2) | Geografische Muster direkt wahrnehmbar |
-| Liniendiagramm + Zielpfad | Emissionstrend 2019–2023 RUMBA + 2024 berechnet (Kap. 3) | Zeitlicher Verlauf und Zielfortschritt |
-| Gestapeltes Balkendiagramm | Anteil BR-Jets vs. Linienflüge (Kap. 3) | Komposition und Vergleich |
-| Big Number / Kacheln | Kennzahlen-Einstieg (Kap. 1) | Sofortige Orientierung ohne Diagramm-Aufwand |
+| 3-D-Globus (WebGL, eigenes Modul) | Flugverbindungen Hero + Kap. 2 | Geografische Muster mit räumlicher Tiefe; Drehung weckt Aufmerksamkeit |
+| Arc-Map (Plotly Scattergeo) | Fallback für Hero + Kap. 2 | Robuste 2-D-Darstellung, wenn Globus-Daten leer sind |
+| Big Number / KPI-Kacheln | Hero + Kap. 0 + Kap. 1 | Sofortige Orientierung ohne Diagramm-Aufwand |
+| Liniendiagramm + Zielpfad | Emissionstrend 2019–2024 RUMBA (Kap. 3) | Zeitlicher Verlauf und Zielfortschritt |
+| Schritt-Karten (HTML-Cards) | Narrativ-Begleitung Kap. 3 | Storytelling neben dem Diagramm; ein Befund pro Karte |
 | Durchsuchbare Tabelle | Einzelflüge (Kap. 2) | Tiefere Exploration der Rohdaten |
-| Dot-Plot (Dumbbell) | CH vs. UK Institutionenvergleich (Kap. 4) | Direkter Vergleich diskreter Kategorien |
-| Isotype- / Unit-Chart | Bürger-Vergleich Pro-Kopf-Emissionen (Kap. 5) | Abstrakte Tonnenzahlen in anschauliche Einheiten übersetzen |
+| Indizierter Linienvergleich | CH vs. UK Institutionenvergleich (Kap. 4) | Vergleich relativer Entwicklungen über die Zeit |
+| Editierbare Routen-Tabelle (`st.data_editor`) | Pro-Kopf-Rechner Kap. 5 (Advanced) | Direkte Manipulation: Lesende geben eigene Flüge ein |
 
 ---
 
 ### Interaktivität
 
-- Filterpanel (Jahr, Departement) für Karte und Tabelle
-- Tooltips auf allen Diagrammen mit Detailwerten
-- Annotationen im Liniendiagramm (Basisjahr, RUMBA-Status)
+- Hero: Jahresauswahl (`st.radio`) steuert Globus und Big-Number-Tile.
+- Kapitel 1: Auswahl des RUMBA-Berichtsjahrs (`st.radio`), aktualisiert alle KPI-Kacheln.
+- Kapitel 2: Filterpanel mit drei `st.selectbox`-Filtern (Jahr, Departement, **Zielland**) für Globus und Tabelle.
+- Kapitel 3: Prev/Next-Buttons zur Schrittnavigation; Position persistiert in `st.session_state["ch3_step_index"]`.
+- Kapitel 5: Modus-Umschaltung per `st.tabs` (Light / Advanced); editierbare Routen-Tabelle (`st.data_editor`).
+- Tooltips auf allen Plotly-Diagrammen mit Detailwerten.
+- Annotationen im Liniendiagramm (Basisjahr, RUMBA-Status).
 
 ---
 
@@ -263,11 +284,12 @@ Die Data Story führt Lesende in fünf narrative Kapitel durch das Thema: von de
 
 | Ziel / Nutzerbedürfnis | Wie adressiert |
 |---|---|
-| Transparenz (Lea: «wer fliegt wohin») | Karte + Tabelle Kapitel 2 |
-| Klimaimpact einordnen (Lea: Kontext) | Big Numbers Kap. 1 + Bürger-Vergleich Kap. 5 |
-| Zeittrend und Zielfortschritt (Lea, Klima) | Liniendiagramm Kapitel 3 mit Zielpfad |
-| Institutionenvergleich (Leitfrage 3) | Gruppiertes Balkendiagramm Kapitel 4 |
-| Persönlicher Bezug (Lea: «Was bedeutet das für mich?») | Isotype-/Unit-Chart Kapitel 5 |
+| Transparenz (Lea: «wer fliegt wohin») | Globus + Tabelle Kapitel 2 (Filter Jahr / Departement / Zielland) |
+| Konzeptuelle Grundlage (Was ist RUMBA?) | KPI-Kacheln und Callout Kapitel 0 |
+| Klimaimpact einordnen (Lea: Kontext) | Big Numbers Kap. 1 + Pro-Kopf-Rechner Kap. 5 |
+| Zeittrend und Zielfortschritt (Lea, Klima) | Liniendiagramm Kapitel 3 mit Zielpfad und Schritt-Narrativ |
+| Institutionenvergleich (Leitfrage 3) | Indizierter Linienvergleich CH vs. UK Kapitel 4 |
+| Persönlicher Bezug (Lea: «Was bedeutet das für mich?») | Pro-Kopf-Rechner Kapitel 5 (Light / Advanced) |
 | Methodik und Quellenvertrauen | Dokumentierter Code, Quellenverweis im Footer |
 
 
