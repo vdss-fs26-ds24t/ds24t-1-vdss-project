@@ -17,6 +17,7 @@ website:
       - project_charta.qmd
       - data_report.qmd
       - viz_design_report.qmd
+      - deployment.qmd
       - evaluation.qmd
       - meeting_notes.qmd
 

@@ -1,1 +1,84 @@
 # Deployment
+
+Dieses Dokument beschreibt, wie die zwei Auslieferungsprodukte des Projekts betrieben und veröffentlicht werden: die **Quarto-Dokumentation** (statische Website, GitHub Pages) und die **Streamlit-Data-Story** (`app/app.py`, Streamlit Community Cloud).
+
+## Überblick
+
+| Produkt | Pfad im Repo | Build-Tool | Hosting |
+|---|---|---|---|
+| Dokumentations-Website | `docs/` | Quarto | GitHub Pages (via Actions) |
+| Interaktive Data Story | `app/app.py` (+ `app/lib/`) | Streamlit | Streamlit Community Cloud |
+
+Beide Pfade sind unabhängig: Änderungen an den `.qmd`-Dateien lösen den Pages-Build aus, Änderungen an der Streamlit-App werden von Streamlit Cloud direkt vom verbundenen Branch gerendert.
+
+## Lokaler Betrieb der Streamlit-Data-Story
+
+**Voraussetzungen:** Python 3.12 (gepinnt via `.python-version`), `uv`.
+
+```bash
+uv sync
+uv run streamlit run app/app.py
+```
+
+Streamlit öffnet die App standardmässig unter `http://localhost:8501`.
+
+### Datenabhängigkeit
+
+Die App lädt fünf Excel-Fluglisten und die OpenFlights-Airports-CSV aus dem Ordner `data/` im Repository-Root (`app/lib/data.py`, Konstante `_DATA_DIR`). Diese Dateien sind nicht im Git-Repository enthalten und müssen separat bereitgestellt werden:
+
+| Datei | Quelle |
+|---|---|
+| `data/flugliste-rumba-2020-de.xlsx` | bk.admin.ch — Flugdaten BK 2020 |
+| `data/flugliste-rumba-2021-fr.xlsx` | bk.admin.ch — Flugdaten BK 2021 |
+| `data/flugliste-rumba-2022 (1).xlsx` | bk.admin.ch — Flugdaten BK 2022 |
+| `data/Flugliste_2023.xlsx` | bk.admin.ch — Flugdaten BK 2023 |
+| `data/Flugliste 2024 (3).xlsx` | bk.admin.ch — Flugdaten BK 2024 |
+| `data/airports.csv` | OpenFlights.org — `airports.dat` |
+
+Fehlt der Ordner oder eine der Excel-Dateien, beendet die App den Lauf mit der Fehlermeldung «Flugdaten konnten nicht geladen werden. Bitte prüfe den Ordner `data/` im Repo.»
+
+### Konfiguration
+
+Die App benötigt **keine Umgebungsvariablen, keine `st.secrets` und keinen explizit konfigurierten Port** — alle Werte (Emissionsfaktoren, RUMBA-Referenzwerte, Belegschafts-Annahme) sind direkt im Quellcode hinterlegt (siehe [Datenbericht](data_report.qmd#hard-coded-annahmen)).
+
+## Cloud-Deployment der Streamlit-Data-Story
+
+Die Data Story wird auf [Streamlit Community Cloud](https://streamlit.io/cloud) gehostet.
+
+| Parameter | Wert |
+|---|---|
+| Repository | [github.com/vdss-fs26-ds24t/ds24t-1-vdss-project](https://github.com/vdss-fs26-ds24t/ds24t-1-vdss-project) |
+| Branch | `main` |
+| Entry-Point | `app/app.py` |
+| Python-Version | 3.12 (aus `.python-version`) |
+| Dependencies | `pyproject.toml` (uv-managed) |
+| Secrets | — |
+
+**Daten für die Cloud:** Da die Excel-Fluglisten und `airports.csv` nicht im Git-Repository liegen, müssen sie für ein erfolgreiches Cloud-Deployment in den Ordner `data/` committed (alternativ: als Sample-Subset) oder über einen anderen Bereitstellungsmechanismus (z. B. ein Sidecar-Repo, ein dauerhafter Cloud-Storage-Bucket) verfügbar gemacht werden. Solange das nicht erfolgt ist, lässt sich die App nur lokal starten.
+
+## Deployment der Quarto-Dokumentation
+
+Die Dokumentations-Website wird automatisch via GitHub Actions gerendert und auf GitHub Pages publiziert.
+
+- **Workflow:** [`.github/workflows/publish.yml`](https://github.com/vdss-fs26-ds24t/ds24t-1-vdss-project/blob/main/.github/workflows/publish.yml)
+- **Trigger:** Push auf `main` oder manuelles `workflow_dispatch`.
+- **Build-Schritte:** Checkout → librsvg installieren → Quarto + TinyTeX einrichten → `quarto render` im Ordner `docs/` → Artefakt `docs/build/` auf GitHub Pages hochladen → Deploy.
+- **Kein Python im CI:** Der Workflow nutzt ausschliesslich Quarto. Berechnete Codezellen werden aus dem Cache `docs/_freeze/` bedient (`execute: freeze: auto` in `_quarto.yml`).
+
+Lokale Vorschau und Render-Befehle:
+
+```bash
+cd docs && quarto preview              # interaktive Vorschau
+cd docs && uv run quarto render        # statisch nach docs/build/
+cd docs && uv run quarto render --no-freeze  # _freeze/-Cache ignorieren und neu rechnen
+```
+
+Wenn lokal eine Codezelle neu gerechnet wurde, müssen die entsprechenden Dateien unter `docs/_freeze/` mit committed werden, damit CI dasselbe Ergebnis erzeugt.
+
+## Checkliste vor einem Release
+
+- [ ] `data/`-Ordner enthält alle fünf Fluglisten und `airports.csv`.
+- [ ] App startet lokal ohne Fehler (`uv run streamlit run app/app.py`).
+- [ ] Hero, Globus, Kapitel 0–5 und Footer werden vollständig gerendert; die drei Filter in Kapitel 2 reagieren.
+- [ ] Quarto rendert ohne Warnungen zu unaufgelösten Cross-Refs (`uv run quarto render` in `docs/`).
+- [ ] Streamlit-Cloud-Deployment zeigt die aktuelle `main`-Version; finale Live-URL ist in [`index.qmd`](index.qmd) eingetragen.

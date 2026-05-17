@@ -6,7 +6,11 @@ Diese Dokumentation beschreibt die Konzeption, Entwicklung und Evaluation eines 
 
 **Produkt:** Öffentlich zugängliche, scrollbare Streamlit-Data-Story, gehostet auf Streamlit Community Cloud.
 
+**Live-App:** [Link folgt nach Cloud-Deployment]. Lokaler Start: `uv run streamlit run app/app.py` (siehe [Deployment](deployment.qmd)).
+
 **Datenbasis:** RUMBA-Flugdaten der Bundeskanzlei 2020–2024 (Excel) sowie offizielle THG-Jahreswerte aus den RUMBA-Umweltberichten 2021–2024 (GS-UVEK).
+
+**Was Lesende in der Data Story erwartet:** Ein **Hero** mit Big-Number-Tile und rotierendem 3-D-Globus pro Jahr; **Kapitel 0** (Grundlagen zu RUMBA und Aktionsplan Flugreisen); **Kapitel 1** (Big-Number-Kacheln zur Verortung der Flugemissionen in der Gesamtbilanz pro RUMBA-Berichtsjahr); **Kapitel 2** (interaktiver Globus + durchsuchbare Tabelle, gefiltert nach Jahr, Departement und Zielland); **Kapitel 3** (Liniendiagramm mit siebenstufigem Narrativ entlang des Zielpfads bis 2030); **Kapitel 4** (Vergleich CH vs. UK Central Government); **Kapitel 5** (interaktiver Pro-Kopf-Rechner mit Light- und Advanced-Modus).
 
 ![Der Entwicklungsprozess für Datenvisualisierungsprodukte](pics/vizproductprocess.png){#fig-vizprocess}
 
@@ -18,3 +22,5 @@ Die vier Hauptphasen und ihre Dokumentationsartefakte:
 * **Datenakquise und -exploration** &rarr; [Datenbericht](data_report.qmd): Datenquellen, Schema, Emissionsmethodik, explorative Analyse.
 * **Visuelle Encodierung und Design** &rarr; [Visualisierungsdesign-Bericht](viz_design_report.qmd): Data-to-Visual-Mapping, Layout, Interaktionsdesign, visueller Stil, Prototyp.
 * **Evaluation** &rarr; [Evaluationsbericht](evaluation.qmd): Heuristische Evaluation und Nutzertests gegenüber den Erfolgskriterien der Projektcharta.
+
+Ergänzend dokumentiert [Deployment](deployment.qmd) den lokalen Betrieb der Streamlit-App, das Cloud-Hosting und den GitHub-Pages-Build der Dokumentation.
