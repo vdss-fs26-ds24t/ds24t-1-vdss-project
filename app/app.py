@@ -57,19 +57,12 @@ styles.inject()
 
 
 # ── Data ────────────────────────────────────────────────────────────────────
-from pathlib import Path
-import os
-st.write("CWD:", os.getcwd())
-st.write("data dir exists:", Path("data").exists())
-st.write("data dir listing:", [p.name for p in Path("data").glob("*")] if Path("data").exists() else "NO DATA DIR")
+
 
 flights = load_flights()
 airports = load_airports()
 flights = add_destination_country(flights, airports)
 
-st.write("flights:", flights.shape)
-st.write("airports:", airports.shape)
-st.write("years:", sorted(flights["source_year"].unique()) if not flights.empty else "NO FLIGHTS")
 
 if flights.empty:
     st.error("Flugdaten konnten nicht geladen werden. Bitte prüfe den Ordner data/ im Repo.")
