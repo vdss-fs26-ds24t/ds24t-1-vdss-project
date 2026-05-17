@@ -381,17 +381,11 @@ with tab_scope:
         * **Organisationen:** Das System umfasst sechs Departemente, die Bundeskanzlei und die Parlamentsdienste. Wichtig: Das **VBS** (Verteidigung, Bevölkerungsschutz und Sport) ist nicht Teil von RUMBA. Es bilanziert seine Emissionen seit 2001 separat über das System «RUMS-VBS», um Doppelzählungen zu vermeiden.
         * **Departemente im Überblick:**
             * **EDA** – Eidgenössisches Departement für auswärtige Angelegenheiten
-
             * **EDI** – Eidgenössisches Departement des Innern
-
             * **EJPD** – Eidgenössisches Justiz- und Polizeidepartement
-
             * **VBS** – Eidgenössisches Departement für Verteidigung, Bevölkerungsschutz und Sport
-
             * **EFD** – Eidgenössisches Finanzdepartement
-
             * **WBF** – Eidgenössisches Departement für Wirtschaft, Bildung und Forschung
-
             * **UVEK** – Eidgenössisches Departement für Umwelt, Verkehr, Energie und Kommunikation
         * **Themenbereiche:** Traditionell deckt RUMBA die grössten Hebel ab: Dienstreisen, den Gebäudebereich (Wärme, Strom, Wasser, Abfall) und den Papierverbrauch. 
         * **Ausblick:** Ab dem Berichtsjahr 2025 wird der Scope um Kältemittel sowie um fünf Satellit-Themen erweitert (IT-Material, Verpflegung, mobiles Arbeiten, Pendelfahrten und Plastikrecycling).
@@ -558,14 +552,14 @@ with tab_other:
         '<div class="method-note">Quellen: RUMBA 2021, Kap. 1.3.3 & 3.3; RUMBA 2023, Kap. 2.3.2; RUMBA 2024, Kap. 4.3; RUMBA 2025, Kap. 2.2.1 & 2.2.2.</div>'
     )
 
-st.divider()
+# st.divider()
 
 
 # ── Chapter 1 — KPIs ────────────────────────────────────────────────────────
 
 styles.chapter_header(
     eyebrow="Kapitel 1",
-    title="Der Bundesratsjet im Kontext",
+    title="Die Flüge der Bundesverwaltung im Kontext",
     lead=(
         "Flugreisen stellen mit 36–61 Prozent den grössten Hotspot der Treibhausgasemissionen "
         "der Bundesverwaltung dar (RUMBA-Umweltberichte 2021–2025). "
@@ -650,7 +644,7 @@ with k6:
 styles.html(f'<div class="method-note">{rumba_note}</div>')
 
 st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
-st.divider()
+# st.divider()
 
 
 # ── Chapter 2 — Who flies where ─────────────────────────────────────────────
@@ -769,7 +763,7 @@ styles.html(
     'Ziellandfilter = Ankunftsland; enthält Hin- und Rückflüge.'
     '</div>'
 )
-st.divider()
+# st.divider()
 
 
 # ── Chapter 3 — Trend ───────────────────────────────────────────────────────
@@ -939,7 +933,7 @@ styles.html("""
 </div>
 """)
 
-st.divider()
+# st.divider()
 
 
 # ── Chapter 4 — Comparison ──────────────────────────────────────────────────
@@ -1262,18 +1256,18 @@ with tab_advanced:
             )
         else:
             verdict_adv = (
-                f"Deine {counted_legs} Flug(e) verursachen schätzungsweise "
-                f"<strong>{user_t_adv:.2f} t</strong> CO₂eq — rund "
-                f"{ratio_swiss_adv}× den Schweizer Durchschnitt "
+                f"Deine Flüge verursachen schätzungsweise im Jahr {adv_year} "
+                f"<strong>{user_t_adv:.2f} t</strong> CO₂eq. Das ist rund "
+                f"{ratio_swiss_adv} × den Schweizer Durchschnitt "
                 f"({charts.BAFU_SWISS_AVG_T} t)"
-                + (f" und etwa {ratio_bk_adv}× eine Ø Person der "
+                + (f" und etwa {ratio_bk_adv} × eine Ø Person der "
                    f"Bundesverwaltung ({bk_pp_adv:.2f} t)." if bk_pp_adv > 0
                    else ".")
             )
 
         styles.html(f"""
 <div style="padding-top:20px">
-  <div class="eyebrow">Dein Vergleich · {adv_year}</div>
+  <div class="eyebrow">Dein Vergleich · <strong>{adv_year}</strong></div>
   <div class="chapter-title" style="font-size:clamp(32px,3vw,48px)">
     {user_t_adv:.2f} t
   </div>
