@@ -82,11 +82,11 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ## User Analysis
 
-### Persona 1: Lea, interessierte Bürgerin (35, Zürich)
-::: {#fig-elephant}
+### Persona: Lea, interessierte Bürgerin (35, Zürich)
+::: {#fig-persona}
 ![](pics/Gemini_Persona.png)
 
-Bild 1: Mit Nano Banana von Gemini erstelltes Persona-Porträt. 
+Mit Nano Banana von Gemini erstelltes Persona-Porträt. 
 :::
 **Profil:** Lehrerin, politisch interessiert, liest regelmässig Tamedia-Medien und SRF-Online. Keine Fachkenntnisse in der Datenanalyse. Nutzt Smartphone und Laptop gleichermässig.
 
@@ -113,10 +113,10 @@ Bild 1: Mit Nano Banana von Gemini erstelltes Persona-Porträt.
 ---
 
 ### Anti-User-Persona: Marc, Datenjournalist (42, Bern)
-::: {#fig-elephant}
+::: {#fig-antipersona}
 ![](pics/Gemini_AntiPersona.png)
 
-Bild 2: Mit Nano Banana von Gemini erstelltes Anti-Persona-Porträt. 
+Mit Nano Banana von Gemini erstelltes Anti-Persona-Porträt. 
 :::
 **Profil:** Journalist bei einer Schweizer Tageszeitung, spezialisiert auf Recherchen zu Politik und Verwaltung. Erfahren im Umgang mit Daten und Tabellen. Nutzt Desktop und Laptop.
 
@@ -143,10 +143,10 @@ Bild 2: Mit Nano Banana von Gemini erstelltes Anti-Persona-Porträt.
 ---
 
 ### Non-Human Persona: Das Klima
-::: {#fig-elephant}
+::: {#fig-nonhumanpersona}
 ![](pics/Gemini_NonHumanPersona.png)
 
-Bild 3: Mit Nano Banana von Gemini erstelltes Non-Human-Persona Bild. 
+Mit Nano Banana von Gemini erstelltes Non-Human-Persona Bild. 
 :::
 **Profil:** Globales, physikalisch-chemisches System, das durch kumulierte Treibhausgasemissionen destabilisiert wird. Kein Bewusstsein, aber klare messbare Zustände und Schwellenwerte. «Nutzt» die Data Story nicht aktiv, ist jedoch das zentrale betroffene System hinter allen dargestellten Daten.
 

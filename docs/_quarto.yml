@@ -7,7 +7,7 @@ language:
   section-title-appendices: "Appendix"
 
 website:
-  title: "Sample Project"
+  title: "RUMBA Data Story"
   search: true
   sidebar:
     style: "floating"
