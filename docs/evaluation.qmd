@@ -96,8 +96,8 @@ Die Ergebnisse der Nutzertests zeigen ein äusserst positives Bild bezüglich de
 
 #### Auffällige Befunde und Optimierungsbedarf 
 
-1. Performance-Flaschenhals auf Mobilgeräten (Person 1): Bei der Nutzung der Data Story über das Smartphone stellte Person 1 fest, dass die Ladezeit deutlich zu lang ist. Da die primäre Persona Lea laut Profil ein „Smartphone-first“-Nutzungsverhalten zeigt, stellt dies ein kritisches Risiko für die Akzeptanz dar.
-2. Wunsch nach aggregierten Kennzahlen / Makro-Ebene (Person 2): Person 2 bemängelte das Fehlen einer schnellen Übersicht zu globalen Flugstatistiken („Key Figures“) über alle Departemente hinweg. Konkret gewünscht werden Antworten auf Fragen wie: Welcher Flug/welche Route kommt am häufigsten vor? Welches Departement verursacht insgesamt die meisten Flüge oder Emissionen?
+1. **Performance-Flaschenhals auf Mobilgeräten** (Person 1): Bei der Nutzung der Data Story über das Smartphone stellte Person 1 fest, dass die Ladezeit deutlich zu lang ist. Da die primäre Persona Lea laut Profil ein „Smartphone-first“-Nutzungsverhalten zeigt, stellt dies ein kritisches Risiko für die Akzeptanz dar.
+2. **Wunsch nach aggregierten Kennzahlen / Makro-Ebene** (Person 2): Person 2 bemängelte das Fehlen einer schnellen Übersicht zu globalen Flugstatistiken („Key Figures“) über alle Departemente hinweg. Konkret gewünscht werden Antworten auf Fragen wie: Welcher Flug/welche Route kommt am häufigsten vor? Welches Departement verursacht insgesamt die meisten Flüge oder Emissionen?
 
 
 ## Diskussion
