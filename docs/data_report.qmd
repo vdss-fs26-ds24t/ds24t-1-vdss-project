@@ -23,9 +23,9 @@ Dieser Bericht dokumentiert alle im Projekt verwendeten Datenquellen und stellt 
 Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourcen- und Umweltmanagement der Bundesverwaltung) als Excel-Dateien veröffentlicht. Sie enthalten alle Dienstreise-Flugabschnitte der erfassten Verwaltungseinheiten.
 
 - **Inhalt:** Einzelne Flugabschnitte (Legs) mit Abflug- und Ankunftsflughafen (Name + IATA-Code), Enddestination, Datum/Monat, Reiseklasse, Departement, Verwaltungseinheit, Strecke in km, Streckenkategorie.
-- **Wichtig:** Die Daten enthalten **keine Personennamen** — nur Departement und Verwaltungseinheit.
-- **Besonderheit:** Die Flugdistanz (km) ist bereits in den Rohdaten berechnet; Emissionen müssen separat berechnet werden.
-- **Rechtliches:** Öffentlich zugängliche Daten (bk.admin.ch); keine Personendaten enthalten.
+- **Wichtig:** Die Daten enthalten **keine Personennamen**. Nur Departement und Verwaltungseinheit.
+- **Besonderheit:** Die Flugdistanz (km) ist bereits in den Rohdaten berechnet. Emissionen müssen separat berechnet werden.
+- **Rechtliches:** Öffentlich zugängliche Daten (bk.admin.ch). Keine Personendaten enthalten.
 - **Datenschutz:** Da keine Einzelpersonen identifizierbar sind, gelten keine besonderen Datenschutzanforderungen.
 
 #### Datenkatalog (kanonisches Schema nach Bereinigung)
@@ -39,14 +39,14 @@ Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourc
 | `arrival_airport` | Flughafen Ankunft (B) | String | Flughafenname | Ankunftsflughafen |
 | `iata_to` | IATA-Code (B) | String (3 Zeichen) | Gültiger IATA-Code | IATA-Code Ankunft |
 | `final_destination` | Enddestination | String | Stadtname | Enddestination (relevant bei Umsteigeflügen) |
-| `date_raw` | Monat | String / Datetime | 2020–2021: Monatsname DE; 2022–2024: Datetime (teils fehlerhaft) | Reisedatum/-monat |
+| `date_raw` | Monat | String / Datetime | 2020–2021: Monatsname DE. 2022–2024: Datetime (teils fehlerhaft) | Reisedatum/-monat |
 | `class_` | Klasse | String | `Economy`, `Business` | Reiseklasse |
 | `department` | Departement | String | z.B. EDA, EFD, WBF, VBS | Zuständiges Departement |
 | `unit` | Verwaltungseinheit | String | z.B. Agroscope, BAZG | Verwaltungseinheit |
 | `rumba_rums` | RUMBA/RUMS | String | `RUMBA`, `RUMS` | Zugehörigkeit zum Erfassungssystem |
 | `distance_km` | Direkte Fluglinie (km) | Float | > 0 | Orthodrome-Distanz (bereits berechnet) |
 | `haul_type_raw` | Kurz-/Mittel-/Langstreckenflug | String | DE (2021–2023) oder EN (2024) | Streckenkategorie |
-| `is_connecting` | Teilstrecke eines Gabelfluges | Boolean | True/False | Nur 2023–2024; 2021–2022 = False |
+| `is_connecting` | Teilstrecke eines Gabelfluges | Boolean | True/False | Nur 2023–2024. 2021–2022 = False |
 | `source_year` | (aus Dateiname abgeleitet) | Integer | 2020–2024 | Datenjahr |
 | `haul_type` | (normalisiert) | String | `short`, `medium`, `long` | Normalisierte Streckenkategorie |
 | `co2_kg` | (berechnet) | Float | > 0 | Berechnete CO₂-Emissionen in kg |
@@ -55,8 +55,8 @@ Die Flugdaten wurden von der Bundeskanzlei im Rahmen des RUMBA-Systems (Ressourc
 
 - **Zeilenanzahl:** 2020: 7'516 · 2021: 7'683 · 2022: 19'758 · 2023: 23'759 · 2024: 23'670 (total: 82'386 Legs)
 - **Klassen:** Economy-Anteil 2024: 88.9%, Business: 11.1%
-- **Datumsqualität:** 2021 enthält Monatsnamen (kein Datum); 2022 enthält einige Zeilen mit falschen Jahreszahlen (z.B. 2027, 2028) — wahrscheinlich Dateneingabefehler. Für das Datenjahr wird stets der Dateiname als Quelle verwendet.
-- **IATA-Abdeckung:** Nahezu vollständig; einzelne unbekannte Codes werden über `data_acquisition/airport_overrides.csv` nachgeschlagen.
+- **Datumsqualität:** 2021 enthält Monatsnamen (kein Datum). 2022 enthält einige Zeilen mit falschen Jahreszahlen (z.B. 2027, 2028) — wahrscheinlich Dateneingabefehler. Für das Datenjahr wird stets der Dateiname als Quelle verwendet.
+- **IATA-Abdeckung:** Nahezu vollständig. Einzelne unbekannte Codes werden über `data_acquisition/airport_overrides.csv` nachgeschlagen.
 - **Fehlende Werte:** Keine fehlenden Werte in Pflichtfeldern (Distanz, IATA-Codes, Departement).
 
 ### Details: RUMBA Umweltberichte 2021–2024
@@ -76,7 +76,7 @@ Die RUMBA-Umweltberichte werden jährlich von der Fachstelle RUMBA / GS-UVEK pub
 | 2021 | 10'020 | RUMBA Umweltbericht 2022 |
 | 2022 | 14'409 | RUMBA Umweltbericht 2023 |
 | 2023 | 16'904 | RUMBA Umweltbericht 2024 |
-| 2024 | k.A. (RUMBA 2025 nicht verfügbar) | — |
+| 2024 | k.A. (RUMBA 2025 nicht verfügbar) | k.A. |
 
 ### Details: Airports-Lookup
 
@@ -95,7 +95,7 @@ Die RUMBA-Umweltberichte werden jährlich von der Fachstelle RUMBA / GS-UVEK pub
 
 | Name | Ausgangsdaten | Speicherort |
 |---|---|---|
-| Zusammengeführte Flugliste mit Emissionen | Fluglisten 2020–2024 | Im Speicher (Streamlit `@st.cache_data`); kein persistiertes CSV |
+| Zusammengeführte Flugliste mit Emissionen | Fluglisten 2020–2024 | Im Speicher (Streamlit `@st.cache_data`). Kein persistiertes CSV |
 | RUMBA-Zeitreihe | RUMBA Umweltberichte 2021–2024 | Hartcodiert in `app/lib/charts.py` (`RUMBA_SERIES`) |
 
 ### Emissionsberechnung (Methodik)
@@ -113,7 +113,7 @@ Die Emissionen pro Flugabschnitt werden auf Basis der bereits in den Rohdaten en
 - **Business Class:** Multiplikator 2.0 (erhöhter Flächenbedarf pro Sitzplatz)
 - **Formel:** `co2_kg = distance_km × factor × class_multiplier`
 
-**Abweichung von offiziellen RUMBA-Werten:** Die berechneten Jahrestotale aus den Excel-Daten liegen systematisch ~20–25 % unter den offiziellen RUMBA-Jahreswerten. Mögliche Gründe: unterschiedliche Emissionsmethodik (RUMBA verwendet TREMOD/EMFAC), abweichender Erfassungskreis (RUMS VBS separat), oder fehlende Flüge in den öffentlich verfügbaren Excel-Dateien. Die berechneten Werte werden in Kapitel 2 (Musteranalyse) verwendet; für Kapitel 3 (Trend) werden die offiziellen RUMBA-Werte verwendet. **In der Hero-Sektion der Data Story werden für jedes ausgewählte Jahr beide Werte explizit gegenübergestellt** (berechnetes Total + RUMBA-Referenz inkl. prozentualer Differenz), damit Lesende die Methodendiskrepanz unmittelbar einordnen können.
+**Abweichung von offiziellen RUMBA-Werten:** Die berechneten Jahrestotale aus den Excel-Daten liegen systematisch ~20–25 % unter den offiziellen RUMBA-Jahreswerten. Mögliche Gründe: unterschiedliche Emissionsmethodik (RUMBA verwendet TREMOD/EMFAC), abweichender Erfassungskreis (RUMS VBS separat), oder fehlende Flüge in den öffentlich verfügbaren Excel-Dateien. Die berechneten Werte werden in Kapitel 2 (Musteranalyse) verwendet. Für Kapitel 3 (Trend) werden die offiziellen RUMBA-Werte verwendet. **In der Hero-Sektion der Data Story werden für jedes ausgewählte Jahr beide Werte explizit gegenübergestellt** (berechnetes Total + RUMBA-Referenz inkl. prozentualer Differenz). Damit Lesende die Methodendiskrepanz unmittelbar einordnen können.
 
 ### Personalisierte Emissionsschätzung (Kapitel 5)
 
@@ -151,4 +151,4 @@ Die Verarbeitung erfolgt in `app/lib/data.py`. Funktionen mit `@st.cache_data` w
 | `avg_leg_metrics(df, year)` | nein | Mittlere Distanz und mittlere CO₂-Emission je Flugabschnitt für ein Berichtsjahr. |
 | `co2_for_distance(distance_km, class_)` | nein | Einzelflug-CO₂ aus Distanz und Klasse (myClimate-Faktoren, Business-Multiplikator). Wird in Kapitel 5 verwendet. |
 | `route_distance_km(airports, iata_from, iata_to)` | nein | Haversine-Distanz zwischen zwei IATA-Codes aus dem Airport-Lookup. Wird in Kapitel 5 für editierbare Routen verwendet. |
-| `haversine_km(lat1, lon1, lat2, lon2)` | nein | Reine Geometrie-Helferfunktion; Erdradius = 6'371 km. |
+| `haversine_km(lat1, lon1, lat2, lon2)` | nein | Reine Geometrie-Helferfunktion. Erdradius = 6'371 km. |

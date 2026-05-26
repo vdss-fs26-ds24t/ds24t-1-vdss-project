@@ -9,10 +9,10 @@ Das Visualisierungskonzept der [Projektcharta](project_charta.qmd) wurde in eine
 **Änderungen gegenüber ursprünglichem Konzept:**
 - Filter nach «Person» entfällt (Personennamen nicht in Rohdaten vorhanden) → drei Filter: Jahr, Departement und **Zielland**.
 - Hero und Kapitel 0 (Grundlagen zu RUMBA) ergänzt, um Begriffsklärung vor den Zahlen zu liefern.
-- Karte: zusätzlich zum Plotly-Scattergeo wird ein eigener 3-D-Globus (`app/lib/globe.py`) als primäre Darstellung verwendet; die Plotly-Arc-Map bleibt als robuster Fallback erhalten.
+- Karte: Zusätzlich zum Plotly-Scattergeo wird ein eigener 3-D-Globus (`app/lib/globe.py`) als primäre Darstellung verwendet. Die Plotly-Arc-Map bleibt als robuster Fallback erhalten.
 - Zeitreihe in Kapitel 3: RUMBA-offizielle Jahreswerte 2019–2024 (statt 2006–2024-Reihe; letztere nicht vollständig rekonstruierbar). Die Erzählung wird in sieben Schritte zerlegt, durch Prev/Next-Buttons gesteuert (Position persistiert in `st.session_state["ch3_step_index"]`).
 - Kapitel 4: UK «Greening Government Commitments» statt breiter Ländervergleich; Darstellung als indizierter Linienvergleich plus Markdown-Vergleichstabelle der Policies (die im Charter-Plan ursprünglich vorgesehene Dot-Plot-Variante wurde verworfen, weil die Zeitreihe inhaltlich aussagekräftiger ist als ein Endpunkt-Vergleich).
-- Kapitel 5: statt eines statischen Isotype-/Balken-Diagramms wird ein interaktiver Pro-Kopf-Rechner umgesetzt — Light-Modus (`st.number_input` Anzahl Flüge) und Advanced-Modus (`st.data_editor` mit IATA-Routen-Tabelle und Klasse Economy/Business). Vergleich gegen die durchschnittliche Pro-Kopf-Emission eines BK-Mitarbeitenden (Annahme `n_staff_estimate = 5'000`).
+- Kapitel 5: Statt eines statischen Isotype-/Balken-Diagramms wird ein interaktiver Pro-Kopf-Rechner umgesetzt. Light-Modus (`st.number_input` Anzahl Flüge) und Advanced-Modus (`st.data_editor` mit IATA-Routen-Tabelle und Klasse Economy/Business). Vergleich gegen die durchschnittliche Pro-Kopf-Emission eines BK-Mitarbeitenden (Annahme `n_staff_estimate = 5'000`).
 
 ## Data-to-Visual-Mapping
 
@@ -20,15 +20,15 @@ Das Visualisierungskonzept der [Projektcharta](project_charta.qmd) wurde in eine
 
 | Kapitel / Chart | Datenvariablen | Marktyp | Visuelle Kanäle | Skala |
 |---|---|---|---|---|
-| Hero — Globus + Big Number | iata_from/to, co2_kg, Jahressumme CO₂eq, RUMBA-Referenzwert | Bögen auf WebGL-Globus + Text-Kachel | Position (geo), Linienstärke, Grösse, Farbe (Warm/Muted) | Geografisch, linear (CO₂) |
-| 0 — KPI-Kacheln + Callout | RUMBA-Umfang, Organisation, neue Themen | Text + Icon | Grösse, Farbe (Akzentleisten) | — |
-| 1 — KPI-Kacheln | Total THG, Anteil Flugreisen, Flug-THG, FTE-Wert je Berichtsjahr | Text | Grösse, Farbe (Warm/Cool/Akzent) | — |
-| 2 — 3-D-Globus | iata_from, iata_to, co2_kg, Flugzahl (aggregiert) | Bögen auf rotierendem Globus | Position (geo), Linienstärke, Opacity | Geografisch, linear (CO₂) |
+| Hero - Globus + Big Number | iata_from/to, co2_kg, Jahressumme CO₂eq, RUMBA-Referenzwert | Bögen auf WebGL-Globus + Text-Kachel | Position (geo), Linienstärke, Grösse, Farbe (Warm/Muted) | Geografisch, linear (CO₂) |
+| 0 - KPI-Kacheln + Callout | RUMBA-Umfang, Organisation, neue Themen | Text + Icon | Grösse, Farbe (Akzentleisten) | - |
+| 1 - KPI-Kacheln | Total THG, Anteil Flugreisen, Flug-THG, FTE-Wert je Berichtsjahr | Text | Grösse, Farbe (Warm/Cool/Akzent) | - |
+| 2 - 3-D-Globus | iata_from, iata_to, co2_kg, Flugzahl (aggregiert) | Bögen auf rotierendem Globus | Position (geo), Linienstärke, Opacity | Geografisch, linear (CO₂) |
 | 2 — Arc-Map (Fallback) | iata_from, iata_to, co2_kg (aggregiert) | Linien + Punkte (Plotly Scattergeo) | Position (geo), Linienstärke, Opacity | Geografisch, linear (CO₂) |
 | 2 — Tabelle | Alle Felder je Flugabschnitt nach Filterung | Zeilen (`st.dataframe`, sortierbar) | Position | Kategorisch, numerisch |
-| 3 — Liniendiagramm + Schrittnavigation | year, co2_t (RUMBA-offiziell 2019–2024), Zielpfad | Linie + Fläche; HTML-Karte je Schritt | Position x/y, Farbe (Warm = Ist, Cool = Ziel) | Temporal, linear |
+| 3 - Liniendiagramm + Schrittnavigation | year, co2_t (RUMBA-offiziell 2019–2024), Zielpfad | Linie + Fläche. HTML-Karte je Schritt | Position x/y, Farbe (Warm = Ist, Cool = Ziel) | Temporal, linear |
 | 4 — Indizierter Linienvergleich | year, co2_indexed (CH/UK, 2019 = 100) | Linien (zwei Serien) | Position x/y, Farbe (Warm = CH, Cool = UK) | Temporal, linear |
-| 5 — Pro-Kopf-Rechner | Eingegebene Flüge, berechnete Emissionen, BK-Schnitt, CH-Bevölkerungsschnitt | Editierbare Tabelle (`st.data_editor`) + Vergleichschart | Länge, Farbe; Direkteingabe | Linear |
+| 5 - Pro-Kopf-Rechner | Eingegebene Flüge, berechnete Emissionen, BK-Schnitt, CH-Bevölkerungsschnitt | Editierbare Tabelle (`st.data_editor`) + Vergleichschart | Länge, Farbe. Direkteingabe | Linear |
 
 ## Layout und Komposition
 

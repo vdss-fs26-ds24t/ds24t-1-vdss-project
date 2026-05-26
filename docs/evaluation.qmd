@@ -28,7 +28,7 @@ Geplante Methoden:
 * **Nutzertests (Usability):** 2–3 Personen aus der Zielgruppe Persona 1 (geringes Data-Literacy-Niveau). Aufgaben (an die aktuelle App angepasst):
     1. *Filter-Verständnis:* «Welches Departement fliegt 2024 am meisten nach Australien?» (Kapitel 2, drei Filter Jahr / Departement / Zielland)
     2. *Trend-Lesen:* «Ist die Bundesverwaltung auf Kurs zum −30 %-Ziel 2030?» (Kapitel 3, sieben Narrativ-Schritte mit Prev/Next)
-    3. *Persönlicher Bezug:* «Wie viele Tonnen CO₂ verursachen drei Flüge Zürich–New York in Business Class — und wie verhält sich das zu einer BK-Person?» (Kapitel 5, Advanced-Modus mit `st.data_editor`)
+    3. *Persönlicher Bezug:* «Wie viele Tonnen CO₂ verursachen drei Flüge Zürich–New York in Business Class? Wie verhält sich das zu einer BK-Person?» (Kapitel 5, Advanced-Modus mit `st.data_editor`)
 * **Protokoll:** Think-Aloud, Beobachtung von Fehlern und Verständnislücken, Zeit pro Aufgabe.
 
 ### Teilnehmende
