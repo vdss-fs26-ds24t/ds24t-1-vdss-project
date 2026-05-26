@@ -1,31 +1,32 @@
-# Sample Project
-This is a template for a data visualization project using Python, uv for environment and package management and Quarto for documentation.
+# RUMBA Data Story
+This project is a ZHAW semester project (Spring 2026) that produces a public, scrollable data story about Swiss federal government flight emissions (2020-2024).
 
-To adapt to your individual project change `sample` to the respective project name in the commands below
+It ships two outputs:
+- Streamlit interactive data story in `app/`
+- Quarto documentation site in `docs/`
 
-Adapt the `LICENSE` as required.
+Documentation website (GitHub Pages): https://vdss-fs26-ds24t.github.io/ds24t-1-vdss-project/
 
-> To do: Provide a brief description of the project here.
+Live Streamlit data story: https://ds24t-1-vdss-rumba-datastory.streamlit.app/
+
+Deployment details for both outputs live in `docs/deployment.qmd`.
 
 ## Project Organisation
 The visualization product development is organised according to the following process model:
 
 ![The visualization product development process](docs/pics/vizproductprocess.png)
 
-Code and configurations used in the different project phases are stored in the correspoding subfolders. Documentation artefacts in the form of a Quarto project are provided in `docs`.
+Code and configurations used in the different project phases are stored in the corresponding subfolders. Documentation artefacts in the form of a Quarto project are provided in `docs`.
 
 | Phase | Code folders | Documentation section | `docs`-File |
 |:-------|:---|:---|:---|
-| Project Understanding | -  | Project Charta | project_charta.qmd  |
-| Data Acquisition and Exploration | `eda` | Data Report | data_report.qmd  |
-| Visual Encoding and Design | `encoding-design`  | Visual Encoding and Design | viz_encoding_design.qmd  |
-| Evaluation | `evaluation`  | Evaluation | evaluation.qmd  |
-| Deployment | `deployment` | Deployment | deplyoment.qmd |
+| Project Understanding | - | Project Charta | project_charta.qmd |
+| Data Acquisition and Exploration | `data_acquisition`, `eda` | Data Report | data_report.qmd |
+| Visual Encoding and Design | `viz_design` | Visual Encoding and Design | viz_design_report.qmd |
+| Evaluation | `evaluation` | Evaluation | evaluation.qmd |
+| Deployment | `deployment` | Deployment | deployment.qmd |
 
-
-> To do: Adjust accoding to your specific project needs - ensure consistency with readme, documentation, etc.
-
-> To do: add link to documentation website for convenience.
+The Streamlit data story itself lives in `app/` and reuses datasets and helpers from `app/lib/`.
 
 
 See section `Quarto Setup and Usage` for instructions on how to build and serve the documentation website using Quarto.
