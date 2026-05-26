@@ -54,32 +54,33 @@ Die Nutzertests wurden im Mai 2026 mit zwei repräsentativen Personen durchgefü
 ### Persona-Abgleich (Gegenüberstellung Projektcharta vs. Testergebnisse)
 Um das Erfolgskriterium „Mindestens 2 Personas abgedeckt“ systematisch zu überprüfen, wurden die Testergebnisse mit den Profilen aus der Projektcharta abgeglichen:
 
-1. Persona: Lea (Interessierte Bürgerin)
+#### Persona: Lea (Interessierte Bürgerin)
+
 **Definitiv erfüllt:**
 
-Pains gemildert: Die unzugänglichen PDF-Rohdaten wurden erfolgreich in eine verständliche Form überführt. Lea kann Kernaussagen ohne Vorwissen erfassen.
+- Pains gemildert: Die unzugänglichen PDF-Rohdaten wurden erfolgreich in eine verständliche Form überführt. Lea kann Kernaussagen ohne Vorwissen erfassen.
 
-Gains realisiert: Die Vergleiche (4x Schweizer Durchschnitt, 2.5x Bundesverwaltungs-Mitarbeitende) machten die abstrakten CO₂-Mengen für beide Testpersonen sofort greifbar und emotional verständlich. Die schnelle Beantwortung belegt den Erfolg.
+- Gains realisiert: Die Vergleiche (4x Schweizer Durchschnitt, 2.5x Bundesverwaltungs-Mitarbeitende) machten die abstrakten CO₂-Mengen für beide Testpersonen sofort greifbar und emotional verständlich. Die schnelle Beantwortung belegt den Erfolg.
 
 **Potenzial / Defizite:**
 
-Technisches Umfeld missachtet: Lea ist laut Profil „Smartphone-first“. Die von Person 1 gemeldete lange Ladezeit auf dem Handy korreliert negativ mit diesem Bedürfnis. Hier muss dringend technisch nachgebessert werden.
+- Technisches Umfeld missachtet: Lea ist laut Profil „Smartphone-first“. Die von Person 1 gemeldete lange Ladezeit auf dem Handy korreliert negativ mit diesem Bedürfnis. Hier muss dringend technisch nachgebessert werden.
 
-2. Anti-User-Persona: Marc (Datenjournalist)
+#### Anti-User-Persona: Marc (Datenjournalist)
 **Definitiv erfüllt:**
 
-Gains realisiert: Der Advanced-Modus in Kapitel 5 (Routeneditor via st.data_editor) funktioniert präzise und liefert valide, exakte Werte (5.56 t CO₂eq), was Marcs Anspruch an analytische Tiefe und Faktenstärke bedient.
+- Gains realisiert: Der Advanced-Modus in Kapitel 5 (Routeneditor via st.data_editor) funktioniert präzise und liefert valide, exakte Werte (5.56 t CO₂eq), was Marcs Anspruch an analytische Tiefe und Faktenstärke bedient.
 
 **Potenzial / Defizite:**
 
-Fehlende Aggregationsebene: Journalisten suchen oft nach der „Story in der Story“ (z.B. Verschwender-Departement, Rekord-Routen). Der Wunsch von Person 2 nach einem Überblick der am häufigsten frequentierten Flüge und Departements-Rankings deckt sich exakt mit Marcs Pain („mühsames manuelles Auslesen und Aggregieren“). Die Data Story ist aktuell zu stark auf Einzelflüge und den globalen Trend fokussiert, die mittlere Aggregationsebene fehlt.
+- Fehlende Aggregationsebene: Journalisten suchen oft nach der „Story in der Story“ (z.B. Verschwender-Departement, Rekord-Routen). Der Wunsch von Person 2 nach einem Überblick der am häufigsten frequentierten Flüge und Departements-Rankings deckt sich exakt mit Marcs Pain („mühsames manuelles Auslesen und Aggregieren“). Die Data Story ist aktuell zu stark auf Einzelflüge und den globalen Trend fokussiert, die mittlere Aggregationsebene fehlt.
 
-3. Non-Human Persona: Das Klima
+#### Non-Human Persona: Das Klima
 **Definitiv erfüllt:**
 
 Monitoring gewährleistet: Das Zielpfad-Diagramm in Kapitel 3 vermittelt die Botschaft „Auf Kurs“ transparent und direkt. Die Vorbildfunktion der Bundesverwaltung wird messbar und für die Bevölkerung kontrollierbar gemacht.
 
-Potenzial / Defizite:
+**Potenzial / Defizite:**
 
 Mangelnder politischer Steuerungsdruck: Ohne die von Person 2 gewünschte departementsspezifische Auswertung bleibt die Kritik diffus. Erst das Aufzeigen, welches Departement die Reduktionsziele verfehlt, erzeugt den systemischen Druck, den die Persona „Klima“ zur Verhaltensänderung benötigt.
 
@@ -122,6 +123,8 @@ Der Prototyp erfüllt die qualitativen und quantitativen Anforderungen der Proje
 Aus den Testergebnissen leiten sich zwei verbindliche Zusatzanforderungen für den finalen Release ab:
 
 **Zusatzanforderung** 
+
+
 1. **Performance**: Optimierung der mobilen Ladezeiten. Der 3-D-WebGL-Globus (globe.py) muss auf Mobilgeräten standardmässig deaktiviert oder durch die performantere Plotly-Arc-Map (Fallback) ersetzt werden. Daten-Caching via st.cache_data für den myClimate- und Airport-Lookup überprüfen.
 
 2. **Inhalt/Features**: Implementierung einer "Key Figures Dashboard"-Sektion am Ende von Kapitel 2 oder als neues Teilkapitel. Diese muss ein Balkendiagramm der Flüge nach Departement sowie eine Top-5-Liste der am häufigsten angeflogenen Destinationen/Routen enthalten.
@@ -130,8 +133,8 @@ Aus den Testergebnissen leiten sich zwei verbindliche Zusatzanforderungen für d
 
 Um die Umsetzung der Zusatzanforderungen abzusichern, bittet das Evaluationsteam um die Klärung folgender Punkte:
 
-Datenverfügbarkeit für Departements-Statistiken: Sind die Departementszuordnungen in den bereinigten Excel-Listen (2020–2024) durchgehend und fehlerfrei codiert, sodass ein aggregiertes Balkendiagramm ohne erneute Datenbereinigung direkt erzeugt werden kann?
+**Datenverfügbarkeit für Departements-Statistiken:** Sind die Departementszuordnungen in den bereinigten Excel-Listen (2020–2024) durchgehend und fehlerfrei codiert, sodass ein aggregiertes Balkendiagramm ohne erneute Datenbereinigung direkt erzeugt werden kann?
 
-Methodik der Routenhäufigkeit: Sollen bei den "häufigsten Flügen" die reinen Flugbewegungen gezählt werden (Anzahl Einträge in der LTDB-Liste) oder sollen diese mit der Anzahl der mitreisenden Personen gewichtet werden, um die tatsächliche Auslastung/Reiseaktivität abzubilden?
+**Methodik der Routenhäufigkeit:** Sollen bei den "häufigsten Flügen" die reinen Flugbewegungen gezählt werden (Anzahl Einträge in der LTDB-Liste) oder sollen diese mit der Anzahl der mitreisenden Personen gewichtet werden, um die tatsächliche Auslastung/Reiseaktivität abzubilden?
 
-Technische Ursache der mobilen Ladezeit: Liegt die Verzögerung primär am Rendering des WebGL-Globus oder an der Datenmenge, die beim Laden der Einzelflug-Tabelle an das Smartphone übertragen wird? Falls Letzteres zutrifft: Sollte für die mobile Ansicht eine Paginierung oder eine Begrenzung auf die Top-50 Einträge eingeführt werden?
+**Technische Ursache der mobilen Ladezeit:** Liegt die Verzögerung primär am Rendering des WebGL-Globus oder an der Datenmenge, die beim Laden der Einzelflug-Tabelle an das Smartphone übertragen wird? Falls Letzteres zutrifft: Sollte für die mobile Ansicht eine Paginierung oder eine Begrenzung auf die Top-50 Einträge eingeführt werden?
