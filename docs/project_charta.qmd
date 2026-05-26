@@ -84,7 +84,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 ### Persona: Lea, interessierte Bürgerin (35, Zürich)
 ::: {#fig-persona}
-![](pics/Gemini_Persona.png){width=50% fig-align="center"}
+![](pics/Gemini_Persona.png){width=50% fig-align="left"}
 
 Mit Nano Banana von Gemini erstelltes Persona-Porträt. 
 :::
@@ -114,7 +114,7 @@ Mit Nano Banana von Gemini erstelltes Persona-Porträt.
 
 ### Anti-User-Persona: Marc, Datenjournalist (42, Bern)
 ::: {#fig-antipersona}
-![](pics/Gemini_AntiPersona.png){width=50% fig-align="center"}
+![](pics/Gemini_AntiPersona.png){width=50% fig-align="left"}
 
 Mit Nano Banana von Gemini erstelltes Anti-Persona-Porträt. 
 :::
@@ -144,7 +144,7 @@ Mit Nano Banana von Gemini erstelltes Anti-Persona-Porträt.
 
 ### Non-Human Persona: Das Klima
 ::: {#fig-nonhumanpersona}
-![](pics/Gemini_NonHumanPersona.png){width=50% fig-align="center"}
+![](pics/Gemini_NonHumanPersona.png){width=50% fig-align="left"}
 
 Mit Nano Banana von Gemini erstelltes Non-Human-Persona Bild. 
 :::

@@ -26,54 +26,112 @@ Geplante Methoden:
 
 * **Heuristische Evaluation:** Walkthrough durch Hero und alle sechs Kapitel (Kapitel 0–5) gegen die Personas (Lea, Marc, Klima) — deckt jedes Kapitel die definierten Jobs, Pains und Gains ab?
 * **Nutzertests (Usability):** 2–3 Personen aus der Zielgruppe Persona 1 (geringes Data-Literacy-Niveau). Aufgaben (an die aktuelle App angepasst):
-    1. *Filter-Verständnis:* «Welches Departement fliegt 2024 am meisten nach Asien?» (Kapitel 2, drei Filter Jahr / Departement / Zielland)
+    1. *Filter-Verständnis:* «Welches Departement fliegt 2024 am meisten nach Australien?» (Kapitel 2, drei Filter Jahr / Departement / Zielland)
     2. *Trend-Lesen:* «Ist die Bundesverwaltung auf Kurs zum −30 %-Ziel 2030?» (Kapitel 3, sieben Narrativ-Schritte mit Prev/Next)
     3. *Persönlicher Bezug:* «Wie viele Tonnen CO₂ verursachen drei Flüge Zürich–New York in Business Class — und wie verhält sich das zu einer BK-Person?» (Kapitel 5, Advanced-Modus mit `st.data_editor`)
 * **Protokoll:** Think-Aloud, Beobachtung von Fehlern und Verständnislücken, Zeit pro Aufgabe.
 
 ### Teilnehmende
 
-*Noch zu ergänzen — sobald die Nutzertests durchgeführt sind.* Zu dokumentieren:
+Die Nutzertests wurden im Mai 2026 mit zwei repräsentativen Personen durchgeführt:
 
-* Anzahl Teilnehmender je Persona-Segment
-* Relevante Merkmale (Domänenkenntnis, Data Literacy, Vorerfahrung mit ähnlichen Tools)
-* Rekrutierungsmethode
+* **Anzahl:** 2 Personen aus dem erweiterten Umfeld des Projektteams (anonymisiert als Person 1 und Person 2).
+
+* **Zielgruppen-Matching:** Beide entsprechen exakt dem Profil der Persona Lea (interessierte Bürgerin).
+
+* **Relevante Merkmale:**
+
+    * Keine Fachkenntnisse in der Datenanalyse oder im Bereich Data Science (geringe Data Literacy).
+
+    * Verfügen über normales "Standard Internet Knowledge", um sich sicher auf modernen Webseiten zurechtzufinden.
+
+* **Infrastruktur:** Beide Personen testeten die Data Story primär von einem Laptop aus. Person 1 führte zudem einen ergänzenden Test auf einem Smartphone durch.
+
+* **Rekrutierungsmethode:** Convenience Sampling aus dem privaten/beruflichen Umfeld, um eine ungezwungene Testatmosphäre ("Think-Aloud") zu gewährleisten.
 
 ## Ergebnisse
 
-*Noch zu ergänzen — nach Abschluss der heuristischen Evaluation und der Nutzertests.* Strukturierung je Erfolgskriterium:
+### Persona-Abgleich (Gegenüberstellung Projektcharta vs. Testergebnisse)
+Um das Erfolgskriterium „Mindestens 2 Personas abgedeckt“ systematisch zu überprüfen, wurden die Testergebnisse mit den Profilen aus der Projektcharta abgeglichen:
 
-* beobachtete Ergebnisse (qualitative Beobachtungen, quantitative Messwerte),
-* Zielwert erreicht ja/nein,
-* auffällige Befunde, unerwartete Beobachtungen oder Edge Cases.
+1. Persona: Lea (Interessierte Bürgerin)
+**Definitiv erfüllt:**
 
-Tabellen, Charts oder annotierte Screenshots einsetzen, wo sie die Aussage stützen.
+Pains gemildert: Die unzugänglichen PDF-Rohdaten wurden erfolgreich in eine verständliche Form überführt. Lea kann Kernaussagen ohne Vorwissen erfassen.
+
+Gains realisiert: Die Vergleiche (4x Schweizer Durchschnitt, 2.5x Bundesverwaltungs-Mitarbeitende) machten die abstrakten CO₂-Mengen für beide Testpersonen sofort greifbar und emotional verständlich. Die schnelle Beantwortung belegt den Erfolg.
+
+**Potenzial / Defizite:**
+
+Technisches Umfeld missachtet: Lea ist laut Profil „Smartphone-first“. Die von Person 1 gemeldete lange Ladezeit auf dem Handy korreliert negativ mit diesem Bedürfnis. Hier muss dringend technisch nachgebessert werden.
+
+2. Anti-User-Persona: Marc (Datenjournalist)
+**Definitiv erfüllt:**
+
+Gains realisiert: Der Advanced-Modus in Kapitel 5 (Routeneditor via st.data_editor) funktioniert präzise und liefert valide, exakte Werte (5.56 t CO₂eq), was Marcs Anspruch an analytische Tiefe und Faktenstärke bedient.
+
+**Potenzial / Defizite:**
+
+Fehlende Aggregationsebene: Journalisten suchen oft nach der „Story in der Story“ (z.B. Verschwender-Departement, Rekord-Routen). Der Wunsch von Person 2 nach einem Überblick der am häufigsten frequentierten Flüge und Departements-Rankings deckt sich exakt mit Marcs Pain („mühsames manuelles Auslesen und Aggregieren“). Die Data Story ist aktuell zu stark auf Einzelflüge und den globalen Trend fokussiert, die mittlere Aggregationsebene fehlt.
+
+3. Non-Human Persona: Das Klima
+**Definitiv erfüllt:**
+
+Monitoring gewährleistet: Das Zielpfad-Diagramm in Kapitel 3 vermittelt die Botschaft „Auf Kurs“ transparent und direkt. Die Vorbildfunktion der Bundesverwaltung wird messbar und für die Bevölkerung kontrollierbar gemacht.
+
+Potenzial / Defizite:
+
+Mangelnder politischer Steuerungsdruck: Ohne die von Person 2 gewünschte departementsspezifische Auswertung bleibt die Kritik diffus. Erst das Aufzeigen, welches Departement die Reduktionsziele verfehlt, erzeugt den systemischen Druck, den die Persona „Klima“ zur Verhaltensänderung benötigt.
+
+### Nutzertests
+Die Ergebnisse der Nutzertests zeigen ein äusserst positives Bild bezüglich der Kernziele, legen jedoch gleichzeitig technische und inhaltliche Optimierungspotenziale offen.
+#### Testergebnisse nach Aufgaben
+
+| Aufgabe / Testfokus | Beobachtete Ergebnisse & Messwerte | Zielwert erreicht? |
+|---------------------|------------------------------------|----------------------|
+| Aufgabe 1: Trend-Lesen (Befindet sich die Verwaltung auf Kurs?) | Beide Personen konnten die Frage fehlerfrei und extrem schnell beantworten. Ergebnis: „Ja, sie ist auf dem Kurs.“ | Ja (Kriterium: Narrativer Fluss & Verständlichkeit erfüllt) |
+| Aufgabe 2: Persönlicher Bezug (3 Flüge nach NY in Business Class) | Beide Personen fanden die präzisen Antworten im interaktiven Rechner autark heraus. Ergebnis: 5.56 Tonnen CO₂eq. Dies entspricht ca. dem 4-fachen Schweizer Durchschnitt und dem 2.5-fachen einer Person der Bundesverwaltung. | Ja (Kriterium: Kognitiv-analytischer & kommunikativer Wert erfüllt) |
+| Bedienbarkeit & Navigation | Beide Personen navigierten flüssig durch alle Kapitel. Es traten keinerlei Navigationsprobleme oder Verständnisbarrieren bezüglich des Layouts auf. | Ja (Qualitatives Kriterium: Intuitive Usability) |
+
+#### Auffällige Befunde und Optimierungsbedarf 
+
+1. Performance-Flaschenhals auf Mobilgeräten (Person 1): Bei der Nutzung der Data Story über das Smartphone stellte Person 1 fest, dass die Ladezeit deutlich zu lang ist. Da die primäre Persona Lea laut Profil ein „Smartphone-first“-Nutzungsverhalten zeigt, stellt dies ein kritisches Risiko für die Akzeptanz dar.
+2. Wunsch nach aggregierten Kennzahlen / Makro-Ebene (Person 2): Person 2 bemängelte das Fehlen einer schnellen Übersicht zu globalen Flugstatistiken („Key Figures“) über alle Departemente hinweg. Konkret gewünscht werden Antworten auf Fragen wie: Welcher Flug/welche Route kommt am häufigsten vor? Welches Departement verursacht insgesamt die meisten Flüge oder Emissionen?
+
 
 ## Diskussion
 
-*Noch zu ergänzen — nach Vorliegen der Ergebnisse.* Zu beantworten:
+**Was hat gut funktioniert?**
+Die kognitiv-analytische sowie die kommunikative Dimension des Visualisierungskonzepts haben sich im Test vollauf bewährt. Dass Personen komplett ohne Data-Science-Hintergrund komplexe Vergleiche (Schweizer Durchschnitt vs. Bundesverwaltung) fehlerfrei innert kürzester Zeit extrahieren konnten, beweist die hohe Qualität des narrativen Flusses und des UI-Designs. Die Kombination aus Storytelling (Kapitel 3) und interaktiver Exploration (Kapitel 5) funktioniert hervorragend.
 
-* Welche Aspekte des Visualisierungskonzepts haben gut funktioniert? Welche User Pains wurden tatsächlich gemildert, welche Gains erzeugt?
-* Wo blieb das Design hinter den Erwartungen zurück? Mögliche Erklärungen?
-* Gibt es Trade-offs zwischen den drei Wertdimensionen (z. B. analytische Tiefe vs. Zugänglichkeit für Laien)?
-* Limitationen der Evaluation selbst (Stichprobengrösse, Lab- vs. Field-Bedingungen, Prototyp-Fidelity).
+**Wo blieb das Design hinter den Erwartungen zurück?**
+Das Design scheitert aktuell an der Balance zwischen visuellem Prunk (interaktiver 3-D-WebGL-Globus) und der technischen Zugänglichkeit (mobile Ladezeiten). Zudem wurde der Fokus zu stark auf die beiden Extreme gelegt: die globale Gesamtsumme (Kapitel 1 & 3) und den Einzelflug (Kapitel 2 & Rechner). Die für die politische Einordnung essenzielle Zwischenebene (Departements-Vergleiche und Routen-Häufigkeiten) wurde im aktuellen Design vernachlässigt.
+
+**Limitationen der Evaluation** 
+Mit zwei Testpersonen ist die Stichprobe klein. Da es sich jedoch um qualitative Usability-Tests handelt, bei denen primär Blockaden und fundamentale Verständnisprobleme aufgedeckt werden sollten, sind die Ergebnisse dennoch hochgradig valide und weisen eine klare Richtung für die finale Optimierung auf.
 
 ## Checkpoint-Entscheidung
 
-*Noch zu ergänzen — nach der Auswertung.* Mögliche Ausgänge:
+Die Projektleitung hat Ende Mai folgende Entscheidung getroffen:
 
-* **Proceed to deployment:** Prototyp erfüllt die Erfolgskriterien und ist (mit oder ohne kleinere Anpassungen) reif für das Deployment.
-* **Iterate:** Eine weitere Designiteration ist nötig. Konkretisieren, welche Aspekte überarbeitet werden:
-    * zusätzliche oder revidierte Datenakquise,
-    * Anpassungen an Visual Encoding oder Interaktionsdesign,
-    * Layout, Narrativ oder visueller Stil,
-    * Accessibility, Performance oder Governance.
-* **Discontinue:** Die Projektziele lassen sich mit dem aktuellen Ansatz nicht erreichen. Begründung dokumentieren.
+**Decision: Iterate (Short Optimization Sprint)**
 
-Zu erfassen: Wer war an der Entscheidung beteiligt und wann wurde sie getroffen?
+Der Prototyp erfüllt die qualitativen und quantitativen Anforderungen der Projektcharta in weiten Teilen (Navigation hervorragend, Verständlichkeit gegeben, Kernfragen beantwortbar). Aufgrund des kritischen Performance-Mangels auf Mobilgeräten und des klaren inhaltlichen Mehrwerts einer aggregierten Statistik wird jedoch ein kompakter Optimierungs-Sprint eingelegt, bevor das finale Deployment durchgeführt wird.
+
+### Zusätzliche Anforderungen und Deployment-Planung
+Aus den Testergebnissen leiten sich zwei verbindliche Zusatzanforderungen für den finalen Release ab:
+
+**Zusatzanforderung** 
+1. **Performance**: Optimierung der mobilen Ladezeiten. Der 3-D-WebGL-Globus (globe.py) muss auf Mobilgeräten standardmässig deaktiviert oder durch die performantere Plotly-Arc-Map (Fallback) ersetzt werden. Daten-Caching via st.cache_data für den myClimate- und Airport-Lookup überprüfen.
+
+2. **Inhalt/Features**: Implementierung einer "Key Figures Dashboard"-Sektion am Ende von Kapitel 2 oder als neues Teilkapitel. Diese muss ein Balkendiagramm der Flüge nach Departement sowie eine Top-5-Liste der am häufigsten angeflogenen Destinationen/Routen enthalten.
 
 ## Zusätzliche Anforderungen und Deployment-Planung
 
-Wenn die Entscheidung «Proceed to deployment» lautet, hier alle aus der Evaluation entstandenen Zusatzanforderungen festhalten (z. B. von Nutzenden gewünschte Features, Datenaktualisierungs-Bedarf, Zugriffskontrolle). Operatives Setup und Schritte sind in [Deployment](deployment.qmd) beschrieben.
+Um die Umsetzung der Zusatzanforderungen abzusichern, bittet das Evaluationsteam um die Klärung folgender Punkte:
 
-Präsentationsmaterialien aus Evaluations-Workshops können im Ordner `docs/` abgelegt werden.
+Datenverfügbarkeit für Departements-Statistiken: Sind die Departementszuordnungen in den bereinigten Excel-Listen (2020–2024) durchgehend und fehlerfrei codiert, sodass ein aggregiertes Balkendiagramm ohne erneute Datenbereinigung direkt erzeugt werden kann?
+
+Methodik der Routenhäufigkeit: Sollen bei den "häufigsten Flügen" die reinen Flugbewegungen gezählt werden (Anzahl Einträge in der LTDB-Liste) oder sollen diese mit der Anzahl der mitreisenden Personen gewichtet werden, um die tatsächliche Auslastung/Reiseaktivität abzubilden?
+
+Technische Ursache der mobilen Ladezeit: Liegt die Verzögerung primär am Rendering des WebGL-Globus oder an der Datenmenge, die beim Laden der Einzelflug-Tabelle an das Smartphone übertragen wird? Falls Letzteres zutrifft: Sollte für die mobile Ansicht eine Paginierung oder eine Begrenzung auf die Top-50 Einträge eingeführt werden?
