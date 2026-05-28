@@ -5,6 +5,8 @@
 
 Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LTDB), der Bundesratsmitgliedern und weiteren Behördenvertretern Flugreisen im In- und Ausland ermöglicht. Flugreisen stellen mit **61 Prozent** den mit Abstand grössten Hotspot der Treibhausgasemissionen (THG-Emissionen) der Bundesverwaltung dar (RUMBA-Umweltbericht 2024). 2023 beliefen sich die Emissionen aus Flugreisen laut RUMBA-Umweltbericht 2024 auf 16'904 Tonnen CO₂-Äquivalente.
 
+**Abgedeckter Zeitraum:** Einzelflug- und LTDB-Daten stehen für 2020–2024 zur Verfügung. 2019 wird in den RUMBA-Berichten als Vor-Corona-Referenzjahr geführt und dient als Basis für Trend und Zielpfad.
+
 **Thematische Aspekte:**
 
 - Wer fliegt mit dem Bundesratsjet wohin und wann?
@@ -16,7 +18,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 **Leitfragen:**
 
 1. Welche Reisemuster (Personen, Destinationen, Häufigkeit) lassen sich aus den Flugdaten der Bundeskanzlei (2020–2024) ablesen?
-2. Wie haben sich die THG-Emissionen der Bundeskanzleisflüge seit 2019 entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
+2. Wie haben sich die THG-Emissionen der Bundeskanzleisflüge seit 2019 (Vor-Corona-Referenz; Datenjahre 2020–2024) entwickelt und ist die Bundesverwaltung auf Kurs zur Erreichung des Reduktionsziels (–30% bis 2030)?
 3. Wie vergleichen sich die Gesamtemissionen der Bundesverwaltung mit den Emissionen anderer Regierungen oder Institutionen?
 
 **Veröffentlichung:** Öffentlich zugängliche, scrollbare Data Story (Website, GitHub Pages), und Dokumentation mit Quarto.
@@ -24,7 +26,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 **Datenquellen:**
 
 - Flugdaten der Bundeskanzlei 2020–2024 (Excel, [bk.admin.ch](https://www.bk.admin.ch/bk/de/home/dokumentation/medienmitteilungen/flugdaten_bk.html))
-- RUMBA – Umweltberichte 2021–2024, GS-UVEK, mit THG-Emissionen Flugreisen je Berichtsjahr
+- RUMBA – Umweltberichte 2021–2024, GS-UVEK, mit THG-Emissionen Flugreisen je Berichtsjahr (Datenjahre 2020–2023; 2019 als Vor-Corona-Referenzjahr)
 - Flüge des Bundesrates mit dem Lufttransportdienst ([admin.ch](https://www.admin.ch/gov/de/start/bundesrat/aufgaben-des-bundesrates/flugreisen.html))
 
 ## Project Objectives and Success Criteria
@@ -32,15 +34,15 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 **Projektziele (aus Stakeholder-/Nutzerperspektive):**
 
 1. **Transparenz schaffen:** Interessierten Bürgerinnen und Bürgern sowie Medienschaffenden ermöglichen, schnell und intuitiv zu verstehen, wer mit dem Bundesratsjet fliegt, wohin und wie oft.
-2. **Klimaimpact kommunizieren:** Die CO₂-Emissionen der Bundesratsflüge verständlich einordnen und im Zeitverlauf (2019–2024) sowie im Vergleich zu anderen Emissionsquellen der Bundesverwaltung darstellen.
-3. **Zielfortschritt aufzeigen:** Den Fortschritt gegenüber dem Aktionsplan Flugreisen (–30% bis 2030 gegenüber 2019) visualisieren.
+2. **Klimaimpact kommunizieren:** Die CO₂-Emissionen der Bundesratsflüge verständlich einordnen und im Zeitverlauf (Datenjahre 2020–2024; 2019 als Vor-Corona-Referenz aus RUMBA) sowie im Vergleich zu anderen Emissionsquellen der Bundesverwaltung darstellen.
+3. **Zielfortschritt aufzeigen:** Den Fortschritt gegenüber dem Aktionsplan Flugreisen (–30% bis 2030 gegenüber 2019, Vor-Corona-Referenzjahr) visualisieren.
 
 **Erfolgskriterien:**
 
 | Kriterium | Qualitativ | Quantitativ (Zielwert) |
 |---|---|---|
 | Verständlichkeit | Laien können Kernaussagen ohne Vorwissen erfassen | Mind. 2 Personas abgedeckt |
-| Vollständigkeit | Alle 5 Datenjahre (2020–2024) dargestellt | 100% der verfügbaren Flugdaten integriert |
+| Vollständigkeit | Alle 5 Datenjahre (2020–2024) dargestellt; 2019 als Vor-Corona-Referenz klar markiert | 100% der verfügbaren Flugdaten integriert |
 | Visualisierungsqualität | Klare visuelle Hierarchie, konsistentes Design | Mind. 3 unterschiedliche Diagrammtypen |
 | Narrativer Fluss | Data Story führt Lesende durch die Kernbotschaften | Mind. 4 klar strukturierte Story-Kapitel |
 | Reproduzierbarkeit | Code und Daten sind dokumentiert und nachvollziehbar | Vollständig in Quarto/Git versioniert |
@@ -88,7 +90,7 @@ Die Schweizer Bundesverwaltung betreibt einen Lufttransportdienst des Bundes (LT
 
 Mit Nano Banana von Gemini erstelltes Persona-Porträt. 
 :::
-**Profil:** Lehrerin, politisch interessiert, liest regelmässig Tamedia-Medien und SRF-Online. Keine Fachkenntnisse in der Datenanalyse. Nutzt Smartphone und Laptop gleichermässig.
+**Profil:** Lehrerin, politisch interessiert, liest regelmässig Tamedia-Medien und SRF-Online. Keine Fachkenntnisse in der Datenanalyse. Nutzt Smartphone und Laptop gleichermassen.
 
 **Domänenexpertise:** Gering (kennt den Bundesrat, weiss wenig über LTDB oder RUMBA)
 **Data Literacy:** Gering bis mittel (versteht einfache Balken- und Liniendiagramme)
@@ -181,7 +183,7 @@ Mit Nano Banana von Gemini erstelltes Non-Human-Persona Bild.
 | Quelle | Inhalt | Format | Zeitraum | Einschränkungen |
 |---|---|---|---|---|
 | Bundeskanzlei (bk.admin.ch) | Flüge LTDB inkl. Mitreisende (Name, Funktion, Destination, Datum) | Excel (RUMBA-Fluglisten) | 2020–2024 | Emissionswerte nicht direkt enthalten. Distanz pro Abschnitt bereits berechnet. Keine Personennamen in den Daten |
-| RUMBA Umweltberichte 2021–2024 | THG-Emissionen Bundesverwaltung gesamt und nach Kategorie inkl. Flugreisen. BR-Jets/Helikopter separat | PDF (Diagramme) | 2020–2023 (je Bericht ein Datenjahr) | Aggregierte Jahreswerte. Keine Einzelflug-Emissionen. 2024er Daten noch nicht publiziert |
+| RUMBA Umweltberichte 2021–2024 | THG-Emissionen Bundesverwaltung gesamt und nach Kategorie inkl. Flugreisen. BR-Jets/Helikopter separat | PDF (Diagramme) | 2020–2023; 2019 als Vor-Corona-Referenz | Aggregierte Jahreswerte. Keine Einzelflug-Emissionen. 2024er Daten noch nicht publiziert |
 | admin.ch Flugreisen | Kontext, Regeln, Aktionsplan | Webseite | Aktuell | Wenig quantitative Daten |
 
 **Personal:** 2 Studierende (Semesterarbeit)
@@ -199,7 +201,7 @@ Mit Nano Banana von Gemini erstelltes Non-Human-Persona Bild.
 |---|---|---|---|
 | Flugdaten-PDFs sind schlecht maschinenlesbar | Hoch | Mittel | Frühe Extraktion testen. Manuelle Nachbearbeitung einplanen |
 | Emissionsdaten für BR-Jets nicht granular genug | Mittel | Mittel | Aggregierte RUMBA-Werte nutzen. Methodik transparent dokumentieren |
-| Datenlücken vor 2020 (keine Einzelflug-Excel-Daten) | Gering | Gering | Flugdaten 2020 vorhanden (Excel). RUMBA-Zeitreihe ergänzt Trend ab 2019 |
+| Datenlücken vor 2020 (keine Einzelflug-Excel-Daten) | Gering | Gering | Flugdaten 2020 vorhanden (Excel). RUMBA-Zeitreihe ergänzt Trend ab 2019 (Vor-Corona-Referenz) |
 | Zeitaufwand für PDF-Extraktion unterschätzt | Mittel | Hoch | Datenakquise priorisieren. Aufwand früh abschätzen |
 
 
@@ -226,7 +228,7 @@ Die Data Story führt Lesende durch eine Hero-Sektion und sechs narrative Kapite
 
 **Kapitel 1 – Einleitung: Die Flüge der Bundesverwaltung im Kontext**
 - *Visualisierung:* Einzelkennzahl-Kacheln (Big Numbers) aus `RUMBA_KEY_FIGURES`: Gesamtemissionen Bundesverwaltung, Anteil Flugreisen (36–61 %), Emissionen Flugreisen pro Berichtsjahr.
-- *Interaktivität:* RUMBA-Berichtsjahr per `st.radio`. Alle Kennzahlen in den Kacheln aktualisieren sich gemeinsam.
+- *Interaktivität:* RUMBA-Berichtsjahr (publizierte Jahre 2020–2023) per `st.radio`. Alle Kennzahlen in den Kacheln aktualisieren sich gemeinsam.
 - *Narrativ:* Verortet die Flugemissionen als grössten Hotspot innerhalb der Gesamtbilanz.
 - *Wert:* Schafft sofort Relevanz und Grössenordnung (kommunikativer Wert).
 
@@ -237,9 +239,9 @@ Die Data Story führt Lesende durch eine Hero-Sektion und sechs narrative Kapite
 - *Wert:* Ermöglicht geografische Mustererkennung (kognitiv-analytisch). Macht Flugaktivität konkret erfahrbar (kommunikativer Wert).
 
 **Kapitel 3 – Zeitliche Entwicklung der Emissionen**
-- *Visualisierung:* Liniendiagramm der offiziellen RUMBA-Flugemissionen (2019–2024) mit Zielpfad (–30 % bis 2030, Aktionsplan Flugreisen). 2020 wird als COVID-Sondereffekt markiert. 2024 ist der jüngste offizielle RUMBA-Wert.
+- *Visualisierung:* Liniendiagramm der Flugemissionen im Zeitfenster 2019–2024 mit Zielpfad (–30 % bis 2030, Aktionsplan Flugreisen). 2019 wird als Vor-Corona-Referenzjahr aus RUMBA gekennzeichnet; Einzelflugdaten stehen ab 2020 zur Verfügung. 2020 wird als COVID-Sondereffekt markiert.
 - *Schrittnavigation:* Sieben Narrativ-Schritte (von 2019-Basisjahr über die jährlichen Stationen bis 2024-Trendwende und 2025-Forecast / 2030-Ziel). Gesteuert über Prev/Next-Buttons. Die aktuelle Position wird in `st.session_state["ch3_step_index"]` persistiert. Jeder Schritt rendert eine Karte mit Heading und Detailtext neben dem Diagramm.
-- *Annotation:* 2019-Basisjahr (20'200 t, abgeleitet aus RUMBA 2024), «auf Zielkurs»-Status (RUMBA 2025).
+- *Annotation:* 2019-Basisjahr (20'200 t, Vor-Corona-Referenz; abgeleitet aus RUMBA 2024), «auf Zielkurs»-Status (RUMBA 2025).
 - *Narrativ:* «Ist die Bundesverwaltung auf Kurs?»
 - *Wert:* Offizielle Zeitreihe und Zielfortschritt schrittweise erzählt. Differenzierte Botschaft statt einzelner Headline (kognitiv-analytisch und kommunikativ).
 
@@ -266,7 +268,7 @@ Die Data Story führt Lesende durch eine Hero-Sektion und sechs narrative Kapite
 | 3-D-Globus (WebGL, eigenes Modul) | Flugverbindungen Hero + Kap. 2 | Geografische Muster mit räumlicher Tiefe. Drehung weckt Aufmerksamkeit |
 | Arc-Map (Plotly Scattergeo) | Fallback für Hero + Kap. 2 | Robuste 2-D-Darstellung, wenn Globus-Daten leer sind |
 | Big Number / KPI-Kacheln | Hero + Kap. 0 + Kap. 1 | Sofortige Orientierung ohne Diagramm-Aufwand |
-| Liniendiagramm + Zielpfad | Emissionstrend 2019–2024 RUMBA (Kap. 3) | Zeitlicher Verlauf und Zielfortschritt |
+| Liniendiagramm + Zielpfad | Emissionstrend 2019–2024 (2019 Referenz; Einzelflugdaten ab 2020) (Kap. 3) | Zeitlicher Verlauf und Zielfortschritt |
 | Schritt-Karten (HTML-Cards) | Narrativ-Begleitung Kap. 3 | Storytelling neben dem Diagramm. Ein Befund pro Karte |
 | Durchsuchbare Tabelle | Einzelflüge (Kap. 2) | Tiefere Exploration der Rohdaten |
 | Indizierter Linienvergleich | CH vs. UK Institutionenvergleich (Kap. 4) | Vergleich relativer Entwicklungen über die Zeit |
@@ -348,6 +350,6 @@ Siehe [Mermaid Syntax für Gantt-Diagramme](https://mermaid.js.org/syntax/gantt.
 |---|---|---|---|
 | Studierende/r | L. Locarnini | Datenakquise, Visualisierung, Data Story, Dokumentation | locarlil@students.zhaw.ch |
 | Studierende/r | A. Wyder | Datenbereinigung, Visualisierung, Data Story, Dokumentation | wyderali@students.zhaw.ch |
-| Betreuung / Auftraggeber | M. Döhmer | Fachliche Begleitung, Feedback, Abnahme Meilensteine | doem@zhaw.ch |
+| Betreuung / Auftraggeber | M. Dömer | Fachliche Begleitung, Feedback, Abnahme Meilensteine | doem@zhaw.ch |
 | Datenquelle 1 | Bundeskanzlei BK | Flugdaten LTDB (öffentl. PDFs) | - |
 | Datenquelle 2 | Fachstelle RUMBA, GS-UVEK | RUMBA Umweltberichte 2021–2024 | – |

@@ -10,7 +10,14 @@ Diese Dokumentation beschreibt die Konzeption, Entwicklung und Evaluation eines 
 
 **Datenbasis:** RUMBA-Flugdaten der Bundeskanzlei 2020–2024 (Excel) sowie offizielle THG-Jahreswerte aus den RUMBA-Umweltberichten 2021–2024 (GS-UVEK).
 
-**Was Lesende in der Data Story erwartet:** Ein **Hero** mit Big-Number-Tile und rotierendem 3-D-Globus pro Jahr. Kapitel 0: Grundlagen zu RUMBA und Aktionsplan Flugreisen. Kapitel 1: Big-Number-Kacheln zur Verortung der Flugemissionen in der Gesamtbilanz pro RUMBA-Berichtsjahr. Kapitel 2: Interaktiver Globus und durchsuchbare Tabelle, gefiltert nach Jahr, Departement und Zielland. Kapitel 3: Liniendiagramm mit siebenstufigem Narrativ entlang des Zielpfads bis 2030. Kapitel 4: Vergleich CH vs. UK Central Government. Kapitel 5: Interaktiver Pro-Kopf-Rechner mit Light- und Advanced-Modus.
+**Was Lesende in der Data Story erwartet:** 
+- Ein **Hero** mit Big-Number-Tile und rotierendem 3-D-Globus pro Jahr. 
+- Kapitel 0: Grundlagen zu RUMBA und Aktionsplan Flugreisen. 
+- Kapitel 1: Big-Number-Kacheln zur Verortung der Flugemissionen in der Gesamtbilanz pro RUMBA-Berichtsjahr. 
+- Kapitel 2: Interaktiver Globus und durchsuchbare Tabelle, gefiltert nach Jahr, Departement und Zielland. 
+- Kapitel 3: Liniendiagramm mit siebenstufigem Narrativ entlang des Zielpfads bis 2030. 
+- Kapitel 4: Vergleich CH vs. UK Central Government. 
+- Kapitel 5: Interaktiver Pro-Kopf-Rechner mit Light- und Advanced-Modus.
 
 ![Der Entwicklungsprozess für Datenvisualisierungsprodukte](pics/vizproductprocess.png){#fig-vizprocess}
 
